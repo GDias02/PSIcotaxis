@@ -1,52 +1,85 @@
-// /heroes - GET
-exports.hero_list = asyncHandler(async (req, res, next) => {
-  const heroes = await Hero.find().sort({ name: 1 }).exec();
-  res.status(200).send({heroes: heroes});
+const Motorista = require("../models/motorista");
+const Pessoa = require("../models/pessoa");
+
+const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
+
+
+// /motoristas - GET
+exports.motorista_list = asyncHandler(async (req, res, next) => {
+  const motoristas = await Motorista.find()
+                                    .sort({ registo: 1 })
+                                    .exec();
+  res.status(200).send(motoristas);
 });
   
-// /hero/id - GET
-exports.hero_detail = asyncHandler(async (req, res, next) => {
-  const hero = await Hero.findById(req.params.id).exec();
-  if (hero === null) {
+// /motorista/id - GET
+exports.motorista = asyncHandler(async (req, res, next) => {
+  const motorista = await Motorista.findById(req.params.id)
+                                  .exec();
+  if (motorista === null) {
     res.status(404).send();
     return;
   }
-  res.status(200).send({hero: hero});
+  res.status(200).send(motorista);
 });
 
-// /hero - POST
-exports.hero_post = [
+// /motorista - POST
+exports.motorista_create = [
   // Validate and sanitize fields.
-  body("name", "Name must not be empty nor too big.")
-    .trim()
-    .isLength({ min: 1, max: 100 })
-    .escape(),
-  body("pet").escape(),
+  body("nif", "Nif tem de ser composto por 9 dígitos e ser positivo")
+            .trim()
+            .isLength(9)
+            .isInt()
+            .escape(),
+  body("nome", "O nome tem de ter entre 2 e 64 caracteres")
+            .trim()
+            .isLength({ min: 2, max: 64 })
+            .escape(),
+  body("genero", `Género tem de ser um dos seguintes valores: ${Pessoa.pessoaSchema.genero.enum}`)
+            .trim()
+            .isIn(Pessoa.pessoaSchema.genero.enum)//This must be always an array
+            .escape(),
+  body("anoDeNascimento", `O ano de nascimento deve corresponder a uma data válida`)
+            .trim()
+            .escape()
+            .isDate()
+            .After(new Date("1900"))
+            .Before(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000)),
+  body("cartaDeConducao")
+            .trim()
+            .isLength({min:2,max:32})
+            .escape(),
 
   // Process request after validation and sanitization.
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
   
-    // Create a Hero object with escaped and trimmed data.
-    const hero = new Hero({
-      name: req.body.name
+    // Create a Motorista object with escaped and trimmed data.
+    const motorista = new Motorista({
+      registo: Date.now(),
+      nif: req.body.nif,
+      nome: req.body.nome,
+      genero: req.body.genero,
+      anoDeNascimento: req.body.anoDeNascimento,
+      cartaDeConducao: req.body.cartaDeConducao,
+      morada: req.body.morada
     });
-    if (req.body.pet) hero.pet = req.body.pet;
   
     if (!errors.isEmpty()) {
       // 400 - Bad Request
       res.status(400).send({errors: errors});
     } else {
-      const sameHero = await Hero.find(hero).exec();
-      if (sameHero.length) {
+      const sameMotorista = await Motorista.find(motorista).exec();
+      if (sameMotorista.length) {
         // 200 - OK
-        res.status(200).send({warning: "Duplicate Hero. No new Hero created!"});
+        res.status(200).send({warning: "Motorista Duplicado. Nenhum motorista foi criado!"});
       } else {
         // 201 - Created
-        await hero.save();
-        const newHero = await Hero.findById(hero._id).exec();
-        res.status(201).send({hero: newHero});
+        await motorista.save();
+        const newMotorista = await Motorista.findById(motorista._id).exec();
+        res.status(201).send(newMotorista);
       }
     }
   }),

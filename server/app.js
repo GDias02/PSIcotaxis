@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cors = require("cors");
+//const cors = require("cors");
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -13,8 +13,7 @@ const app = express();
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = DB.mongo;  //!!!!!!!!!!!!!!!!!!!!!! METER STRING DE CONEXÃO AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+const mongoDB = "mongodb+srv://fc57163:12345678B@cluster0.c11fmyj.mongodb.net/psicotaxis?retryWrites=true&w=majority&appName=Cluster0";
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
@@ -29,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+//app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

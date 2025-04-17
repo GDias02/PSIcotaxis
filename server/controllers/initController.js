@@ -1,82 +1,124 @@
+const Config = require("../models/config");
+const Taxi = require("../models/taxi");
+const Motorista = require("../models/motorista");
+
+const asyncHandler = require("express-async-handler");
+
 exports.init = asyncHandler(async (req, res) => {
-    const heroes = [];
-    const pets = [];
+  const configs = [];
+  const taxis = [];
+  const motoristas = [];
     
-    main().catch((err) => console.log(err));
+  main().catch((err) => console.log(err));
     
-    async function main() {
-      await Hero.deleteMany({});
-      await Pet.deleteMany({});
-      await createPets();
-      await createHeroes();
-      res.status(200).send();
-    }
+  async function main() {
+    await Motorista.deleteMany({});
+    //await Taxi.deleteMany({});
+    //await Config.deleteMany();
 
-    async function configCreate(index, name) {
-      const pet = new Pet({ name: name });
-      await pet.save();
-      pets[index] = pet;
-    }
+    //await createConfigs();
+    //await createTaxis();
+    await createMotoristas();
+
+    res.status(200).send();
+  }
+
+  async function configCreate(index, configJson) {
+    const config = new Config(configJson);
+    await config.save();
+    configs[index] = config;
+  }
   
-    async function taxiCreate(index, name) {
-      const pet = new Pet({ name: name });
-      await pet.save();
-      pets[index] = pet;
-    }
+  async function taxiCreate(index, taxiJson) {
+    const taxi = new Taxi(taxiJson);
+    await taxi.save();
+    taxis[index] = taxi;
+  }
   
-    async function motoristaCreate(index, name, pet) {
-      const hero = new Hero({ name: name });
-      if (pet != false) hero.pet = pet;
-      await hero.save();
-      heroes[index] = hero;
-    }
+  async function motoristaCreate(index, motoristaJson) {
+    const motorista = new Motorista(motoristaJson);
+    await motorista.save();
+    motoristas[index] = motorista;
+  }
     
-    async function createConfig() {
-      await Promise.all([
-        petCreate(0, 'Sly the Raccoon'),
-        petCreate(1, 'Bentley the Turtle'),
-        petCreate(2, 'Murray the Hippo'),
-        petCreate(3, 'Carmelita the Fox'),
-        petCreate(4, 'Panda King'),
-        petCreate(5, 'Sonic the Hedgehog'),
-        petCreate(6, 'Shadow the Hedgehog'),
-        petCreate(7, 'Spike'),
-        petCreate(8, 'Teddy the Bear'),
-      ]);
-    }
+  async function createConfigs() {
+    await Promise.all([
+      configCreate(0, CONFIGS[0]),
+    ]);
+  }
   
-    async function createTaxis() {
-      await Promise.all([
-        heroCreate(0, 'Dr. Nice', pets[0]),
-        heroCreate(1, 'Bombasto', pets[0]),
-        heroCreate(2, 'Celeritas', pets[4]),
-        heroCreate(3, 'Magneta', false),
-        heroCreate(4, 'RubberMan', false),
-        heroCreate(5, 'Dynama', false),
-        heroCreate(6, 'Dr. IQ', pets[6]),
-        heroCreate(7, 'Magma', pets[6]),
-        heroCreate(8, 'Tornado', pets[7]),
-      ]);
-    }
+  async function createTaxis() {
+    await Promise.all([
+      taxiCreate(0, TAXIS[0]),
+      taxiCreate(1, TAXIS[1]),
+      taxiCreate(2, TAXIS[2]),
+    ]);
+  }
 
-    async function createMotoristas() {
-      await Promise.all([
-        heroCreate(0, 'Dr. Nice', pets[0]),
-        heroCreate(1, 'Bombasto', pets[0]),
-        heroCreate(2, 'Celeritas', pets[4]),
-        heroCreate(3, 'Magneta', false),
-        heroCreate(4, 'RubberMan', false),
-        heroCreate(5, 'Dynama', false),
-        heroCreate(6, 'Dr. IQ', pets[6]),
-        heroCreate(7, 'Magma', pets[6]),
-        heroCreate(8, 'Tornado', pets[7]),
-      ]);
-    }
-  });
+  async function createMotoristas() {
+    await Promise.all([
+      motoristaCreate(0, MOTORISTAS[0]),
+      motoristaCreate(1, MOTORISTAS[1]),
+      motoristaCreate(2, MOTORISTAS[2]),
+    ]);
+  }
+});
 
-const MOTORISTAS: Motorista[] = [
+const CONFIGS = [
     {
-        _id: '1',
+        ppm_basico: 10,
+        ppm_luxuoso: 10,
+        agravamento: 10,
+    }
+]
+
+const TAXIS = [
+    {
+        matricula: '11-AA-11',
+        anoDeCompra: new Date('2001'),
+        marca: 'Audi',
+        modelo: 'A1',
+        conforto: 'basico',
+    },
+    {
+        matricula: '22-BB-22',
+        anoDeCompra: new Date('2002'),
+        marca: 'Bentley',
+        modelo: 'Bentayga',
+        conforto: 'luxuoso',
+    },
+    {
+        matricula: '33-CC-33',
+        anoDeCompra: new Date('2003'),
+        marca: 'Citroën',
+        modelo: 'C3',
+        conforto: 'basico',
+    },
+];
+
+const MORADAS_MOTORISTAS = [
+    {   //Avenida
+        rua: 'Av. da Liberdade',
+        numeroDePorta: '182',
+        codigoPostal: '1250-146',
+        localidade: 'Lisboa',
+    },
+    {   //Beco
+        rua: 'Beco das Farinhas',
+        numeroDePorta: '10',
+        codigoPostal: '1100-179',
+        localidade: 'Lisboa',
+    },
+    {   //Calçada
+        rua: 'Calçada do Carmo',
+        numeroDePorta: '37 A',
+        codigoPostal: '1200-090',
+        localidade: 'Lisboa',
+    },
+];
+
+const MOTORISTAS = [
+    {
         nif: 111111111,
         nome: 'Ana Artemisa Alexandre',
         genero: 'feminino',
@@ -85,7 +127,6 @@ const MOTORISTAS: Motorista[] = [
         morada: MORADAS_MOTORISTAS[0],
     },
     {
-        _id: '2',
         nif: 222222222,
         nome: 'Beto Baltazar Botelho',
         genero: 'masculino',
@@ -94,7 +135,6 @@ const MOTORISTAS: Motorista[] = [
         morada: MORADAS_MOTORISTAS[1],
     },
     {
-        _id: '3',
         nif: 333333333,
         nome: 'Carlos Carvalho',
         genero: 'masculino',

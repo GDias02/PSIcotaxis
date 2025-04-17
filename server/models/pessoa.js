@@ -8,6 +8,7 @@ const baseOptions = {
 }
 
 const pessoaSchema = new Schema({
+    registo: { type: Date, default: Date.now(), required: true},
     nif: { type: Number, min: 100000000, max: 999999999, unique: true, required: true },
     nome: { type: String, minLength: 2, maxLength: 64, required: true },
     genero: {
