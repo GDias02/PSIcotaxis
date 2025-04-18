@@ -20,6 +20,10 @@ import {MatCardModule} from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
 import { ConfigComponent } from './config/config.component';
+import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
+
+import { MotoristaService } from './motorista.service';
+import { MotoristaCreateComponent } from './motorista-create/motorista-create.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +32,9 @@ import { ConfigComponent } from './config/config.component';
     LoginComponent,
     DashboardComponent,
     MotoristasComponent,
-    ConfigComponent
+    ConfigComponent,
+    MotoristaDetailComponent,
+    MotoristaCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +52,7 @@ import { ConfigComponent } from './config/config.component';
     MatInputModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [MotoristaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

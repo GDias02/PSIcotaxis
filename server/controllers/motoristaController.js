@@ -30,22 +30,20 @@ exports.motorista_create = [
   body("nif", "Nif tem de ser composto por 9 dígitos e ser positivo")
             .trim()
             .isLength(9)
-            .isInt()
             .escape(),
   body("nome", "O nome tem de ter entre 2 e 64 caracteres")
             .trim()
             .isLength({ min: 2, max: 64 })
             .escape(),
-  body("genero", `Género tem de ser um dos seguintes valores: ${Pessoa.pessoaSchema.genero.enum}`)
+  body("genero", `Género tem de ser um dos seguintes valores: ${ new Pessoa().generosPossiveis}`)
             .trim()
-            .isIn(Pessoa.pessoaSchema.genero.enum)//This must be always an array
+            .isIn(new Pessoa().generosPossiveis)//This must be always an array
             .escape(),
   body("anoDeNascimento", `O ano de nascimento deve corresponder a uma data válida`)
             .trim()
-            .escape()
-            .isDate()
-            .After(new Date("1900"))
-            .Before(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000)),
+            .isAfter("1900")
+            .isBefore(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000).toISOString())
+            .escape(),
   body("cartaDeConducao")
             .trim()
             .isLength({min:2,max:32})

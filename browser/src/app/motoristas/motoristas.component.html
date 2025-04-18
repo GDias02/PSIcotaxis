@@ -1,1 +1,22 @@
-<p>motoristas works!</p>
+<h2>Motoristas</h2>
+
+<div>
+  <button type="button" class="add-button" 
+    <a routerLink="/motoristas/create">
+        Criar Motorista
+    </a>>
+  </button>
+</div>
+
+<ul class="motoristas">
+  <li *ngFor="let motorista of motoristaes">
+    <a routerLink="/motoristas/{{motorista._id}}">
+      <span class="badge">{{motorista.nif}}</span>
+      <span class="badge">{{motorista.name}}</span>
+    </a>
+    <button type="button" class="delete" title="delete motorista"
+      (click)="delete(motorista)">
+      x
+    </button>
+  </li>
+</ul>

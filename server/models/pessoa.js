@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+const generosPossiveis = ["feminino", "masculino"]
+
 const baseOptions = {
     discriminatorKey: 'tipo',
     collection: 'pessoas'
@@ -14,11 +16,15 @@ const pessoaSchema = new Schema({
     genero: {
         type: String,
         required: true,
-        enum: ["feminino", "masculino"],
+        enum: generosPossiveis,
         default: "feminino"
     },
-    tipo: { type: String, required: true, enum: ['Motorista', 'Cliente'] }
+    tipo: { type: String, enum: ['Motorista', 'Cliente'] }
 }, baseOptions);
+
+pessoaSchema.virtual('generosPossiveis').get(function() {
+    return generosPossiveis;
+})
 
 // Export model
 module.exports = mongoose.model("Pessoa", pessoaSchema);

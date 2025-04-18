@@ -1,0 +1,38 @@
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
+import { Motorista } from '../motorista';
+import { MotoristaService } from '../motorista.service';
+import { Morada } from '../morada';
+import { MoradaService } from '../morada.service';
+
+@Component({
+  selector: 'app-motorista-create',
+  templateUrl: './motorista-create.component.html',
+  styleUrls: ['./motorista-create.component.css']
+})
+export class MotoristaCreateComponent {
+  nif: number;
+  nome: string;
+  genero: string;
+  anoDeNascimento: Date;
+  cartaDeConducao: string;
+  morada: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private motoristaService: MotoristaService,
+    private moradaService: MoradaService,
+    private location: Location
+  ) {}
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  save(): void {
+    this.motoristaService.addMotorista({this.nif, this.nome, this.genero, this.anoDeNascimento, this.cartaDeConducao, this.morada} as Motorista)
+      .subscribe(() => this.goBack());
+  }
+}
