@@ -98,7 +98,7 @@
                         <input matInput type="password" class="form-control" [(ngModel)]="adminPass" id="adminPass">
                     </mat-form-field>
                     <mat-card-actions>
-                        <button mat-fab extended [disabled]="!nameAdmin || !adminPass">
+                        <button mat-fab extended [disabled]="!nameAdmin || !adminPass" (click)="login(0)">
                             <mat-icon>home</mat-icon>
                             Login
                         </button>
