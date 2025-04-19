@@ -1,0 +1,18 @@
+<h2>Lista de Taxis</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>matricula</th>
+        <th>marca</th>
+        <th>modelo</th>
+        <th>conforto</th>
+    </tr>
+    <tr *ngFor="let taxi of taxis">
+    <td><span>{{taxi._id}}</span></td>
+    <td><span>{{taxi.matricula}}</span></td>
+    <td><span>{{taxi.marca}}</span></td>
+    <td><span>{{taxi.modelo}}</span></td>
+    <td><span>{{taxi.conforto}}</span></td>
+    </tr>
+</table>
+<button>Registar novo taxi</button>
