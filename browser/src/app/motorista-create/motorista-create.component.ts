@@ -4,8 +4,6 @@ import { Location } from '@angular/common';
 
 import { Motorista } from '../motorista';
 import { MotoristaService } from '../motorista.service';
-import { Morada } from '../morada';
-import { MoradaService } from '../morada.service';
 
 @Component({
   selector: 'app-motorista-create',
@@ -23,7 +21,6 @@ export class MotoristaCreateComponent {
   constructor(
     private route: ActivatedRoute,
     private motoristaService: MotoristaService,
-    private moradaService: MoradaService,
     private location: Location
   ) {}
 

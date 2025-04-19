@@ -18,13 +18,16 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
 import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { MotoristaService } from './motorista.service';
 import { MotoristaCreateComponent } from './motorista-create/motorista-create.component';
 import { ConfigsComponent } from './configs/configs.component'
+import { MoradaCreateComponent } from './morada-create/morada-create.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import { ConfigsComponent } from './configs/configs.component'
     MotoristasComponent,
     MotoristaDetailComponent,
     MotoristaCreateComponent,
-    ConfigsComponent
+    ConfigsComponent,
+    MoradaCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,10 @@ import { ConfigsComponent } from './configs/configs.component'
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule,
+    MatDividerModule,
+    MatGridListModule
   ],
   providers: [MotoristaService],
   bootstrap: [AppComponent]

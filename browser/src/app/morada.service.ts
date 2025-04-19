@@ -62,5 +62,12 @@ export class MoradaService {
       catchError(this.handleError<Morada>('deleteMorada'))
     )
   }
+
+  getLocalidadeByCodigoPostal(codigoPostal: string): Observable<string>{
+    const url =`${this.moradasUrl}/moradas/codigoPostal/${codigoPostal}`;
+    return this.http.get<string>(url).pipe(
+      catchError(this.handleError<string>(`get Localidade using código-postal=${codigoPostal}`))
+    )
+  }
 }
 
