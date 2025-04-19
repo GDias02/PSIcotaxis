@@ -17,6 +17,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
 import { ConfigComponent } from './config/config.component';
@@ -50,7 +52,9 @@ import { MotoristaCreateComponent } from './motorista-create/motorista-create.co
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule,
+    MatDividerModule
   ],
   providers: [MotoristaService],
   bootstrap: [AppComponent]
