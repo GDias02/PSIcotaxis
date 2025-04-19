@@ -29,7 +29,7 @@ export class MotoristaDetailComponent {
 
   getMotorista(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.motoristaService.getMotorista(id)
+    this.motoristaService.getMotorista(id!)
       .subscribe(motorista => this.populateMotorista(motorista));
   }
 

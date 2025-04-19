@@ -45,21 +45,21 @@ export class MotoristaService {
       );
   }
 
-  updateHero(motorista: Motorista): Observable<Motorista> {
+  updateMotorista(motorista: Motorista): Observable<Motorista> {
     const url = `${this.motoristasUrl}/motoristas/${motorista._id}`;
     return this.http.put<Motorista>(url, motorista, this.httpOptions).pipe(
       catchError(this.handleError<Motorista>('updateMotorista'))
     );
   }
 
-  addHero(motorista: Motorista): Observable<Motorista> {
+  addMotorista(motorista: Motorista): Observable<Motorista> {
     const url = this.motoristasUrl + "/motoristas/create";
     return this.http.post<Motorista>(url, motorista, this.httpOptions).pipe(
       catchError(this.handleError<Motorista>('addMotorista'))
     );
   }
 
-  deleteHero(id: string): Observable<Motorista> {
+  deleteMotorista(id: string): Observable<Motorista> {
     const url = `${this.motoristasUrl}/motoristas/${id}`;
 
     return this.http.delete<Motorista>(url, this.httpOptions).pipe(
