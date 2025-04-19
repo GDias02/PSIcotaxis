@@ -23,9 +23,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
 import { ConfigComponent } from './config/config.component';
 import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { MotoristaService } from './motorista.service';
-import { MotoristaCreateComponent } from './motorista-create/motorista-create.component'
+import { MotoristaCreateComponent } from './motorista-create/motorista-create.component';
+import { MoradaCreateComponent } from './morada-create/morada-create.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { MotoristaCreateComponent } from './motorista-create/motorista-create.co
     MotoristasComponent,
     ConfigComponent,
     MotoristaDetailComponent,
-    MotoristaCreateComponent
+    MotoristaCreateComponent,
+    MoradaCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { MotoristaCreateComponent } from './motorista-create/motorista-create.co
     MatInputModule,
     MatCardModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatGridListModule
   ],
   providers: [MotoristaService],
   bootstrap: [AppComponent]
