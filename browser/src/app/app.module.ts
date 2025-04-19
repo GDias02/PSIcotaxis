@@ -27,7 +27,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MotoristaService } from './motorista.service';
 import { MotoristaCreateComponent } from './motorista-create/motorista-create.component';
 import { ConfigsComponent } from './configs/configs.component'
-import { MoradaCreateComponent } from './morada-create/morada-create.component'
+import { MoradaCreateComponent } from './morada-create/morada-create.component';
+import { ViagensComponent } from './viagens/viagens.component';
+import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component'
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { MoradaCreateComponent } from './morada-create/morada-create.component'
     MotoristaDetailComponent,
     MotoristaCreateComponent,
     ConfigsComponent,
-    MoradaCreateComponent
+    MoradaCreateComponent,
+    ViagensComponent,
+    ViagemCustoComponent
   ],
   imports: [
     BrowserModule,
