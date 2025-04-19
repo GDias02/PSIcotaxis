@@ -32,7 +32,7 @@ export class MotoristaCreateComponent {
   }
 
   save(): void {
-    this.motoristaService.addMotorista({this.nif, this.nome, this.genero, this.anoDeNascimento, this.cartaDeConducao, this.morada} as Motorista)
+    this.motoristaService.addMotorista({nif: this.nif, nome: this.nome, genero: this.genero, anoDeNascimento: this.anoDeNascimento, cartaDeConducao: this.cartaDeConducao, morada: this.morada} as Motorista)
       .subscribe(() => this.goBack());
   }
 }
