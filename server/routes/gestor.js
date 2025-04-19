@@ -14,9 +14,8 @@ router.post("/taxis/create", taxi_controller.taxi_create);
 router.get("/motoristas", motorista_controller.motorista_list);
 router.get("/motoristas/:id", motorista_controller.motorista);
 router.post("/motoristas/create", motorista_controller.motorista_create);
-/*
+
 /// Config ROUTES ///
 router.get("/configs", config_controller.config_list);
 router.put("/config", config_controller.config_create);
-*/
 module.exports = router;

@@ -6,7 +6,7 @@ import { MotoristaService } from '../motorista.service';
 @Component({
   selector: 'app-motoristas',
   templateUrl: './motoristas.component.html',
-  styleUrls: ['./motoristas.component.css']
+  styleUrls: ['./motoristas.component.css'],
 })
 export class MotoristasComponent {
   motoristas: Motorista[] = [];

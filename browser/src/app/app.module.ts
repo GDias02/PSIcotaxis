@@ -15,15 +15,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { LoginComponent } from './login/login.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
-import { ConfigComponent } from './config/config.component';
 import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
 
 import { MotoristaService } from './motorista.service';
-import { MotoristaCreateComponent } from './motorista-create/motorista-create.component'
+import { MotoristaCreateComponent } from './motorista-create/motorista-create.component';
+import { ConfigsComponent } from './configs/configs.component'
 
 @NgModule({
   declarations: [
@@ -32,9 +33,9 @@ import { MotoristaCreateComponent } from './motorista-create/motorista-create.co
     LoginComponent,
     DashboardComponent,
     MotoristasComponent,
-    ConfigComponent,
     MotoristaDetailComponent,
-    MotoristaCreateComponent
+    MotoristaCreateComponent,
+    ConfigsComponent
   ],
   imports: [
     BrowserModule,
