@@ -13,12 +13,12 @@ import { MoradaService } from '../morada.service';
   styleUrls: ['./motorista-create.component.css']
 })
 export class MotoristaCreateComponent {
-  nif: number;
-  nome: string;
-  genero: string;
-  anoDeNascimento: Date;
-  cartaDeConducao: string;
-  morada: string;
+  nif?: number;
+  nome?: string;
+  genero?: string;
+  anoDeNascimento?: Date;
+  cartaDeConducao?: string;
+  morada?: string;
 
   constructor(
     private route: ActivatedRoute,

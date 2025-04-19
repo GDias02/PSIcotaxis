@@ -1,7 +1,7 @@
 <h2>Motoristas</h2>
 
 <div>
-  <button type="button" class="add-button" 
+  <button type="button" class="add-button">
     <a routerLink="/motoristas/create">
         Criar Motorista
     </a>>
@@ -9,14 +9,13 @@
 </div>
 
 <ul class="motoristas">
-  <li *ngFor="let motorista of motoristaes">
+  <li *ngFor="let motorista of motoristas">
     <a routerLink="/motoristas/{{motorista._id}}">
       <span class="badge">{{motorista.nif}}</span>
-      <span class="badge">{{motorista.name}}</span>
+      <span class="badge">{{motorista.nome}}</span>
     </a>
     <button type="button" class="delete" title="delete motorista"
       (click)="delete(motorista)">
-      x
     </button>
   </li>
 </ul>

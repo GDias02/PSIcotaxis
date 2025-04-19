@@ -52,7 +52,7 @@ export class MotoristaService {
     );
   }
 
-  addHero(motorista: Motorista): Observable<Motorista> {
+  addMotorista(motorista: Motorista): Observable<Motorista> {
     const url = this.motoristasUrl + "/motoristas/create";
     return this.http.post<Motorista>(url, motorista, this.httpOptions).pipe(
       catchError(this.handleError<Motorista>('addMotorista'))
