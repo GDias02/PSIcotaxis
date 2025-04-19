@@ -5,39 +5,44 @@ const taxiSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    minlength: 2,
+    maxlength: 12,
     validate: {
       validator: function (v) {
         const temLetra = /[A-Za-z]/.test(v);
         const temNumero = /\d/.test(v);
-        return v.length >= 5 && v.length <= 10 && temLetra && temNumero;
+        return temLetra && temNumero;
       },
-      message: "A matrícula deve ter entre 5 e 10 caracteres e conter letras e números."
+      message: "A matrícula deve conter letras e números."
     }
   },
   marca: {
     type: String,
-    enum: ["Toyota", "Renault", "BMW", "Mercedes", "Nissan"],
-    required: true
+    required: true,
+    minlength: 2,
+    maxlength: 32
   },
   modelo: {
     type: String,
-    enum: ["Corolla", "Clio", "Série 3", "Classe E", "Leaf"],
-    required: true
+    required: true,
+    minlength: 2,
+    maxlength: 32
   },
   anoDeCompra: {
-    type: Number,
+    type: Date, 
     required: true,
     validate: {
       validator: function (v) {
-        return v <= new Date().getFullYear();
+        return v.getFullYear() >= 1900 && v <= new Date();
       },
-      message: "O ano de compra deve ser anterior ou igual ao ano atual."
+      message: "O ano de compra deve ser maior ou igual a 1900 e não pode ser no futuro."
     }
   },
   conforto: {
     type: String,
-    enum: ["básico", "luxuoso"],
-    required: true
+    enum: ["basico", "luxuoso"],
+    required: true,
+    default: "basico"
   },
   criadoEm: {
     type: Date,
