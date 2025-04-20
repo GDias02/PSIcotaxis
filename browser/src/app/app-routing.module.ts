@@ -10,6 +10,7 @@ import { TaxisComponent } from './taxis/taxis.component';
 import { ConfigsComponent } from './configs/configs.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
 const routes: Routes = [
   { path: 'viagens', component: ViagensComponent },
@@ -19,8 +20,9 @@ const routes: Routes = [
   { path: 'viagens/custo', component: ViagemCustoComponent },
   { path: 'motoristas/:id', component: MotoristaDetailComponent },
   { path: 'motoristas/create', component: MotoristaCreateComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'main-page', component: MainPageComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 

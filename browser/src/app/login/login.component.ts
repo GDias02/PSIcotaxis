@@ -22,7 +22,6 @@ export class LoginComponent {
   userPass = '';
 
   login() {
-    console.log(this.user);
     this.userService.setCurrentUser(this.getUserType());
     this.router.navigate([`dashboard`]);
   }

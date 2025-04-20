@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { TaxisComponent } from './taxis/taxis.component';
@@ -50,6 +51,7 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component'
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatTabsModule,
     MatExpansionModule,
