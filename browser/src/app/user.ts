@@ -1,7 +1,8 @@
 export const enum User {
   CLIENTE,
   MOTORISTA,
-  ADMINISTRADOR
+  GESTOR,
+  NAO_AUTENTICADO
 }
 
 export const types = {

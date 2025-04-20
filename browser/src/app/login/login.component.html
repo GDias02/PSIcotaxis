@@ -1,110 +1,46 @@
 <div class="grid-container">
-    <mat-card class="logintype" appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>CLIENTE</mat-card-title>
-            <mat-card-subtitle>Login para clientes</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-accordion class="example-headers-align" multi>
-                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> {{panelOpenState() ? 'Utilizador' : 'Entrar'}} </mat-panel-title>
-                        <mat-panel-description>
-                            Insira o seu nome de utilizador e password
-                            <mat-icon>account_circle</mat-icon>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-
-                    <mat-form-field>
-                        <mat-label>Username</mat-label>
-                        <input matInput type="text" class="form-control" [(ngModel)]="nameClient" id="nameClient"
-                            placeholder="Admin Doe">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" class="form-control" [(ngModel)]="clientPass" id="clientPass">
-                    </mat-form-field>
-                    <mat-card-actions>
-                        <button mat-fab extended [disabled]="!nameClient || !clientPass">
-                            <mat-icon>home</mat-icon>
-                            Login
-                        </button>
-                    </mat-card-actions>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-card-content>
-    </mat-card>
-    <mat-card class="logintype" appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>MOTORISTA</mat-card-title>
-            <mat-card-subtitle>Login para motoristas</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-accordion class="example-headers-align" multi>
-                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> {{panelOpenState() ? 'Utilizador' : 'Entrar'}} </mat-panel-title>
-                        <mat-panel-description>
-                            Insira o seu nome de utilizador e password
-                            <mat-icon>account_circle</mat-icon>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-
-                    <mat-form-field>
-                        <mat-label>Username</mat-label>
-                        <input matInput type="text" class="form-control" [(ngModel)]="nameMoto" id="nameMoto"
-                            placeholder="Admin Doe">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" class="form-control" [(ngModel)]="motoPass" id="motoPass">
-                    </mat-form-field>
-                    <mat-card-actions>
-                        <button mat-fab extended [disabled]="!nameMoto || !motoPass">
-                            <mat-icon>home</mat-icon>
-                            Login
-                        </button>
-                    </mat-card-actions>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-card-content>
-    </mat-card>
-    <mat-card class="logintype" appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>ADMINISTRADOR</mat-card-title>
-            <mat-card-subtitle>Login para administradores</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-accordion class="example-headers-align" multi>
-                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> {{panelOpenState() ? 'Utilizador' : 'Entrar'}} </mat-panel-title>
-                        <mat-panel-description>
-                            Insira o seu nome de utilizador e password
-                            <mat-icon>account_circle</mat-icon>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-
-                    <mat-form-field>
-                        <mat-label>Username</mat-label>
-                        <input matInput type="text" class="form-control" [(ngModel)]="nameAdmin" id="nameAdmin"
-                            placeholder="Admin Doe">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" class="form-control" [(ngModel)]="adminPass" id="adminPass">
-                    </mat-form-field>
-                    <mat-card-actions>
-                        <button mat-fab extended [disabled]="!nameAdmin || !adminPass" (click)="login(0)">
-                            <mat-icon>home</mat-icon>
-                            Login
-                        </button>
-                    </mat-card-actions>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-card-content>
-    </mat-card>
-</div>
+    <div class="grid-container">
+        <mat-card class="logintype" appearance="outlined">
+            <mat-card-header>
+                <mat-radio-group aria-label="Login como:">
+                    <mat-radio-button value="Cliente" (change)="user='Cliente'" selected>Cliente</mat-radio-button>
+                    <mat-radio-button value="Motorista" (change)="user='Motorista'">Motorista</mat-radio-button>
+                    <mat-radio-button value="Gestor" (change)="user='Gestor'">Gestor</mat-radio-button>
+                </mat-radio-group>
+    
+                <mat-card-title>{{user}}</mat-card-title>
+                <mat-card-subtitle>Login para {{user}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-accordion class="example-headers-align" multi>
+                    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)"
+                        [disabled]="user==='Utilizador'">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> {{panelOpenState() ? user : 'Entrar'}} </mat-panel-title>
+                            <mat-panel-description>
+                                Insira o seu nome de utilizador e password
+                                <mat-icon>account_circle</mat-icon>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+    
+                        <mat-form-field>
+                            <mat-label>Username</mat-label>
+                            <input matInput type="text" class="form-control" [(ngModel)]="userName" id="userName"
+                                placeholder="Admin Doe">
+                        </mat-form-field>
+    
+                        <mat-form-field>
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" class="form-control" [(ngModel)]="userPass" id="userPass">
+                        </mat-form-field>
+                        <mat-card-actions>
+                            <button mat-fab extended [disabled]="!userName || !userPass" (click)="login()">
+                                <mat-icon>home</mat-icon>
+                                Login
+                            </button>
+                        </mat-card-actions>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </mat-card-content>
+        </mat-card>
+    </div>

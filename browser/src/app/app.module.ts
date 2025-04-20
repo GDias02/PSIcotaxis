@@ -23,6 +23,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
 import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatRadioModule} from '@angular/material/radio';
 
 import { MotoristaService } from './motorista.service';
 import { MotoristaCreateComponent } from './motorista-create/motorista-create.component';
@@ -62,7 +63,8 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component'
     MatCardModule,
     MatListModule,
     MatDividerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatRadioModule
   ],
   providers: [MotoristaService],
   bootstrap: [AppComponent]

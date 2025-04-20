@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy, signal, inject} from '@angular/core';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { Component, ChangeDetectionStrategy, signal, inject, Input, Injectable } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { User } from '../user';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,23 +13,32 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   readonly panelOpenState = signal(false);
   private readonly router = inject(Router);
-  nameClient? = '';
-  clientPass? = '';
-  nameMoto? = '';
-  motoPass? = '';
-  nameAdmin? = '';
-  adminPass? = '';
+  constructor(private readonly userService: UserService){};
 
-  login(code: any) {
-    console.log(code);
-    switch (code) {
-      case 0:
-        this.router.navigate(['/dashboard', { user: User.ADMINISTRADOR }]);
+  user: string = 'Utilizador';
+
+  @Input()
+  userName = '';
+  userPass = '';
+
+  login() {
+    console.log(this.user);
+    this.userService.setCurrentUser(this.getUserType());
+    this.router.navigate([`dashboard`]);
+  }
+  getUserType(): User {
+    let currUser = User.NAO_AUTENTICADO;
+    switch (this.user) {
+      case "Cliente":
+        currUser = User.CLIENTE;
         break;
-      case 1:
+      case "Motorista":
+        currUser = User.MOTORISTA;
         break;
-      case 2:
+      case "Gestor":
+        currUser = User.GESTOR;
         break;
     }
+    return currUser;
   }
 }

@@ -2,21 +2,14 @@
 
 <mat-divider></mat-divider>
 
-  <button mat-raised-button (click)="delete(motorista)">
-    <a routerLink="/motoristas/create">
-      Criar Motorista
-    </a>
-  </button>
-
 <mat-divider></mat-divider>
-
 <mat-list role="list">
   <mat-list-item role="listitem" *ngFor="let motorista of motoristas">
     <a routerLink="/motoristas/{{motorista._id}}">
       <span class="badge">{{motorista.nif}}</span>
       <span class="badge">{{motorista.nome}}</span>
     </a>
-    <button mat-raised-button (click)="delete(motorista)">x</button>
+    <button mat-raised-button class="delete" type="button" title="delete motorista" (click)="delete(motorista)">x</button>
   </mat-list-item>
 </mat-list>
 
@@ -27,6 +20,12 @@
     <a routerLink="/motoristas/create">
         Criar Motorista
     </a>>
+  </button>
+
+    <button mat-raised-button (click)="delete(motorista)">
+    <a routerLink="/motoristas/create">
+      Criar Motorista
+    </a>
   </button>
 
   <ul class="motoristas">
