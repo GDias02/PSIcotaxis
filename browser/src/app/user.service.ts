@@ -6,15 +6,24 @@ import { User } from './user';
   providedIn: 'root'
 })
 export class UserService {
-  currentUser: User = User.NAO_AUTENTICADO;
+  currentUserType: User = User.NAO_AUTENTICADO;
+  currentUserName: string = "";
+
   
-  setCurrentUser(newUser : User){
-    this.currentUser = newUser;
+  setCurrentUserType(newUser : User){
+    this.currentUserType = newUser;
   }
   
-  getCurrentUser(): Observable<User> {
-    return of(this.currentUser);
+  getCurrentUserType(): Observable<User> {
+    return of(this.currentUserType);
   }
 
+  setCurrentUserName(newUser : string){
+    this.currentUserName = newUser;
+  }
+
+  getCurrentUserName(): Observable<string>{
+    return of(this.currentUserName);
+  }
   constructor() { }
 }

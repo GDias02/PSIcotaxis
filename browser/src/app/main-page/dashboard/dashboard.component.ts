@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { User } from '../user';
-import { UserService } from '../user.service';
+import { User } from '../../user';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,12 +11,12 @@ export class DashboardComponent {
   user: User = User.NAO_AUTENTICADO;
   navLinks = [{
     label: 'Taxis',
-    link: '/taxis',
+    link: 'taxis',
     index: 0
   }];
   activeLink = this.navLinks[0];
   constructor(private readonly userService: UserService) {
-    this.userService.getCurrentUser().subscribe(currentUser => this.user = currentUser);
+    this.userService.getCurrentUserType().subscribe(currentUser => this.user = currentUser);
     this.generateLinks();
   }
 
@@ -25,14 +25,14 @@ export class DashboardComponent {
       case User.CLIENTE:
         this.navLinks.push({
           label: 'Motoristas',
-          link: '/motoristas',
+          link: 'motoristas',
           index: 1
         });
         break;
       case User.MOTORISTA:
         this.navLinks.push({
           label: 'Motoristas',
-          link: '/motoristas',
+          link: 'motoristas',
           index: 1
         });
         this.navLinks.push({
@@ -44,12 +44,12 @@ export class DashboardComponent {
       case User.GESTOR:
         this.navLinks.push({
           label: 'Motoristas',
-          link: '/motoristas',
+          link: 'motoristas',
           index: 1
         });
         this.navLinks.push({
           label: 'Configuracoes',
-          link: '/configs',
+          link: 'configs',
           index: 2
         });
         break;

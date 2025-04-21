@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { TaxisComponent } from './taxis/taxis.component';
+import { TaxisComponent } from './main-page/taxis/taxis.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -20,37 +20,30 @@ import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { MotoristasComponent } from './motoristas/motoristas.component';
-import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
+import { DashboardComponent } from './main-page/dashboard/dashboard.component';
+import { MotoristasComponent } from './main-page/motoristas/motoristas.component';
+import { MotoristaDetailComponent } from './main-page/motorista-detail/motorista-detail.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatRadioModule} from '@angular/material/radio';
 
-import { MotoristaService } from './motorista.service';
-import { MotoristaCreateComponent } from './motorista-create/motorista-create.component';
-import { ConfigsComponent } from './configs/configs.component'
-import { MoradaCreateComponent } from './morada-create/morada-create.component';
-import { ViagensComponent } from './viagens/viagens.component';
-import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component'
+import { MotoristaService } from './main-page/motorista.service';
+import { MotoristaCreateComponent } from './main-page/motorista-create/motorista-create.component';
+import { ConfigsComponent } from './main-page/configs/configs.component'
+import { MoradaCreateComponent } from './main-page/morada-create/morada-create.component';
+import { ViagensComponent } from './main-page/viagens/viagens.component';
+import { ViagemCustoComponent } from './main-page/viagem-custo/viagem-custo.component'
+import { MainPageModule } from './main-page/main-page.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaxisComponent,
     LoginComponent,
-    DashboardComponent,
-    MotoristasComponent,
-    MotoristaDetailComponent,
-    MotoristaCreateComponent,
-    ConfigsComponent,
-    MoradaCreateComponent,
-    ViagensComponent,
-    ViagemCustoComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    MainPageModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatTabsModule,

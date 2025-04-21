@@ -22,8 +22,9 @@ export class LoginComponent {
   userPass = '';
 
   login() {
-    this.userService.setCurrentUser(this.getUserType());
-    this.router.navigate([`dashboard`]);
+    this.userService.setCurrentUserType(this.getUserType());
+    this.userService.setCurrentUserName(this.userName);
+    this.router.navigate([`main-page`]);
   }
   getUserType(): User {
     let currUser = User.NAO_AUTENTICADO;
