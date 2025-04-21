@@ -29,7 +29,19 @@ export class MotoristaCreateComponent {
   }
 
   save(): void {
+    console.log(this.nome);
+    console.log(this.nif);
+    console.log(this.genero);
+    console.log(this.anoDeNascimento);
+    console.log(this.cartaDeConducao);
+    console.log(this.morada);
     this.motoristaService.addMotorista({nif: this.nif, nome: this.nome, genero: this.genero, anoDeNascimento: this.anoDeNascimento, cartaDeConducao: this.cartaDeConducao, morada: this.morada} as Motorista)
       .subscribe(() => this.goBack());
+  }
+
+  allFilled(): boolean {
+    return this.nome !== undefined && this.nif !== undefined &&
+      this.genero !== undefined && this.anoDeNascimento !== undefined &&
+      this.cartaDeConducao !== undefined && this.morada !== undefined
   }
 }

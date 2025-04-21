@@ -1,21 +1,36 @@
-<mat-list *ngIf="motorista">
-        <mat-list-item>  
-            <h1>{{ motorista.nome | uppercase }}</h1>
-        </mat-list-item>
-    <mat-divider></mat-divider>
-        <mat-list-item>
-            <h2>Dados Pessoais</h2>
-            <mat-list role="list">
-                <mat-list-item role="listitem">NIF : {{ motorista.nif }}</mat-list-item>
-                <mat-list-item role="listitem">Género: {{ motorista.genero }}</mat-list-item>
-                <mat-list-item role="listitem">Ano de Nascimento: {{ motorista.anoDeNascimento }}</mat-list-item>
-                <mat-list-item role="listitem">Carta de Condução: {{ motorista.cartaDeConducao }}</mat-list-item>
-                <mat-list-item role="listitem">Morada: {{ motorista.morada }}</mat-list-item>
-              </mat-list>
-        </mat-list-item>
-    <mat-divider></mat-divider>
-        <mat-list-item>
-            <h2>Últimas corridas</h2>
-            (As últimas corridas são colocadas aqui, e mostram as avaliações de cada utilizador)         
-        </mat-list-item>
-</mat-list>
+<mat-card appearance="outlined">
+    <mat-card-content *ngIf="motorista">
+        <h2>{{ motorista.nome | uppercase }}</h2>
+
+        <mat-divider></mat-divider>
+
+        <mat-list role="list">
+            <h3>Dados Pessoais</h3>
+            <mat-list-item role="listitem">NIF : {{ motorista.nif }}</mat-list-item>
+            <mat-list-item role="listitem">Género: {{ motorista.genero }}</mat-list-item>
+            <mat-list-item role="listitem">Ano de Nascimento: {{ datePipe.transform(motorista.anoDeNascimento, "dd-MM-yyyy") }}</mat-list-item>
+            <mat-list-item role="listitem">Carta de Condução: {{ motorista.cartaDeConducao }}</mat-list-item>
+            <mat-list-item role="listitem">Morada: {{ motorista.morada }}</mat-list-item>
+        </mat-list>
+
+        <mat-card-actions>
+            <button mat-fab extended (click)="goBack()">
+                <mat-icon fontIcon="&#8617;"></mat-icon>
+                Voltar
+            </button>
+
+            <button mat-fab extended (click)="save()" disabled>
+                Atualizar
+            </button>
+        </mat-card-actions>
+
+        <mat-divider></mat-divider>
+
+        <mat-list>
+            <h3>Serviços Recentes</h3>
+            <mat-list-item>
+                TO DO        
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>
