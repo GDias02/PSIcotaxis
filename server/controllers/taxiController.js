@@ -1,4 +1,4 @@
-const Taxi = require("../models/motorista");
+const Taxi = require("../models/taxi");
 
 
 const asyncHandler = require("express-async-handler");
