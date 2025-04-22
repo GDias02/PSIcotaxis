@@ -4,25 +4,65 @@ import { Location } from '@angular/common';
 
 import { Taxi } from '../taxi';
 import { TaxiService } from '../taxi.service';
+import { map, Observable, startWith } from 'rxjs';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-taxi-create',
   templateUrl: './taxi-create.component.html',
-  styleUrls: ['./taxi-create.component.css']
+  styleUrls: ['./taxi-create.component.css'],
 })
 
 export class TaxiCreateComponent {
+  myControl = new FormControl<string>('');
+  options: string[] = [];
+  filteredOptions?: Observable<string[]>;
+  
   matricula?: string;
   anoDeCompra?: Date;
   marca?: string;
   modelo?: string;
   conforto?: string;
 
+
   constructor(
     private route: ActivatedRoute,
     private taxiService: TaxiService,
     private location: Location,
   ) {}
+
+  ngOnInit() {
+    this.getMarcas();
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : '';
+        return name ? this._filter(name as string) : this.options.slice();
+      }),
+    );
+  }
+
+  getMarcas(): void {
+    this.taxiService.getMarcasEModelos()
+        .subscribe(marcas => {
+          for (let key of Object.getOwnPropertyNames(marcas)){
+            this.options.push(key);
+          }
+        });
+  }
+
+  displayFn(marca: string): string {
+    return marca;
+  }
+
+  
+  private _filter(name: string): string[] {
+    const filterValue = name.toLowerCase();
+
+    return this.options ? this.options.filter(option => option.toLowerCase().includes(filterValue)): [];
+  }
+
 
   goBack(): void {
     this.location.back();

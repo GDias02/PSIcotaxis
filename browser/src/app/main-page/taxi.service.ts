@@ -34,6 +34,14 @@ export class TaxiService {
       );
   }
 
+  getMarcasEModelos(): Observable<any> {
+    const url = `${this.taxisUrl}/taxis/marcas_e_modelos`;
+    return this.http.get<any>(url)
+      .pipe(
+        catchError(this.handleError<any>('getMarcasEModelos', []))
+      );
+  }
+
   getTaxi(id: string): Observable<Taxi> {
     const url = `${this.taxisUrl}/taxis/${id}`;
     return this.http.get<Taxi>(url)

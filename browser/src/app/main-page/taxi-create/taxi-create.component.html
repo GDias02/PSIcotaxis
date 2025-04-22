@@ -4,9 +4,15 @@
         <mat-grid-tile>
             <div class="form-container">
                 <p>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field class="example-full-width">
                         <mat-label>Marca</mat-label>
-                        <input matInput placeholder="Marca" [(ngModel)]="marca">
+                        <input type="text" placeholder="Escolha uma marca" aria-label="Marca" matInput [formControl]="myControl"
+                            [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of (filteredOptions | async)" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                 </p>
                 <p>

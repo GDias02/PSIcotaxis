@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -40,6 +40,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -68,7 +69,11 @@ import { MatOptionModule } from '@angular/material/core';
     MatDatepickerModule,
     MatSelectModule,
     MatOptionModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    AsyncPipe
 
   ],
   declarations: [

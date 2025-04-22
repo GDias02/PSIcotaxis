@@ -62,7 +62,7 @@ exports.taxi_create = [
                     return matricula.match("[0-9]{2}\\-[0-9]{2}\\-[A-Z]{2}");
                 }
                 if (ano < new Date('2020')) {
-                    return matricula.match("[0-9]{2}\\-[A-Z]{2}\\-[0-9]{2}\\");
+                    return matricula.match("[0-9]{2}\\-[A-Z]{2}\\-[0-9]{2}");
                 } 
                 if (ano <= new Date()){
                     return matricula.match("[A-Z]{2}\\-[0-9]{2}\\-[A-Z]{2}");
