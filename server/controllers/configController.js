@@ -6,7 +6,7 @@ const { body, validationResult } = require("express-validator");
 
 // /configs - GET
 exports.config_list = asyncHandler(async (req, res, next) => {
-  const configs = await Config.find().exec();
+  const configs = await Config.findOne().exec();
   res.status(200).send(configs);
 });
 

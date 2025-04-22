@@ -1,0 +1,11 @@
+.confirmation-buttons {
+    display: block;
+}
+.confirmation-buttons *{
+    margin: 5px;
+}
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

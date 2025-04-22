@@ -1,7 +1,43 @@
-<h2>Viagens</h2>
-
-<button mat-raised-button>
-    <a routerLink="/viagens/custo">
-        Planear Viagem
-    </a>
-</button>
+<mat-card appearance="outlined">
+    <mat-card-content>
+      <h2>Viagens</h2>
+      <mat-card-actions>
+        <button mat-fab extended (click)="showViagemCreate()">
+            <mat-icon id="plusIcon" fontIcon="&plus;"></mat-icon>
+            Registar Viagem
+        </button>
+        <button mat-fab extended (click)="showViagemPlan()">
+            <mat-icon>euro</mat-icon>
+            Planear Viagem
+        </button>
+      </mat-card-actions>
+      
+      <table mat-table [dataSource]="viagens" matSort class="mat-elevation-z8" hidden> <!--!!!!!!!!!-->
+      
+        <!-- Nif Column -->
+        <ng-container matColumnDef="nif">
+          <th mat-header-cell *matHeaderCellDef> NIF </th>
+          <td mat-cell *matCellDef="let viagem"> {{viagem.nif}} </td>
+        </ng-container>
+      
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef> NOME </th>
+          <td mat-cell *matCellDef="let viagem"> {{viagem.nome}} </td>
+        </ng-container>
+      
+        <!-- Registo Column which sorts the table -->
+        <ng-container matColumnDef="registo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> REGISTO </th>
+          <td mat-cell *matCellDef="let viagem"> {{datePipe.transform(viagem.registo, "dd-MM-yyyy HH-mm-ss")}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+            mat-row
+            (click)="showViagemDetail(row)"
+            *matRowDef="let row; columns: displayedColumns;"
+        ></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>

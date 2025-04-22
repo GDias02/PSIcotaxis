@@ -31,7 +31,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserService } from '../user.service';
@@ -59,8 +59,7 @@ import { UserService } from '../user.service';
     MatDividerModule,
     MatGridListModule,
     MatRadioModule,
-    MatDatepickerModule
-
+    MatDatepickerModule,
   ],
   declarations: [
     MainPageComponent,

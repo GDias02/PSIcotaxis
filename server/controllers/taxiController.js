@@ -1,27 +1,27 @@
-const Taxi = require("../models/motorista");
+const Taxi = require("../models/taxi");
 
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 function matriculaValidator(v){
-        const temLetra = /[A-Za-z]/.test(v);
-        const temNumero = /\d/.test(v);
-        return temLetra && temNumero;
+  const temLetra = /[A-Za-z]/.test(v);
+  const temNumero = /\d/.test(v);
+  return temLetra && temNumero;
 }
 
 // /taxis - GET
 exports.taxi_list = asyncHandler(async (req, res, next) => {
   const taxis = await Taxi.find()
-                                    .sort({ registo: 1 })
-                                    .exec();
+                          .sort({ registo: 1 })
+                          .exec();
   res.status(200).send(taxis);
 });
   
 // /taxi/id - GET
 exports.taxi = asyncHandler(async (req, res, next) => {
   const taxi = await Taxi.findById(req.params.id)
-                                  .exec();
+                        .exec();
   if (taxi === null) {
     res.status(404).send();
     return;
