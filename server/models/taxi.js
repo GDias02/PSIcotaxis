@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const niveisDeConforto = ["basico", "luxuoso"];
+
 const taxiSchema = new mongoose.Schema({
   matricula: {
     type: String,
@@ -20,13 +22,13 @@ const taxiSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 32
+    maxlength: 64
   },
   modelo: {
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 32
+    maxlength: 64
   },
   anoDeCompra: {
     type: Date, 
@@ -40,11 +42,11 @@ const taxiSchema = new mongoose.Schema({
   },
   conforto: {
     type: String,
-    enum: ["basico", "luxuoso"],
+    enum: niveisDeConforto,
     required: true,
     default: "basico"
   },
-  criadoEm: {
+  registo: {
     type: Date,
     default: Date.now
   }

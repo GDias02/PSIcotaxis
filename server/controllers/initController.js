@@ -18,11 +18,11 @@ exports.init = asyncHandler(async (req, res) => {
   async function main() {
     await Pessoa.deleteMany({});
     await Morada.deleteMany({});
-    //await Taxi.deleteMany({});
+    await Taxi.deleteMany({});
     await Config.deleteMany();
 
     await createConfigs();
-    //await createTaxis();
+    await createTaxis();
     await createMoradas();
     await createMotoristas();
     await createPessoas();

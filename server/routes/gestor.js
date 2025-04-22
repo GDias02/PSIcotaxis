@@ -4,12 +4,12 @@ const router = express.Router();
 const taxi_controller = require("../controllers/taxiController");
 const motorista_controller = require("../controllers/motoristaController");
 const config_controller = require("../controllers/configController");
-/*
+
 /// Taxi ROUTES ///
 router.get("/taxis", taxi_controller.taxi_list);
 router.get("/taxis/:id", taxi_controller.taxi);
 router.post("/taxis/create", taxi_controller.taxi_create);
-*/
+
 /// Motorista ROUTES ///
 router.get("/motoristas", motorista_controller.motorista_list);
 router.get("/motoristas/:id", motorista_controller.motorista);

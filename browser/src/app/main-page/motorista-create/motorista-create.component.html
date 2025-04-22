@@ -1,63 +1,51 @@
-<mat-card appearance="outlined">
-    <mat-card-content>
-        <h2>Registar Motorista</h2>
+<h2>Registar Motorista</h2>
 
-        <mat-divider></mat-divider>
+<mat-divider></mat-divider>
 
-        <mat-list role="list">
-            <mat-list-item role="listitem"> 
-                <mat-form-field>
-                    <mat-label>Nome</mat-label>
-                    <input matInput placeholder="Motorista Doe" [(ngModel)]="nome">
-                </mat-form-field>
-            </mat-list-item>
-            <mat-list-item role="listitem"> 
-                <mat-form-field>
-                    <mat-label>NIF</mat-label>
-                    <input matInput placeholder="123456789" [(ngModel)]="nif">
-                </mat-form-field>
-            </mat-list-item>
-            <mat-list-item role="listitem"> 
-                <mat-form-field>
-                    <mat-label>Género</mat-label>
-                    <select matNativeControl required [(ngModel)]="genero">
-                      <option value="masculino">masculino</option>
-                      <option value="feminino" selected>feminino</option>
-                    </select>
-                  </mat-form-field>
-            </mat-list-item>
-            <mat-list-item role="listitem"> 
-                <!-- <mat-form-field>
-                    <mat-label>Ano de Nascimento</mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="anoDeNascimento">
-                    <mat-hint>DD/MM/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field> -->
-            </mat-list-item>
-            <mat-list-item role="listitem"> 
-                <mat-form-field>
-                    <mat-label>Carta de Condução</mat-label>
-                    <input matInput placeholder="TODO" [(ngModel)]="cartaDeConducao">
-                </mat-form-field>
-            </mat-list-item>
-            <mat-list-item role="listitem">
-                <mat-form-field>
-                    <mat-label>Morada</mat-label>
-                    <input matInput placeholder="TODO" [(ngModel)]="morada">
-                </mat-form-field>
-            </mat-list-item>
-        </mat-list>
+<mat-form-field>
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="Motorista Doe" [(ngModel)]="nome">
+</mat-form-field>
 
-        <mat-card-actions>
-            <button mat-fab extended (click)="goBack()">
-                <mat-icon fontIcon="&#8617;"></mat-icon>
-                Voltar
-            </button>
+<mat-form-field>
+    <mat-label>NIF</mat-label>
+    <input matInput placeholder="123456789" [(ngModel)]="nif">
+</mat-form-field>
 
-            <button mat-fab extended (click)="save()" [disabled]="!allFilled()">
-                Registar
-            </button>
-        </mat-card-actions>
-    </mat-card-content>
-</mat-card>
+<mat-form-field>
+    <mat-label>Género</mat-label>
+    <select matNativeControl required [(ngModel)]="genero">
+        <option value="masculino">masculino</option>
+        <option value="feminino" selected>feminino</option>
+    </select>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Ano de Nascimento</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="anoDeNascimento">
+    <mat-hint>DD/MM/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Carta de Condução</mat-label>
+    <input matInput placeholder="TODO" [(ngModel)]="cartaDeConducao">
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Morada</mat-label>
+    <input matInput placeholder="TODO" [(ngModel)]="morada">
+</mat-form-field>
+
+<div class="confirmation-buttons">
+<button mat-fab extended (click)="goBack()">
+    <mat-icon fontIcon="&#8617;"></mat-icon>
+    Voltar
+</button>
+
+<button mat-fab extended (click)="save()" [disabled]="!allFilled()">
+    Registar
+    <mat-icon>person_add</mat-icon>
+</button>
+</div>
