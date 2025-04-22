@@ -33,6 +33,7 @@ exports.config_create = [
   
     // Create a Motorista object with escaped and trimmed data.
     const config = new Config({
+      _id: req.body._id,
       ppm_basico: req.body.ppm_basico,
       ppm_luxuoso: req.body.ppm_luxuoso,
       agravamento: req.body.agravamento,
