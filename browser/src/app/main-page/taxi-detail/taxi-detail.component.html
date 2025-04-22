@@ -1,0 +1,36 @@
+<mat-card appearance="outlined">
+    <mat-card-content *ngIf="taxi">
+        <h2>{{ taxi.matricula }}</h2>
+
+        <mat-divider></mat-divider>
+
+        <mat-list role="list">
+            <h3>Dados do Veículo</h3>
+            <mat-list-item role="listitem">matricula : {{ taxi.matricula }}</mat-list-item>
+            <mat-list-item role="listitem">Ano De Compra: {{ datePipe.transform(taxi.anoDeCompra, "yyyy") }}</mat-list-item>
+            <mat-list-item role="listitem">Marca: {{ taxi.marca }}</mat-list-item>
+            <mat-list-item role="listitem">Modelo: {{ taxi.modelo }}</mat-list-item>
+            <mat-list-item role="listitem">Nível de Conforto: {{ taxi.conforto }}</mat-list-item>
+        </mat-list>
+
+        <mat-card-actions>
+            <button mat-fab extended (click)="goBack()">
+                <mat-icon fontIcon="&#8617;"></mat-icon>
+                Voltar
+            </button>
+
+            <button mat-fab extended (click)="save()" disabled>
+                Atualizar
+            </button>
+        </mat-card-actions>
+
+        <mat-divider></mat-divider>
+
+        <mat-list>
+            <h3>Serviços Recentes</h3>
+            <mat-list-item>
+                TO DO        
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>

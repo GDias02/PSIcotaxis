@@ -1,0 +1,63 @@
+<div id="taxi-create-wrapper">
+    <h2 class="header">Registar um taxi </h2>
+    <mat-grid-list cols="2" rowHeight="1:2">
+        <mat-grid-tile>
+            <div class="form-container">
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Marca</mat-label>
+                        <input matInput placeholder="Marca" [(ngModel)]="marca">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Modelo</mat-label>
+                        <input matInput placeholder="Modelo" [(ngModel)]="modelo">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field>
+                        <mat-label>Conforto</mat-label>
+                        <mat-select [(ngModel)]="conforto" placeholder="Conforto">
+                            <mat-option *ngFor="let gen of ['básico', 'luxuoso']" [value]="gen">
+                                {{ gen }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+
+            </div>
+
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="form-container">
+                <p>
+                    <mat-form-field>
+                        <mat-label>Data de Compra</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="anoDeCompra">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field>
+                        <mat-label>Matrícula</mat-label>
+                        <input matInput placeholder="11-AA-11" [(ngModel)]="matricula">
+                    </mat-form-field>
+                </p>
+                <div class="confirmation-buttons">
+                    <button mat-fab extended (click)="goBack()">
+                        <mat-icon fontIcon="&#8617;"></mat-icon>
+                        Voltar
+                    </button>
+
+                    <button mat-fab extended (click)="save()" [disabled]="!allFilled()">
+                        Registar
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//Components and Routers
 import { MainPageRoutingModule } from './main-page-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConfigsComponent } from './configs/configs.component';
@@ -16,7 +19,9 @@ import { TaxisComponent } from './taxis/taxis.component';
 import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MainPageComponent } from './main-page.component';
-import { HttpClientModule } from '@angular/common/http';
+import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
+
+//Materials
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -31,13 +36,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../user.service';
+import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
 
 @NgModule({
   imports: [
@@ -47,6 +49,7 @@ import { UserService } from '../user.service';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     //Materials
     MatTabsModule,
     MatExpansionModule,
@@ -64,7 +67,6 @@ import { UserService } from '../user.service';
     MatRadioModule,
     MatSelectModule,
     MatOptionModule,
-    ReactiveFormsModule,
     MatDatepickerModule
 
   ],
@@ -79,6 +81,8 @@ import { UserService } from '../user.service';
     MoradaCreateComponent,
     ViagensComponent,
     ViagemCustoComponent,
+    TaxiDetailComponent,
+    TaxiCreateComponent
   ],
 })
 export class MainPageModule {
