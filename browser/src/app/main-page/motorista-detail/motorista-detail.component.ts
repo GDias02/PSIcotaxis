@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 import { Motorista } from '../motorista';
 import { MotoristaService } from '../motorista.service';
@@ -20,7 +20,8 @@ export class MotoristaDetailComponent {
     private route: ActivatedRoute,
     private motoristaService: MotoristaService,
     private moradaService: MoradaService,
-    private location: Location
+    private location: Location,
+    public datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -41,5 +42,9 @@ export class MotoristaDetailComponent {
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    //TO DO
   }
 }

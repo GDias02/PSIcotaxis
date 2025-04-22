@@ -1,41 +1,39 @@
-<h2>Motoristas</h2>
-
-<mat-divider></mat-divider>
-
-<mat-divider></mat-divider>
-<mat-list role="list">
-  <mat-list-item role="listitem" *ngFor="let motorista of motoristas">
-    <a routerLink="/motoristas/{{motorista._id}}">
-      <span class="badge">{{motorista.nif}}</span>
-      <span class="badge">{{motorista.nome}}</span>
-    </a>
-    <button mat-raised-button class="delete" type="button" title="delete motorista" (click)="delete(motorista)">x</button>
-  </mat-list-item>
-</mat-list>
-
-<button type="button" class="add-button">
-  <a routerLink="create">
-      Inscrever Motorista
-  </a>>
-</button>
-
-<!--OLD LIST 
-
-
-    <button mat-raised-button (click)="delete(motorista)">
-    <a routerLink="/motoristas/create">
-      Criar Motorista
-    </a>
-  </button>
-
-  <ul class="motoristas">
-  <li *ngFor="let motorista of motoristas">
-    <a routerLink="/motoristas/{{motorista._id}}">
-      <span class="badge">{{motorista.nif}}</span>
-      <span class="badge">{{motorista.nome}}</span>
-    </a>
-    <button type="button" class="delete" title="delete motorista"
-      (click)="delete(motorista)">
-    </button>
-  </li>
-</ul> -->
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <h2>Motoristas</h2>
+    <mat-card-actions>
+      <button mat-fab extended (click)="showMotoristaCreate()">
+          <mat-icon fontIcon="&plus;"></mat-icon>
+          Registar Motorista
+      </button>
+    </mat-card-actions>
+    
+    <table mat-table [dataSource]="motoristas" matSort class="mat-elevation-z8">
+    
+      <!-- Nif Column -->
+      <ng-container matColumnDef="nif">
+        <th mat-header-cell *matHeaderCellDef> NIF </th>
+        <td mat-cell *matCellDef="let motorista"> {{motorista.nif}} </td>
+      </ng-container>
+    
+      <!-- Nome Column -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> NOME </th>
+        <td mat-cell *matCellDef="let motorista"> {{motorista.nome}} </td>
+      </ng-container>
+    
+      <!-- Registo Column which sorts the table -->
+      <ng-container matColumnDef="registo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> REGISTO </th>
+        <td mat-cell *matCellDef="let motorista"> {{datePipe.transform(motorista.registo, "dd-MM-yyyy HH-mm-ss")}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+          mat-row
+          (click)="showMotoristaDetail(row)"
+          *matRowDef="let row; columns: displayedColumns;"
+      ></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

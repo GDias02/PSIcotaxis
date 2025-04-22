@@ -13,6 +13,10 @@ export class DashboardComponent {
     label: 'Taxis',
     link: 'taxis',
     index: 0
+  },{
+    label: 'Viagens',
+    link: 'viagens',
+    index: 3
   }];
   activeLink = this.navLinks[0];
   constructor(private readonly userService: UserService) {

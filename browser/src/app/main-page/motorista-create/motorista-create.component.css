@@ -34,3 +34,28 @@ mat-grid-list {
     align-self: flex-end; /* Align the button at the bottom */
     background-color: lightblue;
 }
+
+.confirmation-buttons {
+    display: block;
+}
+.confirmation-buttons *{
+    margin: 5px;
+}
+
+/* Ensure the datepicker toggle aligns properly with the input */
+.mat-form-field {
+    display: flex;
+    align-items: center; /* Align input and toggle button vertically */
+}
+
+/* Adjust the toggle button alignment */
+.mat-datepicker-toggle {
+    margin-left: auto; /* Push the toggle button to the far right */
+    display: flex;
+    align-items: center; /* Center the icon vertically */
+}
+
+/* Optional: Ensure consistent width for all form fields */
+.mat-form-field-appearance-fill {
+    width: 85%; /* Make all form fields take up the same width */
+}

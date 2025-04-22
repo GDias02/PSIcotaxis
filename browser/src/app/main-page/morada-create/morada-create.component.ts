@@ -42,6 +42,13 @@ export class MoradaCreateComponent {
               .getLocalidadeByCodigoPostal(codPostal);
   }
 
+  allFilled():boolean{
+    return this.codPostal.value !== '0000-000'&& this.codPostal.value !== undefined &&
+            this.localidade !== 'Localidade' && this.localidade !== undefined &&
+              this.rua !== '' && this.rua !== undefined &&
+                this.numero !== '' && this.numero !== undefined;
+  }
+
   save(): Promise<string> {
     return new Promise((resolve, reject) => {
       this.moradaService.addMorada({

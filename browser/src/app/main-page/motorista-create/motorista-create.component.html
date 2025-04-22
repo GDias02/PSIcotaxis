@@ -1,3 +1,4 @@
+
 <div id="motorista-create-wrapper">
     <h2 class= "header">Registar um motorista </h2>
     <mat-grid-list cols="2" rowHeight="1:2">
@@ -18,22 +19,25 @@
                 <p>
                     <mat-form-field>
                         <mat-label>Género</mat-label>
-                        <mat-select placeholder="Género">
-                            <mat-option *ngFor="let gen of ['masculino', 'feminino']" [value]="gen">
+                        <mat-select [(ngModel)]="genero" placeholder="Género">
+                            <mat-option *ngFor="let gen of ['Masculino', 'Feminino']" [value]="gen">
                             {{ gen }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     </p>
                 <p>
-                    <mat-form-field appearance="fill">
-                    <mat-label>Ano de Nascimento</mat-label>
-                    <input matInput placeholder="Ano"  [(ngModel)]="anoDeNascimento">
-                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Data de Nascimento</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="dataDeNascimento">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
                 </p>
                 <p>
                     <mat-form-field appearance="fill">
-                    <mat-label>Carta</mat-label>
+                    <mat-label>Carta de Condução</mat-label>
                     <input matInput placeholder="Carta" [(ngModel)]="cartaDeConducao">
                     </mat-form-field>
                 </p>
@@ -42,7 +46,17 @@
         <mat-grid-tile>
             <div class="morada-container">
                 <app-morada-create></app-morada-create>
-                <button id="submit-button" mat-raised-button>Inscrever</button>
+                <div class="confirmation-buttons">
+                    <button mat-fab extended (click)="goBack()">
+                        <mat-icon fontIcon="&#8617;"></mat-icon>
+                        Voltar
+                    </button>
+                    
+                    <button mat-fab extended (click)="save()" [disabled]="!allFilled()">
+                        Registar
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+                </div>
             </div>
         </mat-grid-tile>
     </mat-grid-list>
