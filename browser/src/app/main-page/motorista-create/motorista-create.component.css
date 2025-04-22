@@ -1,12 +1,61 @@
+#motorista-create-wrapper {
+    margin-left: 20%; /* Center the wrapper horizontally */
+    margin-right: 20%;
+    margin-bottom: 10%;
+}
+
+
+
+.header {
+    margin: 0 auto; /* Center the header horizontally */
+    padding: 0; /* Remove default padding */
+    text-align: center; /* Center the text inside the header */
+    font-weight: bold; /* Make the header bold */
+    margin-bottom: 16px; /* Add spacing below the header */
+    width: 100%; /* Ensure the header spans the full width */
+}
+
+mat-grid-list {
+    width: 100%; /* Ensure the grid list spans the full width of the container */
+}
+
+.form-container {
+    height: 100%;
+}
+
+.morada-container {
+    display: flex;
+    height: 100%; /* Ensure it takes the full height of the grid tile */
+    flex-direction: column;
+    align-items: center;
+}
+    
+#submit-button {
+    align-self: flex-end; /* Align the button at the bottom */
+    background-color: lightblue;
+}
+
 .confirmation-buttons {
     display: block;
 }
 .confirmation-buttons *{
     margin: 5px;
 }
-:host {
+
+/* Ensure the datepicker toggle aligns properly with the input */
+.mat-form-field {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: center; /* Align input and toggle button vertically */
 }
 
+/* Adjust the toggle button alignment */
+.mat-datepicker-toggle {
+    margin-left: auto; /* Push the toggle button to the far right */
+    display: flex;
+    align-items: center; /* Center the icon vertically */
+}
+
+/* Optional: Ensure consistent width for all form fields */
+.mat-form-field-appearance-fill {
+    width: 85%; /* Make all form fields take up the same width */
+}
