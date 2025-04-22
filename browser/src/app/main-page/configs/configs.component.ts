@@ -32,8 +32,14 @@ export class ConfigsComponent {
     this.agravamento = configs.agravamento;
   }
 
+  allFilled(): boolean {
+    return this.ppm_basico !== undefined && String(this.ppm_basico) !== '' &&
+      this.ppm_luxuoso !== undefined && String(this.ppm_luxuoso) !== '' &&
+      this.agravamento !== undefined && String(this.agravamento) !== '';
+  }
+
   save(): void {
     this.configService.updateConfig({_id: this.configs!._id, ppm_basico: this.ppm_basico, ppm_luxuoso: this.ppm_luxuoso, agravamento: this.agravamento} as Config)
-      .subscribe();
+      .subscribe(configs => this.prepareConfig(configs));
   }
 }

@@ -6,7 +6,7 @@ const { body, validationResult } = require("express-validator");
 
 // /configs - GET
 exports.config_list = asyncHandler(async (req, res, next) => {
-  const configs = await Config.find().exec();
+  const configs = await Config.findOne().exec();
   res.status(200).send(configs);
 });
 
@@ -33,6 +33,7 @@ exports.config_create = [
   
     // Create a Motorista object with escaped and trimmed data.
     const config = new Config({
+      _id: req.body._id,
       ppm_basico: req.body.ppm_basico,
       ppm_luxuoso: req.body.ppm_luxuoso,
       agravamento: req.body.agravamento,

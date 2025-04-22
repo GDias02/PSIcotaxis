@@ -6,15 +6,15 @@ const { body, validationResult } = require("express-validator");
 // /taxis - GET
 exports.taxi_list = asyncHandler(async (req, res, next) => {
   const taxis = await Taxi.find()
-                                    .sort({ registo: 1 })
-                                    .exec();
+                          .sort({ registo: 1 })
+                          .exec();
   res.status(200).send(taxis);
 });
 
 // /taxi/id - GET
 exports.taxi = asyncHandler(async (req, res, next) => {
   const taxi = await Taxi.findById(req.params.id)
-                                  .exec();
+                        .exec();
   if (taxi === null) {
     res.status(404).send();
     return;

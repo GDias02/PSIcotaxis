@@ -1,1 +1,35 @@
-<p>viagem-custo works!</p>
+<h2>Simular Viagem</h2>
+
+<mat-divider></mat-divider>
+
+<mat-form-field>
+    <mat-label>Conforto do Táxi</mat-label>
+    <select matNativeControl required [(ngModel)]="conforto">
+        <option value="basico" selected>basico</option>
+        <option value="luxuoso">luxuoso</option>
+    </select>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Data de Início</mat-label>
+    <input matInput type="datetime-local" placeholder="Data Início" [(ngModel)]="inicio">
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Data de Fim</mat-label>
+    <input matInput type="datetime-local" placeholder="Data Fim" [(ngModel)]="fim">
+</mat-form-field>
+
+<p>Custo: {{custo}}€</p>
+
+<div class="confirmation-buttons">
+    <button mat-fab extended (click)="goBack()">
+        <mat-icon fontIcon="&#8617;"></mat-icon>
+        Voltar
+    </button>
+
+    <button mat-fab extended (click)="calcularCustoViagem()" [disabled]="!allFilled()">
+        Simular
+        <mat-icon>euro</mat-icon>
+    </button>
+</div>

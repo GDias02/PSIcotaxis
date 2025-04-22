@@ -38,7 +38,7 @@ export class ConfigService {
   }
 
   updateConfig(config: Config): Observable<Config> {
-    const url = `${this.configsUrl}/configs/${config._id}`;
+    const url = `${this.configsUrl}/config`;
     return this.http.put<Config>(url, config, this.httpOptions).pipe(
       catchError(this.handleError<Config>('updateConfig'))
     );

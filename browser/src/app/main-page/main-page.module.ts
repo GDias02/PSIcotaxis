@@ -37,6 +37,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+<<<<<<< HEAD
+=======
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+>>>>>>> 0aa131af8d6907e02ecf5119cdf557a3005b7d0d
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
@@ -65,9 +70,14 @@ import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
     MatDividerModule,
     MatGridListModule,
     MatRadioModule,
+    MatDatepickerModule,
     MatSelectModule,
     MatOptionModule,
+<<<<<<< HEAD
     MatDatepickerModule
+=======
+    ReactiveFormsModule,
+>>>>>>> 0aa131af8d6907e02ecf5119cdf557a3005b7d0d
 
   ],
   declarations: [
