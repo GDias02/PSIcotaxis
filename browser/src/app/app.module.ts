@@ -25,6 +25,8 @@ import { MotoristasComponent } from './main-page/motoristas/motoristas.component
 import { MotoristaDetailComponent } from './main-page/motorista-detail/motorista-detail.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatRadioModule} from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 import { MotoristaService } from './main-page/motorista.service';
 import { MotoristaCreateComponent } from './main-page/motorista-create/motorista-create.component';
@@ -59,7 +61,9 @@ import { MainPageModule } from './main-page/main-page.module';
     MatListModule,
     MatDividerModule,
     MatGridListModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule,
+    MatOptionModule,
   ],
   providers: [MotoristaService],
   bootstrap: [AppComponent]

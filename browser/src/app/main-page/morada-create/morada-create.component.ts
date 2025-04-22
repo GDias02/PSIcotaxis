@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MoradaService } from '../morada.service';
 import { Morada } from '../morada';
 import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-morada-create',
@@ -9,7 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./morada-create.component.css']
 })
 export class MoradaCreateComponent {
-  codPostal: string = '0000-000'; 
+  codPostal: FormControl = new FormControl('0000-000'); //FormControl to detect input, to then detect localidade
   localidade: string = 'Localidade';
   rua: string = '';
   numero: string = '';
@@ -18,24 +20,33 @@ export class MoradaCreateComponent {
     private moradaService: MoradaService,
   ) { }
 
-  //TODO 
-  //ngOnInit()//Every 1 sec after Codigo Postal is changed search for localidade
-  //Morada needs endpoints in the server
-  //The server needs logic to determine what localidade corresponds to what código postal
-  //Fix motorista-create component, it needs to be a proper form
-  //Motorista-create component calls morada-create's save(),
-  //and uses its _id to make a new Motorista
+  ngOnInit() {
+    this.codPostal.valueChanges
+      .pipe(
+        debounceTime(600), 
+        distinctUntilChanged(),
+        switchMap((codigoPostal) => this.searchForLocalidade(codigoPostal))
+      )
+      .subscribe({
+        next: (localidade) => {
+          this.localidade = localidade;
+        },
+        error: (err) => {
+          console.error('Error fetching localidade:', err);
+        }
+      });
+  }
 
-  searchForLocalidade():Observable<String>{
+  searchForLocalidade(codPostal: string):Observable<string>{
     return this.moradaService
-              .getLocalidadeByCodigoPostal(this.codPostal);
+              .getLocalidadeByCodigoPostal(codPostal);
   }
 
   save(): Promise<string> {
     return new Promise((resolve, reject) => {
       this.moradaService.addMorada({
         rua: this.rua,
-        codigo_postal: this.codPostal,
+        codigo_postal: this.codPostal.value,
         localidade: this.localidade
       } as Morada).subscribe({
         next: (createdMorada) => {

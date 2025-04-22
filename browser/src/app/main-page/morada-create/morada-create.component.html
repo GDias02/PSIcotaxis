@@ -1,24 +1,24 @@
 <p>
     <mat-form-field appearance="fill">
       <mat-label>Código-Postal</mat-label>
-      <input matInput placeholder="Placeholder" [(ngModel)]="codPostal">
+      <input matInput placeholder="0000-000" [formControl]="codPostal">
     </mat-form-field>
   </p>
 <p>
 <mat-form-field appearance="fill">
     <mat-label>Localidade</mat-label>
-    <input matInput placeholder="Placeholder" [(ngModel)]="localidade">
+    <input matInput placeholder="Localidade" [(ngModel)]="localidade">
 </mat-form-field>
 </p>
 <p>
     <mat-form-field appearance="fill">
       <mat-label>Rua</mat-label>
-      <input matInput placeholder="Placeholder" [(ngModel)]="rua">
+      <input matInput placeholder="Rua" [(ngModel)]="rua">
     </mat-form-field>
 </p>
 <p>
     <mat-form-field appearance="fill">
-      <mat-label>Numero</mat-label>
-      <input matInput placeholder="Placeholder" [(ngModel)]="numero">
+      <mat-label>Número</mat-label>
+      <input matInput placeholder="Número" [(ngModel)]="numero">
     </mat-form-field>
 </p>

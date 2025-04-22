@@ -1,22 +1,49 @@
-<mat-list>
-    <mat-list-item>  
-        <h1>Criar Motorista</h1>
-    </mat-list-item>
-<mat-divider></mat-divider>
-    <mat-list-item>
-        <h2>Dados Pessoais</h2>
-        <mat-list role="list">
-            <mat-list-item role="listitem">NIF : {{nif}}</mat-list-item>
-            <mat-list-item role="listitem">Género: {{genero}}</mat-list-item>
-            <mat-list-item role="listitem">Ano de Nascimento: {{anoDeNascimento}}</mat-list-item>
-            <mat-list-item role="listitem">Carta de Condução: {{cartaDeConducao}}</mat-list-item>
-            <mat-list-item role="listitem">Morada: {{morada}}</mat-list-item>
-          </mat-list>
-    </mat-list-item>
-<mat-divider></mat-divider>
-    <mat-list-item>
-        <h2>Últimas corridas</h2>
-        (As últimas corridas são colocadas aqui, e mostram as avaliações de cada utilizador)         
-    </mat-list-item>
-</mat-list>
-
+<div id="motorista-create-wrapper">
+    <h2 class= "header">Registar um motorista </h2>
+    <mat-grid-list cols="2" rowHeight="1:2">
+        <mat-grid-tile>
+            <div class="form-container">
+                <p>
+                    <mat-form-field appearance="fill">
+                    <mat-label>Nome</mat-label>
+                    <input matInput placeholder="Nome" [(ngModel)]="nome">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="fill">
+                    <mat-label>NIF</mat-label>
+                    <input matInput placeholder="NIF" [(ngModel)]="nif">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field>
+                        <mat-label>Género</mat-label>
+                        <mat-select placeholder="Género">
+                            <mat-option *ngFor="let gen of ['masculino', 'feminino']" [value]="gen">
+                            {{ gen }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    </p>
+                <p>
+                    <mat-form-field appearance="fill">
+                    <mat-label>Ano de Nascimento</mat-label>
+                    <input matInput placeholder="Ano"  [(ngModel)]="anoDeNascimento">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="fill">
+                    <mat-label>Carta</mat-label>
+                    <input matInput placeholder="Carta" [(ngModel)]="cartaDeConducao">
+                    </mat-form-field>
+                </p>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="morada-container">
+                <app-morada-create></app-morada-create>
+                <button id="submit-button" mat-raised-button>Inscrever</button>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

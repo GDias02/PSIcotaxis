@@ -32,6 +32,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 
 @NgModule({
@@ -56,8 +59,10 @@ import { UserService } from '../user.service';
     MatListModule,
     MatDividerModule,
     MatGridListModule,
-    MatRadioModule
-
+    MatRadioModule,
+    MatSelectModule,
+    MatOptionModule,
+    ReactiveFormsModule
   ],
   declarations: [
     MainPageComponent,
