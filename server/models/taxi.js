@@ -52,4 +52,8 @@ const taxiSchema = new mongoose.Schema({
   }
 });
 
+taxiSchema.virtual('niveisDeConforto').get(function() {
+  return niveisDeConforto;
+})
+
 module.exports = mongoose.model("Taxi", taxiSchema);
