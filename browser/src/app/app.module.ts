@@ -21,6 +21,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 import { MainPageModule } from './main-page/main-page.module';
 import { LoginComponent } from './login/login.component';
@@ -54,6 +56,8 @@ import { AppComponent } from './app.component';
     MatDividerModule,
     MatGridListModule,
     MatRadioModule,
+    MatSelectModule,
+    MatOptionModule,
     FormsModule,
     ReactiveFormsModule,
   ],
