@@ -16,10 +16,11 @@ import { MotoristaCreateComponent } from './motorista-create/motorista-create.co
 import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
 import { TaxisComponent } from './taxis/taxis.component';
+import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
+import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
 import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MainPageComponent } from './main-page.component';
-import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
 
 //Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -37,14 +38,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-<<<<<<< HEAD
-=======
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
->>>>>>> 0aa131af8d6907e02ecf5119cdf557a3005b7d0d
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
 
 @NgModule({
   imports: [
@@ -73,11 +68,7 @@ import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
     MatDatepickerModule,
     MatSelectModule,
     MatOptionModule,
-<<<<<<< HEAD
     MatDatepickerModule
-=======
-    ReactiveFormsModule,
->>>>>>> 0aa131af8d6907e02ecf5119cdf557a3005b7d0d
 
   ],
   declarations: [
