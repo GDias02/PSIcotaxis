@@ -5,7 +5,6 @@ import { FormControl, AbstractControl, FormGroup, Validators, ValidatorFn, Valid
 
 import { Motorista } from '../motorista';
 import { MotoristaService } from '../motorista.service';
-import { Morada } from '../morada';
 import { MoradaCreateComponent } from '../morada-create/morada-create.component';
 
 

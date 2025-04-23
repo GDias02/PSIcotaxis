@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 import { Motorista } from '../motorista';
 import { MotoristaService } from '../motorista.service';
+
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-motoristas',
@@ -14,8 +17,10 @@ export class MotoristasComponent {
   motoristas: Motorista[] = [];
 
   displayedColumns: string[] = ['nif', 'nome', 'registo'];
-  dataSource = this.motoristas;
+  dataSource = new MatTableDataSource<Motorista>(this.motoristas); 
 
+  @ViewChild(MatSort) sort!: MatSort;
+  
   constructor(
     private motoristaService: MotoristaService,
     private readonly router: Router,
@@ -25,10 +30,20 @@ export class MotoristasComponent {
   ngOnInit(): void {
     this.getMotoristas();
   }
+  
+  ngAfterViewInit(): void{
+    this.dataSource.sort = this.sort;
+
+    this.sort.active = 'registo'; // Column to sort by
+    this.sort.direction = 'desc'; // Sort direction (e.g., newest first)
+    this.sort.sortChange.emit(); // Trigger the sort
+  }
 
   getMotoristas(): void {
-    this.motoristaService.getMotoristas()
-        .subscribe(motoristas => this.motoristas = motoristas);
+    this.motoristaService.getMotoristas().subscribe((motoristas) => {
+      this.motoristas = motoristas;
+      this.dataSource.data = motoristas;
+    });
   }
 
   showMotoristaCreate() {
@@ -41,6 +56,8 @@ export class MotoristasComponent {
 
   delete(motorista: Motorista): void {
     this.motoristas = this.motoristas.filter(m => m !== motorista)
+    this.dataSource.data = this.motoristas;
     this.motoristaService.deleteMotorista(motorista._id!).subscribe();
   }
+
 }
