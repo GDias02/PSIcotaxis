@@ -4,7 +4,6 @@ import { DatePipe, Location } from '@angular/common';
 
 import { Motorista } from '../motorista';
 import { MotoristaService } from '../motorista.service';
-import { Morada } from '../morada';
 
 @Component({
   selector: 'app-motorista-detail',
@@ -13,7 +12,6 @@ import { Morada } from '../morada';
 })
 export class MotoristaDetailComponent {
   motorista?: Motorista;
-  morada?: Morada;
 
   constructor(
     private route: ActivatedRoute,

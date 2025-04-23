@@ -40,7 +40,7 @@ export class MotoristaCreateComponent {
       cartaDeConducao: this.cartaDeConducao,
       morada: {
         rua: this.moradaComponent?.rua,
-        codigo_postal: this.moradaComponent?.codPostal?.value,
+        codigoPostal: this.moradaComponent?.codPostal?.value,
         localidade: this.moradaComponent?.localidade
       } as Morada
     } as Motorista).subscribe({
