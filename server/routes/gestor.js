@@ -7,6 +7,7 @@ const config_controller = require("../controllers/configController");
 
 /// Taxi ROUTES ///
 router.get("/taxis", taxi_controller.taxi_list);
+router.get("/taxis/marcas_e_modelos", taxi_controller.marcas_e_modelos_list);
 router.get("/taxis/:id", taxi_controller.taxi);
 router.post("/taxis/create", taxi_controller.taxi_create);
 
@@ -17,7 +18,5 @@ router.post("/motoristas/create", motorista_controller.motorista_create);
 
 /// Config ROUTES ///
 router.get("/configs", config_controller.config_list);
-router.put("/config", config_controller.config_create);
-
-
+router.put("/configs", config_controller.config_create);
 module.exports = router;

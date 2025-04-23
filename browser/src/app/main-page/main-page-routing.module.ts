@@ -10,6 +10,9 @@ import { MotoristasComponent } from './motoristas/motoristas.component';
 import { TaxisComponent } from './taxis/taxis.component';
 import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { MainPageComponent } from './main-page.component';
+import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
+import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
+import { AppComponent } from '../app.component';
 
 const mainroutes: Routes = [
     { path: 'main-page', component: MainPageComponent, children: [
@@ -18,10 +21,12 @@ const mainroutes: Routes = [
       { path: 'motoristas/create', component: MotoristaCreateComponent },
       { path: 'motoristas/:id', component: MotoristaDetailComponent },
       { path: 'taxis', component: TaxisComponent },
+      { path: 'taxis/create', component: TaxiCreateComponent },
+      { path: 'taxis/:id', component: TaxiDetailComponent },
       { path: 'configs', component: ConfigsComponent },
       { path: 'viagens/custo', component: ViagemCustoComponent },
     ]},
-    { path: '**', component: DashboardComponent },
+    { path: '**', component: AppComponent },
 ];
 
 @NgModule({

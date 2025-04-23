@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+//Components and Routers
 import { MainPageRoutingModule } from './main-page-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConfigsComponent } from './configs/configs.component';
@@ -13,10 +16,13 @@ import { MotoristaCreateComponent } from './motorista-create/motorista-create.co
 import { MotoristaDetailComponent } from './motorista-detail/motorista-detail.component';
 import { MotoristasComponent } from './motoristas/motoristas.component';
 import { TaxisComponent } from './taxis/taxis.component';
+import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
+import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
 import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MainPageComponent } from './main-page.component';
-import { HttpClientModule } from '@angular/common/http';
+
+//Materials
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -32,12 +38,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../user.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -47,6 +50,7 @@ import { UserService } from '../user.service';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     //Materials
     MatTabsModule,
     MatExpansionModule,
@@ -65,7 +69,11 @@ import { UserService } from '../user.service';
     MatDatepickerModule,
     MatSelectModule,
     MatOptionModule,
-    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    AsyncPipe
 
   ],
   declarations: [
@@ -79,6 +87,8 @@ import { UserService } from '../user.service';
     MoradaCreateComponent,
     ViagensComponent,
     ViagemCustoComponent,
+    TaxiDetailComponent,
+    TaxiCreateComponent
   ],
 })
 export class MainPageModule {

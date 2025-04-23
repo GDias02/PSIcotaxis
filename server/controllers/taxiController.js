@@ -11,6 +11,26 @@ exports.taxi_list = asyncHandler(async (req, res, next) => {
   res.status(200).send(taxis);
 });
 
+// /marcas_e_modelos - GET
+exports.marcas_e_modelos_list = asyncHandler(async (req, res, next) => {
+  const taxis = await Taxi.find()
+                          .exec();
+  const marcas_e_modelos = {};
+
+  for (taxi of taxis) { 
+    let mc = taxi["marca"];
+    let mod = taxi["modelo"];
+    if (Object.getOwnPropertyNames(marcas_e_modelos).includes(mc)){
+      if (!(marcas_e_modelos[`${mc}`].includes(mod))){
+        marcas_e_modelos[`${mc}`].push(mod)
+      }
+    } else {
+      marcas_e_modelos[`${mc}`]= [mod];
+    }
+  }
+  res.status(200).send(marcas_e_modelos);
+});
+
 // /taxi/id - GET
 exports.taxi = asyncHandler(async (req, res, next) => {
   const taxi = await Taxi.findById(req.params.id)
@@ -42,7 +62,7 @@ exports.taxi_create = [
                     return matricula.match("[0-9]{2}\\-[0-9]{2}\\-[A-Z]{2}");
                 }
                 if (ano < new Date('2020')) {
-                    return matricula.match("[0-9]{2}\\-[A-Z]{2}\\-[0-9]{2}\\");
+                    return matricula.match("[0-9]{2}\\-[A-Z]{2}\\-[0-9]{2}");
                 } 
                 if (ano <= new Date()){
                     return matricula.match("[A-Z]{2}\\-[0-9]{2}\\-[A-Z]{2}");

@@ -1,7 +1,39 @@
-<h2>Configurações</h2>
-
-<mat-list role="list" *ngIf="configs">
-  <mat-list-item role="listitem">Preço por minuto para táxis de tipo básico: {{configs.ppm_basico}}</mat-list-item>
-  <mat-list-item role="listitem">Preço por minuto para táxis de tipo luxuoso: {{configs.ppm_luxuoso}}</mat-list-item>
-  <mat-list-item role="listitem">Agravamento noturno (21h-6h): {{configs.agravamento}}</mat-list-item>
-</mat-list>
+<div id="configs-create-wrapper">
+  <h2 class= "header">Configurações </h2>
+  <mat-grid-list cols="1" rowHeight="1:2" *ngIf="configs">
+    <mat-grid-tile>
+      <div class="form-container">
+        <form [formGroup]="configForm" (ngSubmit)="onSubmit()">
+          <p>
+            <mat-form-field appearance="fill">
+            <mat-label>Preço por minuto básico</mat-label>
+            <input matInput type="number" placeholder="0.25" value="configs.ppm_basico" formControlName="ppm_basico" [(ngModel)]="ppm_basico">
+            <mat-error *ngIf="configForm.value.ppm_basico">Preço por minuto tem de ser positivo e não muito elevado</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="fill">
+            <mat-label>Preço por minuto luxuoso</mat-label>
+            <input matInput type="number" placeholder="0.25" value="configs.ppm_luxuoso" formControlName="ppm_luxuoso" [(ngModel)]="ppm_luxuoso">
+            <mat-error *ngIf="configForm.value.ppm_luxuoso">Preço por minuto tem de ser positivo e não muito elevado</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="fill">
+              <mat-label>Agravamento</mat-label>
+              <input matInput type="number" placeholder="20" value="configs.agravamento" formControlName="agravamento" [(ngModel)]="agravamento">
+              <mat-error *ngIf="configForm.value.agravamento">Agravamento tem de ser positivo e não muito elevado</mat-error>
+            </mat-form-field>
+          </p>
+          <div class="confirmation-buttons">
+            <button mat-fab extended type="submit" [disabled]="!configForm.valid" #saveButton>
+                Guardar Alterações
+                <mat-icon>save</mat-icon>
+            </button>
+            <p hidden #saved>SAVED</p>
+          </div>
+        </form>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
