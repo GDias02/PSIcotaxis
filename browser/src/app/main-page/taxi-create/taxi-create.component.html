@@ -9,7 +9,7 @@
                         <input type="text" placeholder="Escolha uma marca" aria-label="Marca" matInput [formControl]="myControl"
                             [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of (filteredOptions | async)" [value]="option">
+                            <mat-option *ngFor="let option of (filteredOptionsMarcas | async)" [value]="option">
                                 {{option}}
                             </mat-option>
                         </mat-autocomplete>
@@ -25,7 +25,7 @@
                     <mat-form-field>
                         <mat-label>Conforto</mat-label>
                         <mat-select [(ngModel)]="conforto" placeholder="Conforto">
-                            <mat-option *ngFor="let gen of ['básico', 'luxuoso']" [value]="gen">
+                            <mat-option *ngFor="let gen of confortos" [value]="gen">
                                 {{ gen }}
                             </mat-option>
                         </mat-select>
