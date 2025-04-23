@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { MoradaService } from '../morada.service';
-import { Morada } from '../morada';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+import { MotoristaService } from '../motorista.service';
 
 @Component({
   selector: 'app-morada-create',
@@ -17,15 +16,16 @@ export class MoradaCreateComponent {
   numero: string = '';
   
   constructor(
-    private moradaService: MoradaService,
+    private motoristaService: MotoristaService
   ) { }
 
   ngOnInit() {
     this.codPostal.valueChanges
       .pipe(
-        debounceTime(600), 
+        debounceTime(500), 
         distinctUntilChanged(),
-        switchMap((codigoPostal) => this.searchForLocalidade(codigoPostal))
+        filter((codigoPostal) => /^\d{4}-\d{3}$/.test(codigoPostal)), // Ensure it matches the regex iiii-iii
+        switchMap((codigoPostal) => this.searchForLocalidade(codigoPostal)),
       )
       .subscribe({
         next: (localidade) => {
@@ -38,8 +38,7 @@ export class MoradaCreateComponent {
   }
 
   searchForLocalidade(codPostal: string):Observable<string>{
-    return this.moradaService
-              .getLocalidadeByCodigoPostal(codPostal);
+    return this.motoristaService.getLocalidadeByCodigoPostal(codPostal);
   }
 
   allFilled():boolean{
@@ -47,25 +46,6 @@ export class MoradaCreateComponent {
             this.localidade !== 'Localidade' && this.localidade !== undefined &&
               this.rua !== '' && this.rua !== undefined &&
                 this.numero !== '' && this.numero !== undefined;
-  }
-
-  save(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.moradaService.addMorada({
-        rua: this.rua,
-        codigo_postal: this.codPostal.value,
-        localidade: this.localidade
-      } as Morada).subscribe({
-        next: (createdMorada) => {
-          console.log('Created Morada:', createdMorada);
-          resolve(createdMorada._id); // Return the _id of the created Morada
-        },
-        error: (err) => {
-          console.error('Error creating Morada:', err);
-          reject(err); // Handle errors
-        }
-      });
-    });
   }
 
 }

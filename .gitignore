@@ -1,4 +1,5 @@
 *.pdf
+server/public/codigosPostais/leiame.txt
 
 # Node.js
 node_modules/

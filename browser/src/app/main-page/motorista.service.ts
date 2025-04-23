@@ -6,6 +6,8 @@ import { catchError } from 'rxjs/operators';
 
 import { Motorista } from './motorista';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -65,5 +67,14 @@ export class MotoristaService {
     return this.http.delete<Motorista>(url, this.httpOptions).pipe(
       catchError(this.handleError<Motorista>('deleteMotorista'))
     );
+  }
+
+  getLocalidadeByCodigoPostal(codPostal: string): Observable<string> {
+    const url = `http://localhost:3000/servicos/localidade/${codPostal}`;
+     
+    return this.http.get(url, {responseType: 'text'})
+      .pipe(
+        catchError(this.handleError<string>(`getLocalidadeByCodigoPostal codPostal=${codPostal}`))
+      );
   }
 }

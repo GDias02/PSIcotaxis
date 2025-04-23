@@ -1,3 +1,5 @@
+import { Morada } from "./morada";
+
 export interface Motorista {
     _id: string;
     nif: number;
@@ -5,5 +7,5 @@ export interface Motorista {
     genero: string;
     anoDeNascimento: Date;
     cartaDeConducao: string;
-    morada: string;
+    morada: Morada;
 }

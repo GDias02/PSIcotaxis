@@ -1,6 +1,6 @@
 export interface Morada {
-    _id: string;
     rua : string;
-    codigo_postal : string;
+    codigoPostal : string;
     localidade : string;
+    numeroDePorta: string;
 }
