@@ -44,7 +44,7 @@ exports.motorista_create = [
             .isAfter("1900")
             .isBefore(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000).toISOString())
             .escape(),
-  body("cartaDeConducao")
+  body("cartaDeConducao", 'A carta de condução tem de ter entre 2 e 32 caracteres')
             .trim()
             .isLength({min:2,max:32})
             .escape(),

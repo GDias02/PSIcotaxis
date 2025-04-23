@@ -1,63 +1,70 @@
 
 <div id="motorista-create-wrapper">
     <h2 class= "header">Registar um motorista </h2>
-    <mat-grid-list cols="2" rowHeight="1:2">
-        <mat-grid-tile>
-            <div class="form-container">
-                <p>
-                    <mat-form-field appearance="fill">
-                    <mat-label>Nome</mat-label>
-                    <input matInput placeholder="Nome" [(ngModel)]="nome">
-                    </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field appearance="fill">
-                    <mat-label>NIF</mat-label>
-                    <input matInput placeholder="NIF" [(ngModel)]="nif">
-                    </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field>
-                        <mat-label>Género</mat-label>
-                        <mat-select [(ngModel)]="genero" placeholder="Género">
-                            <mat-option *ngFor="let gen of ['Masculino', 'Feminino']" [value]="gen">
-                            {{ gen }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+    <form [formGroup]="motoristaForm" (ngSubmit)="onSubmit()">
+        <mat-grid-list cols="2" rowHeight="1:2">
+            <mat-grid-tile>
+                <div class="form-container">
+                    <p>
+                        <mat-form-field appearance="fill">
+                        <mat-label>Nome</mat-label>
+                        <input matInput placeholder="Nome" formControlName="nome" [(ngModel)]="nome">
+                        <mat-error *ngIf="motoristaForm.value.nome">O nome tem de ter entre 2 e 64 caracteres</mat-error>
+                        </mat-form-field>
                     </p>
-                <p>
-                    <mat-form-field>
-                        <mat-label>Data de Nascimento</mat-label>
-                        <input matInput [matDatepicker]="picker" [(ngModel)]="dataDeNascimento">
-                        <mat-hint>DD/MM/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field appearance="fill">
-                    <mat-label>Carta de Condução</mat-label>
-                    <input matInput placeholder="Carta" [(ngModel)]="cartaDeConducao">
-                    </mat-form-field>
-                </p>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="morada-container">
-                <app-morada-create></app-morada-create>
-                <div class="confirmation-buttons">
-                    <button mat-fab extended (click)="goBack()">
-                        <mat-icon fontIcon="&#8617;"></mat-icon>
-                        Voltar
-                    </button>
-                    
-                    <button mat-fab extended (click)="save()" [disabled]="!allFilled()">
-                        Registar
-                        <mat-icon>person_add</mat-icon>
-                    </button>
+                    <p>
+                        <mat-form-field appearance="fill">
+                        <mat-label>NIF</mat-label>
+                        <input matInput placeholder="NIF" formControlName="nif" [(ngModel)]="nif">
+                        <mat-error *ngIf="motoristaForm.value.nif">Nif inválido</mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field>
+                            <mat-label>Género</mat-label>
+                            <mat-select formControlName="genero" [(ngModel)]="genero" placeholder="Género">
+                                <mat-option *ngFor="let gen of ['Masculino', 'Feminino']" [value]="gen">
+                                {{ gen }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="motoristaForm.value.genero">Género tem de ser masculino ou feminino</mat-error>
+                        </mat-form-field>
+                        </p>
+                    <p>
+                        <mat-form-field>
+                            <mat-label>Data de Nascimento</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="dataDeNascimento" [(ngModel)]="dataDeNascimento">
+                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="motoristaForm.value.dataDeNascimento">A idade do motorista deve ser maior que 18</mat-error>
+                          </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="fill">
+                        <mat-label>Carta de Condução</mat-label>
+                        <input matInput placeholder="Carta" formControlName="cartaDeConducao" [(ngModel)]="cartaDeConducao">
+                        <mat-error *ngIf="motoristaForm.value.cartaDeConducao">A carta de condução tem de ser válida</mat-error>
+                        </mat-form-field>
+                    </p>
                 </div>
-            </div>
-        </mat-grid-tile>
-    </mat-grid-list>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="morada-container">
+                    <app-morada-create></app-morada-create>
+                    <div class="confirmation-buttons">
+                        <button mat-fab extended (click)="goBack()">
+                            <mat-icon fontIcon="&#8617;"></mat-icon>
+                            Voltar
+                        </button>
+                        
+                        <button mat-fab extended type="submit" [disabled]="!motoristaForm.valid || !moradaFormValid()">
+                            Registar
+                            <mat-icon>person_add</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </form>
 </div>

@@ -1,24 +1,29 @@
-<p>
-    <mat-form-field appearance="fill">
-      <mat-label>Código-Postal</mat-label>
-      <input matInput placeholder="0000-000" [formControl]="codPostal">
-    </mat-form-field>
+<form [formGroup]="moradaForm">
+  <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Código-Postal</mat-label>
+        <input matInput placeholder="0000-000" formControlName="codPostal" [(ngModel)]="codPostal">
+        <mat-error *ngIf="moradaForm.value.codPostal">O código postal tem de ser válido</mat-error>
+      </mat-form-field>
+    </p>
+  <p>
+  <mat-form-field appearance="fill">
+      <mat-label>Localidade</mat-label>
+      <input matInput placeholder="Localidade" formControlName="localidade" [(ngModel)]="localidade">
+      <mat-error *ngIf="moradaForm.value.localidade">A localidade tem de ser válida</mat-error>
+  </mat-form-field>
   </p>
-<p>
-<mat-form-field appearance="fill">
-    <mat-label>Localidade</mat-label>
-    <input matInput placeholder="Localidade" [(ngModel)]="localidade">
-</mat-form-field>
-</p>
-<p>
-    <mat-form-field appearance="fill">
-      <mat-label>Rua</mat-label>
-      <input matInput placeholder="Rua" [(ngModel)]="rua">
-    </mat-form-field>
-</p>
-<p>
-    <mat-form-field appearance="fill">
-      <mat-label>Número da Porta</mat-label>
-      <input matInput placeholder="Número" [(ngModel)]="numero">
-    </mat-form-field>
-</p>
+  <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Rua</mat-label>
+        <input matInput placeholder="Rua" formControlName="rua" [(ngModel)]="rua">
+        <mat-error *ngIf="moradaForm.value.rua">A rua tem de ser válida</mat-error>
+      </mat-form-field>
+  </p>
+  <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Número da Porta</mat-label>
+        <input matInput placeholder="Número" [(ngModel)]="numero">
+      </mat-form-field>
+  </p>
+</form>

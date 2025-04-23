@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl, AbstractControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+
 import { MotoristaService } from '../motorista.service';
 
 @Component({
@@ -10,22 +11,28 @@ import { MotoristaService } from '../motorista.service';
   styleUrls: ['./morada-create.component.css']
 })
 export class MoradaCreateComponent {
-  codPostal: FormControl = new FormControl('0000-000'); //FormControl to detect input, to then detect localidade
-  localidade: string = 'Localidade';
+  codPostal: string = '';
+  localidade: string = '';
   rua: string = '';
   numero: string = '';
+
+  moradaForm = new FormGroup({
+    codPostal: new FormControl('', [Validators.required, Validators.pattern('^\\d{4}-\\d{3}$')]),
+    localidade: new FormControl('', [Validators.required]),
+    rua: new FormControl('', [Validators.required, Validators.minLength(4)]),
+  })
   
   constructor(
     private motoristaService: MotoristaService
   ) { }
 
   ngOnInit() {
-    this.codPostal.valueChanges
+    this.moradaForm.controls['codPostal'].valueChanges
       .pipe(
         debounceTime(500), 
         distinctUntilChanged(),
-        filter((codigoPostal) => /^\d{4}-\d{3}$/.test(codigoPostal)), // Ensure it matches the regex iiii-iii
-        switchMap((codigoPostal) => this.searchForLocalidade(codigoPostal)),
+        filter((codigoPostal) => /^\d{4}-\d{3}$/.test(codigoPostal!)), // Ensure it matches the regex iiii-iii
+        switchMap((codigoPostal) => this.searchForLocalidade(codigoPostal!)),
       )
       .subscribe({
         next: (localidade) => {
@@ -40,12 +47,4 @@ export class MoradaCreateComponent {
   searchForLocalidade(codPostal: string):Observable<string>{
     return this.motoristaService.getLocalidadeByCodigoPostal(codPostal);
   }
-
-  allFilled():boolean{
-    return this.codPostal.value !== '0000-000'&& this.codPostal.value !== undefined &&
-            this.localidade !== 'Localidade' && this.localidade !== undefined &&
-              this.rua !== '' && this.rua !== undefined &&
-                this.numero !== '' && this.numero !== undefined;
-  }
-
 }
