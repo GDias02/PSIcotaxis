@@ -5,7 +5,6 @@ import { DatePipe, Location } from '@angular/common';
 import { Motorista } from '../motorista';
 import { MotoristaService } from '../motorista.service';
 import { Morada } from '../morada';
-import { MoradaService } from '../morada.service';
 
 @Component({
   selector: 'app-motorista-detail',
@@ -19,7 +18,6 @@ export class MotoristaDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private motoristaService: MotoristaService,
-    private moradaService: MoradaService,
     private location: Location,
     public datePipe: DatePipe
   ) {}
@@ -36,8 +34,6 @@ export class MotoristaDetailComponent {
 
   populateMotorista(motorista: Motorista): void {
     this.motorista = motorista;
-    this.moradaService.getMorada(this.motorista.morada)
-      .subscribe(morada => this.morada = morada);
   }
 
   goBack(): void {

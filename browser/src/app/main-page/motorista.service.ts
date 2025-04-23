@@ -66,4 +66,13 @@ export class MotoristaService {
       catchError(this.handleError<Motorista>('deleteMotorista'))
     );
   }
+
+  getLocalidadeByCodigoPostal(codPostal: string): Observable<string> {
+    const url = `https://localhost:3000/servicos/localidade/${codPostal}`;
+
+    return this.http.get<string>(url)
+      .pipe(
+        catchError(this.handleError<string>(`getLocalidadeByCodigoPostal codPostal=${codPostal}`))
+      );
+  }
 }

@@ -2,14 +2,12 @@ const Config = require("../models/config");
 const Taxi = require("../models/taxi");
 const Pessoa = require("../models/pessoa");
 const Motorista = require("../models/motorista");
-const Morada = require("../models/morada");
 
 const asyncHandler = require("express-async-handler");
 
 exports.init = asyncHandler(async (req, res) => {
   const configs = [];
   const taxis = [];
-  const moradas = [];
   const motoristas = [];
   const pessoas = [];
     
@@ -17,13 +15,11 @@ exports.init = asyncHandler(async (req, res) => {
     
   async function main() {
     await Pessoa.deleteMany({});
-    await Morada.deleteMany({});
     await Taxi.deleteMany({});
     await Config.deleteMany();
 
     await createConfigs();
     await createTaxis();
-    await createMoradas();
     await createMotoristas();
     await createPessoas();
 
@@ -41,16 +37,10 @@ exports.init = asyncHandler(async (req, res) => {
     await taxi.save();
     taxis[index] = taxi;
   }
-
-  async function moradaCreate(index, moradaJson) {
-    const morada = new Morada(moradaJson);
-    await morada.save();
-    moradas[index] = morada;
-  }
   
-  async function motoristaCreate(index, motoristaJson) {
+  async function motoristaCreate(index, motoristaJson, moradaJson) {
     const motorista = new Motorista(motoristaJson);
-    motorista.morada = moradas[index]._id;
+    motorista.morada = moradaJson
     await motorista.save();
     motoristas[index] = motorista;
   }
@@ -75,19 +65,11 @@ exports.init = asyncHandler(async (req, res) => {
     ]);
   }
 
-  async function createMoradas() {
-    await Promise.all([
-      moradaCreate(0, MORADAS_MOTORISTAS[0]),
-      moradaCreate(1, MORADAS_MOTORISTAS[1]),
-      moradaCreate(2, MORADAS_MOTORISTAS[2]),
-    ]);
-  }
-
   async function createMotoristas() {
     await Promise.all([
-      motoristaCreate(0, MOTORISTAS[0]),
-      motoristaCreate(1, MOTORISTAS[1]),
-      motoristaCreate(2, MOTORISTAS[2]),
+      motoristaCreate(0, MOTORISTAS[0], MORADAS_MOTORISTAS[0]),
+      motoristaCreate(1, MOTORISTAS[1], MORADAS_MOTORISTAS[1]),
+      motoristaCreate(2, MOTORISTAS[2], MORADAS_MOTORISTAS[2]),
     ]);
   }
 
