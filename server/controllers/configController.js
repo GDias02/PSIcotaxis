@@ -15,15 +15,15 @@ exports.config_create = [
   // Validate and sanitize fields.
   body("ppm_basico", "Preço por minuto tem de ser positivo e não muito elevado")
             .trim()
-            .isLength({min: 0.01, max: 100})
+            .isFloat({min: 0.01, max: 100})
             .escape(),
   body("ppm_luxuoso", "Preço por minuto tem de ser positivo e não muito elevado")
             .trim()
-            .isLength({min: 0.01, max: 100})
+            .isFloat({min: 0.01, max: 100})
             .escape(),
   body("agravamento", "Agravamento tem de ser positivo e não muito elevado")
             .trim()
-            .isLength({min: 0, max: 100})
+            .isFloat({min: 0, max: 100})
             .escape(),
 
   // Process request after validation and sanitization.
@@ -41,11 +41,11 @@ exports.config_create = [
   
     if (!errors.isEmpty()) {
       // 400 - Bad Request
-      res.status(400).send({errors: errors});
+      res.status(400).send(errors);
     } else {
-      await config.save();
-      const newConfig = await Config.findById(config._id).exec();
-      res.status(201).send(newConfig);
+      let updatedConfig = await Config.findByIdAndUpdate(config._id, config, {}).exec();
+      updatedConfig = await Config.findById(config._id);
+      res.status(201).send(updatedConfig);
     }
   }),
 ];

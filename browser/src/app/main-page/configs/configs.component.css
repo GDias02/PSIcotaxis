@@ -48,3 +48,7 @@ mat-grid-list {
 .mat-form-field-appearance-fill {
     width: 100%; /* Make all form fields take up the same width */
 }
+
+p {
+    margin-bottom: 10%;
+}

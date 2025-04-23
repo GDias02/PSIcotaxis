@@ -29,7 +29,7 @@ exports.motorista_create = [
   // Validate and sanitize fields.
   body("nif", "Nif tem de ser composto por 9 dígitos e ser positivo")
             .trim()
-            .isLength(9)
+            .isInt({min: 100000000, max: 999999999})
             .escape(),
   body("nome", "O nome tem de ter entre 2 e 64 caracteres")
             .trim()
@@ -39,7 +39,7 @@ exports.motorista_create = [
             .trim()
             .isIn(new Pessoa().generosPossiveis)//This must be always an array
             .escape(),
-  body("anoDeNascimento", `O ano de nascimento deve corresponder a uma data válida`)
+  body("anoDeNascimento", `A idade do motorista deve ser maior que 18`)
             .trim()
             .isAfter("1900")
             .isBefore(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000).toISOString())
