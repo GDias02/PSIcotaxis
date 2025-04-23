@@ -1,35 +1,49 @@
-<h2>Simular Viagem</h2>
+<div class="custo-wrapper">
 
-<mat-divider></mat-divider>
-
-<mat-form-field>
-    <mat-label>Conforto do Táxi</mat-label>
-    <select matNativeControl required [(ngModel)]="conforto">
-        <option value="basico" selected>basico</option>
-        <option value="luxuoso">luxuoso</option>
-    </select>
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Data de Início</mat-label>
-    <input matInput type="datetime-local" placeholder="Data Início" [(ngModel)]="inicio">
-</mat-form-field>
-
-<mat-form-field>
-    <mat-label>Data de Fim</mat-label>
-    <input matInput type="datetime-local" placeholder="Data Fim" [(ngModel)]="fim">
-</mat-form-field>
-
-<p>Custo: {{custo}}€</p>
-
-<div class="confirmation-buttons">
-    <button mat-fab extended (click)="goBack()">
-        <mat-icon fontIcon="&#8617;"></mat-icon>
-        Voltar
-    </button>
-
-    <button mat-fab extended (click)="calcularCustoViagem()" [disabled]="!allFilled()">
-        Simular
-        <mat-icon>euro</mat-icon>
-    </button>
+  <h2 class="header">Simular Viagem</h2>
+  <mat-grid-list cols="1" rowHeight="1:2">
+    <mat-grid-tile>
+      <div class="form-container">
+        <form [formGroup]="custoForm" (ngSubmit)="onSubmit()">
+          <p>
+            <mat-form-field>
+              <mat-label>Conforto do Táxi</mat-label>
+              <select matNativeControl required formControlName="conforto" [(ngModel)]="conforto">
+                <option value="basico" selected>basico</option>
+                <option value="luxuoso">luxuoso</option>
+              </select>
+              <mat-error *ngIf="custoForm.value.conforto">Conforto do táxi só pode ser básico ou luxuoso</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field>
+              <mat-label>Data de Início</mat-label>
+              <input matInput type="datetime-local" placeholder="Data Início" formControlName="inicio" [(ngModel)]="inicio" (change)="updateValidityFim()">
+              <mat-error *ngIf="custoForm.value.inicio">A data de inicio tem de ser anterior à data de fim da viagem</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field>
+              <mat-label>Data de Fim</mat-label>
+              <input matInput type="datetime-local" placeholder="Data Fim" formControlName="fim" [(ngModel)]="fim" (change)="updateValidityInicio()">
+              <mat-error *ngIf="custoForm.value.fim">A data de inicio tem de ser anterior à data de fim da viagem</mat-error>
+            </mat-form-field>
+          </p>
+          <p id="custo">Custo: {{custo}}€</p>
+          
+          <div class="confirmation-buttons">
+            <button mat-fab extended (click)="goBack()">
+              <mat-icon fontIcon="&#8617;"></mat-icon>
+              Voltar
+            </button>
+        
+            <button mat-fab extended type="submit" [disabled]="!custoForm.valid">
+              Simular
+              <mat-icon>euro</mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

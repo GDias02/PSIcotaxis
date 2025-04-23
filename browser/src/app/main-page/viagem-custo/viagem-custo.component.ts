@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { FormControl, AbstractControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 import { ConfigService } from '../config.service';
 import { Config } from '../config';
@@ -9,20 +10,61 @@ import { Config } from '../config';
   templateUrl: './viagem-custo.component.html',
   styleUrls: ['./viagem-custo.component.css']
 })
-export class ViagemCustoComponent {
+export class ViagemCustoComponent implements OnInit {
   configAtual?: Config; 
   conforto?: string;
-  inicio?: Date;
-  fim?: Date;
+  inicio: Date = new Date();
+  fim: Date = new Date();
   custo: number = 0;
+
+  custoForm = new FormGroup({
+    conforto: new FormControl('', [Validators.required, Validators.pattern('^basico|luxuoso$')]),
+    inicio: new FormControl('', [Validators.required, this.inicioBeforeFim()]),
+    fim: new FormControl('', [Validators.required, this.fimAfterInicio()])
+  })
 
   constructor(
     private configService: ConfigService,
     private location: Location
   ) {}
 
-  allFilled(): boolean {
-    return this.conforto !== undefined && this.inicio !== undefined && this.fim !== undefined
+  ngOnInit(): void {
+    /* this.custoForm.get('inicio')!.valueChanges.subscribe(value => {
+      this.custoForm.get('fim')!.setValue(value, { onlySelf: true, emitEvent: false, emitModelToViewChange: true });
+    }, error => {}, () => {});
+
+    this.custoForm.get('fim')!.valueChanges.subscribe(value => {
+      this.custoForm.get('inicio')!.setValue(value, { onlySelf: true, emitEvent: false, emitModelToViewChange: true });
+    }, error => {}, () => {}); */
+  }
+
+  inicioBeforeFim(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const inicio = control.value;
+      if (inicio < this.fim!) return null;
+      else return { inicioBeforeFim: true, fimAfterInicio: true }
+    }
+  }
+
+  fimAfterInicio(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const fim = control.value;
+      if (this.inicio! < fim) return null;
+      else return { inicioBeforeFim: true, fimAfterInicio: true }
+    }
+  }
+
+  updateValidityFim(): void {
+    this.custoForm.controls['fim'].updateValueAndValidity();
+  }
+
+  updateValidityInicio(): void {
+    this.custoForm.controls['inicio'].updateValueAndValidity();
+  }
+
+  onSubmit(): void {
+    if (this.custoForm.invalid) return;
+    this.calcularCustoViagem();
   }
 
   calcularCustoViagem() {
