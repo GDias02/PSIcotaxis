@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Config } from './config';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class ConfigService {
 
   constructor(
     private http: HttpClient,
+    private messageService: MessageService
   ) { }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -42,5 +44,9 @@ export class ConfigService {
     return this.http.put<Config>(url, config, this.httpOptions).pipe(
       catchError(this.handleError<Config>('updateConfig'))
     );
+  }
+
+  private log(message: string) {
+    this.messageService.add(`Configurações Service: ${message}`);
   }
 }

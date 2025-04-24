@@ -5,13 +5,16 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Viagem } from './viagem';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViagemService {
 
-  constructor() { }
+  constructor(
+    private messageService: MessageService
+  ) { }
 
   getViagens(): Observable<Viagem[]> {
     return of([]);
@@ -19,5 +22,9 @@ export class ViagemService {
 
   deleteViagem(id: string): Observable<any> {
     return of({});
+  }
+
+  private log(message: string) {
+    this.messageService.add(`Viagem Service: ${message}`);
   }
 }

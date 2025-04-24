@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Taxi } from '../taxi';
 import { TaxiService } from '../taxi.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-taxis',
@@ -13,7 +16,9 @@ export class TaxisComponent {
   taxis: Taxi[] = [];
 
   displayedColumns: string[] = ['marcaEModelo', 'ano', 'matricula', 'conforto','registo'];
-  dataSource = this.taxis;
+  dataSource = new MatTableDataSource<Taxi>(this.taxis); 
+
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private taxiService: TaxiService,
@@ -23,6 +28,14 @@ export class TaxisComponent {
 
   ngOnInit(): void {
     this.getTaxis();
+  }
+
+  ngAfterViewInit(): void{
+    this.dataSource.sort = this.sort;
+
+    this.sort.active = 'registo'; // Column to sort by
+    this.sort.direction = 'desc'; // Sort direction (e.g., newest first)
+    this.sort.sortChange.emit(); // Trigger the sort
   }
 
   getTaxis(): void {
@@ -39,7 +52,8 @@ export class TaxisComponent {
   }
 
   delete(taxi: Taxi): void {
-    this.taxis = this.taxis.filter(m => m !== taxi)
+    this.taxis = this.taxis.filter(m => m !== taxi);
+    this.dataSource.data = this.taxis;
     this.taxiService.deleteTaxi(taxi._id!).subscribe();
   }
 }
