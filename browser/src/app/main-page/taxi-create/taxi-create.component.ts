@@ -78,14 +78,14 @@ export class TaxiCreateComponent {
       anoDeCompra: this.anoDeCompra,
       marca: this.marcaControl.value,
       modelo: this.modelo,
-      conforto: this.conforto,
+      conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
     } as Taxi).subscribe({
       next: (taxi) => {
-        console.log('Created Taxi:', taxi);
-        this.goBack();
+      console.log('Created Taxi:', taxi);
+      this.goBack();
       },
       error: (err) => {
-        console.error('Error creating taxi:', err);
+      console.error('Error creating taxi:', err);
       }
     });
   }

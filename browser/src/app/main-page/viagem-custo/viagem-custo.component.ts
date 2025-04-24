@@ -12,15 +12,21 @@ import { Config } from '../config';
 })
 export class ViagemCustoComponent implements OnInit {
   configAtual?: Config; 
-  conforto?: string;
-  inicio: Date = new Date();
-  fim: Date = new Date();
+
+  // Default values for inicio and fim
+  now: string = new Date().toISOString().slice(0, 16)
+
+  conforto: string = "basico";
+  inicio: string = this.now;
+  fim: string = this.now;
+
   custo: number = 0;
 
+
   custoForm = new FormGroup({
-    conforto: new FormControl('', [Validators.required, Validators.pattern('^basico|luxuoso$')]),
-    inicio: new FormControl('', [Validators.required, this.inicioBeforeFim()]),
-    fim: new FormControl('', [Validators.required, this.fimAfterInicio()])
+    conforto: new FormControl(this.conforto, [Validators.required, Validators.pattern('^basico|luxuoso$')]),
+    inicio: new FormControl(new Date(this.inicio), [Validators.required, this.inicioBeforeFim()]),
+    fim: new FormControl(new Date(this.fim), [Validators.required, this.fimAfterInicio()])
   })
 
   constructor(
@@ -68,7 +74,7 @@ export class ViagemCustoComponent implements OnInit {
   }
 
   calcularCustoViagem() {
-    if(this.inicio! >= this.fim!) return;
+    if(new Date(this.inicio!) >= new Date(this.fim!)) return;
     this.configService.getConfigs().subscribe(configs => this.custoViagem(configs));
   };
 
@@ -82,12 +88,9 @@ export class ViagemCustoComponent implements OnInit {
     }
     const agravamento = (1 + configs.agravamento / 100);
 
-    this.inicio = new Date(this.inicio!);
-    this.fim = new Date(this.fim!);
-
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    let start = this.inicio;
-    let end = this.fim;
+    let start = new Date(this.inicio);
+    let end = new Date(this.fim);
     let minutosDeNoite = 0;
     let minutosDeDia = 0;
     while(start < end){

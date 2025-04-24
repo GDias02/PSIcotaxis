@@ -31,8 +31,9 @@ exports.motorista_create = [
             .trim()
             .isInt({min: 100000000, max: 999999999})
             .escape(),
-  body("nome", "O nome tem de ter entre 2 e 64 caracteres")
+  body("nome", "O nome tem de ter entre 2 e 64 caracteres, também não pode ter dígitos")
             .trim()
+            .isAlpha()
             .isLength({ min: 2, max: 64 })
             .escape(),
   body("genero", `Género tem de ser um dos seguintes valores: ${ new Pessoa().generosPossiveis}`)
