@@ -53,8 +53,6 @@ exports.motorista_create = [
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-  
-    // Create a Motorista object with escaped and trimmed data.
     const motorista = new Motorista({
       registo: Date.now(),
       nif: req.body.nif,
@@ -65,17 +63,23 @@ exports.motorista_create = [
       morada: req.body.morada
     });
   
+    
     if (!errors.isEmpty()) {
       // 400 - Bad Request
       res.status(400).send({errors: errors});
     } else {
       const sameMotorista = await Motorista.find(motorista).exec();
+      console.log(sameMotorista);
       if (sameMotorista.length) {
         // 200 - OK
-        res.status(200).send({warning: "Motorista Duplicado. Nenhum motorista foi criado!"});
+        res.status(200).send({warning: "Motorista DuplicadoXXX. Nenhum motorista foi criado!"});
       } else {
+        // Create a Motorista object with escaped and trimmed data.
         // 201 - Created
-        await motorista.save();
+        await motorista.save().catch((error) => {
+          console.log(error);
+          res.status(409).send({warning: "Motorista Duplicado. Nenhum motorista foi criado!"});
+      });
         const newMotorista = await Motorista.findById(motorista._id).exec();
         res.status(201).send(newMotorista);
       }

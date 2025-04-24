@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { Motorista } from './motorista';
 import { MessageService } from './message.service';
@@ -55,13 +55,35 @@ export class MotoristaService {
       catchError(this.handleError<Motorista>('updateMotorista'))
     );
   }
-
+/*
   addMotorista(motorista: Motorista): Observable<Motorista> {
     const url = this.motoristasUrl + "/motoristas/create";
     return this.http.post<Motorista>(url, motorista, this.httpOptions).pipe(
       catchError(this.handleError<Motorista>('addMotorista'))
     );
+  }*/
+
+  addMotorista(motorista: Motorista): Observable<Motorista> {
+    const url = this.motoristasUrl + "/motoristas/create";
+    return this.http.post<Motorista>(url, motorista, { ...this.httpOptions, observe: 'response' }).pipe(
+      tap(response => {
+        if (response.status === 200) {
+          this.log(`Status 200: ${response.headers.get('warning')}`);
+          // Handle status 200 logic here
+        } else if (response.status === 400) {
+          console.error('Status 400: Bad Request.');
+          this.log('Status 400: Bad Request.');
+          // Handle status 400 logic here
+        } else if (response.status === 201) {
+          console.log('Status 201: Resource created successfully.');
+          // Handle status 201 logic here (normal behavior)
+        }
+      }),
+      map(response => response.body as Motorista), // Extract the body from the response
+      catchError(this.handleError<Motorista>('addMotorista'))
+    );
   }
+
 
   deleteMotorista(id: string): Observable<Motorista> {
     const url = `${this.motoristasUrl}/motoristas/${id}`;
