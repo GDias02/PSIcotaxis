@@ -40,7 +40,10 @@ export class TaxisComponent {
 
   getTaxis(): void {
     this.taxiService.getTaxis()
-        .subscribe(taxis => this.taxis = taxis);
+        .subscribe(taxis => {
+          this.taxis = taxis;
+          this.dataSource.data = taxis;
+        });
   }
 
   showTaxiCreate() {
