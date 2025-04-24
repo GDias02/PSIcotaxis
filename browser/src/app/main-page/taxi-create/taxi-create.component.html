@@ -22,6 +22,9 @@
                             <mat-label>Modelo</mat-label>
                             <input matInput placeholder="Modelo" formControlName="modelo" [(ngModel)]="modelo">
                             <mat-error *ngIf="taxiForm.value.modelo">O modelo tem de ter entre 2 e 64 caracteres</mat-error>
+                            <mat-select [(value)]="modelo" >
+                                  <mat-option *ngFor="let option of optionsModelos" [value]="option">{{option}}</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </p>
                     <p>
