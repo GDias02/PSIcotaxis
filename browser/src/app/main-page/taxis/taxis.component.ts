@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TaxisComponent {
   taxis: Taxi[] = [];
 
-  displayedColumns: string[] = ['marcaEModelo', 'ano', 'matricula', 'conforto','registo'];
+  displayedColumns: string[] = ['marca', 'anoDeCompra', 'matricula', 'conforto','registo'];
   dataSource = new MatTableDataSource<Taxi>(this.taxis); 
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,10 +32,11 @@ export class TaxisComponent {
 
   ngAfterViewInit(): void{
     this.dataSource.sort = this.sort;
-
+    setTimeout(()=> {
     this.sort.active = 'registo'; // Column to sort by
     this.sort.direction = 'desc'; // Sort direction (e.g., newest first)
     this.sort.sortChange.emit(); // Trigger the sort
+    });
   }
 
   getTaxis(): void {

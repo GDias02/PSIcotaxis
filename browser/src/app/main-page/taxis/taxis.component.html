@@ -11,13 +11,13 @@
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
             <!-- Marca e Modelo Column -->
-            <ng-container matColumnDef="marcaEModelo">
+            <ng-container matColumnDef="marca">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca e Modelo</th>
                 <td mat-cell *matCellDef="let taxi"> {{taxi.marca}} {{taxi.modelo}} </td>
             </ng-container>
 
             <!-- Ano Column -->
-            <ng-container matColumnDef="ano">
+            <ng-container matColumnDef="anoDeCompra">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Ano </th>
                 <td mat-cell *matCellDef="let taxi"> {{datePipe.transform(taxi.anoDeCompra, "yyyy")}} </td>
             </ng-container>
