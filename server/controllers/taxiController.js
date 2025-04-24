@@ -102,17 +102,21 @@ exports.taxi_create = [
   
     if (!errors.isEmpty()) {
       // 400 - Bad Request
-      res.status(400).send({errors: errors});
+      res.status(400).send(errors);
     } else {
       const sameTaxi = await Taxi.find(taxi).exec();
       if (sameTaxi.length) {
         // 200 - OK
         res.status(200).send({warning: "Taxi duplicado. Nenhum taxi foi criado!"});
       } else {
-        // 201 - Created
-        await taxi.save();
-        const newTaxi = await Taxi.findById(taxi._id).exec();
-        res.status(201).send(newTaxi);
+        try {
+          // 201 - Created
+          await taxi.save();
+          const newTaxi = await Taxi.findById(taxi._id).exec();
+          res.status(201).send(newTaxi);
+        } catch (error) {
+          res.status(409).send(error);
+        }
       }
     }
   }),

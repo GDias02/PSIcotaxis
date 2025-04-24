@@ -71,12 +71,26 @@ export class MotoristaCreateComponent {
       }
     } as Motorista).subscribe({
       next: (motorista) => {
-        console.log('Created Motorista:', motorista);
-        this.goBack();
-      },
-      error: (err) => {
-        console.error('Error creating motorista:', err);
+        if (motorista.name !== "HttpErrorResponse"){
+          console.log('Created Motorista:', motorista);
+          this.goBack();
+        } else {
+          //There was a specific error
+          const error = motorista.error;
+          console.log('Error creating motorista', error);
+          if (error.code === 11000){
+            this.showErrors(Object.keys(error.keyPattern), "Este valor já foi utilizado anteriormente");
+          }
+          
+        }
+          
       }
     });
+  }
+
+  showErrors(controlNames: string[], message: string) {
+    for (let f in this.motoristaForm.controls) {
+      
+    }
   }
 }

@@ -33,7 +33,7 @@ exports.motorista_create = [
             .escape(),
   body("nome", "O nome tem de ter entre 2 e 64 caracteres, também não pode ter dígitos")
             .trim()
-            .isAlpha()
+            .matches(/^[^\d]*$/)
             .isLength({ min: 2, max: 64 })
             .escape(),
   body("genero", `Género tem de ser um dos seguintes valores: ${ new Pessoa().generosPossiveis}`)
@@ -73,16 +73,17 @@ exports.motorista_create = [
       console.log(sameMotorista);
       if (sameMotorista.length) {
         // 200 - OK
-        res.status(200).send({warning: "Motorista DuplicadoXXX. Nenhum motorista foi criado!"});
+        res.status(200).send({warning: "Motorista Duplicado. Nenhum motorista foi criado!"});
       } else {
-        // Create a Motorista object with escaped and trimmed data.
-        // 201 - Created
-        await motorista.save().catch((error) => {
-          console.log(error);
-          res.status(409).send({warning: "Motorista Duplicado. Nenhum motorista foi criado!"});
-      });
-        const newMotorista = await Motorista.findById(motorista._id).exec();
-        res.status(201).send(newMotorista);
+        try {
+          // Create a Motorista object with escaped and trimmed data.
+          // 201 - Created
+          await motorista.save()
+          const newMotorista = await Motorista.findById(motorista._id).exec();
+          res.status(201).send(newMotorista);
+        } catch (error) {
+          res.status(409).send(error)
+        }
       }
     }
   }),
