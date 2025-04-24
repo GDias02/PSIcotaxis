@@ -73,7 +73,6 @@ export class TaxiCreateComponent {
   }
 
   save(): void {
-    this.logstats();
     this.taxiService.addTaxi({
       matricula: this.matricula!.toLocaleUpperCase(),
       anoDeCompra: this.anoDeCompra,
