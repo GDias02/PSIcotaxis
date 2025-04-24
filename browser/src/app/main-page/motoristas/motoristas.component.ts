@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -24,7 +24,7 @@ export class MotoristasComponent {
   constructor(
     private motoristaService: MotoristaService,
     private readonly router: Router,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +34,11 @@ export class MotoristasComponent {
   ngAfterViewInit(): void{
     this.dataSource.sort = this.sort;
 
-    this.sort.active = 'registo'; // Column to sort by
-    this.sort.direction = 'desc'; // Sort direction (e.g., newest first)
-    this.sort.sortChange.emit(); // Trigger the sort
+    setTimeout(() => {
+      this.sort.active = 'registo';
+      this.sort.direction = 'desc';
+      this.sort.sortChange.emit();
+    });
   }
 
   getMotoristas(): void {

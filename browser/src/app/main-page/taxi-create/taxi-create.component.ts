@@ -110,9 +110,10 @@ export class TaxiCreateComponent {
       this.anoDeCompra !== undefined &&
       this.conforto !== undefined;
   }
+
   logstats(): void {
       console.log("matricula "+this.matricula);
-      console.log("marca "+this.marca);
+      console.log("marca "+this.marcaControl.value);
       console.log("modelo " + this.modelo);
       console.log("ano de compra "+this.anoDeCompra);
       console.log("conforto"+this.conforto);
