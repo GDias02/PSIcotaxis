@@ -10,7 +10,7 @@
             <mat-list-item role="listitem">Género: {{ motorista.genero }}</mat-list-item>
             <mat-list-item role="listitem">Ano de Nascimento: {{ datePipe.transform(motorista.anoDeNascimento, "dd-MM-yyyy") }}</mat-list-item>
             <mat-list-item role="listitem">Carta de Condução: {{ motorista.cartaDeConducao }}</mat-list-item>
-            
+            <br>
             <h4>Morada de {{motorista.nome}}</h4>
             <mat-list-item role="listitem">Rua: {{ motorista.morada.rua }}</mat-list-item>
             <mat-list-item role="listitem">Localidade: {{ motorista.morada.localidade }}</mat-list-item>
@@ -20,12 +20,12 @@
         </mat-list>
 
         <mat-card-actions>
-            <button mat-fab extended (click)="goBack()">
+            <button class="motorista-detail-buttons" mat-fab extended (click)="goBack()">
                 <mat-icon fontIcon="&#8617;"></mat-icon>
                 Voltar
             </button>
 
-            <button mat-fab extended (click)="save()" disabled>
+            <button class="motorista-detail-buttons" mat-fab extended (click)="save()" disabled>
                 Atualizar
             </button>
         </mat-card-actions>
