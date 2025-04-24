@@ -1,0 +1,8 @@
+BACKLOG (TODO LIST)
+USO: <prioridade; conclusao; descricao; encarregado;>
+
+<Alta; finalizing; como mostrar mensagens de erro de maus pedidos http; ;>
+<media; investigando; formato das datas em datepickers está MM-dd-yyy; ;>
+<baixa; TODO; form de codigo-postal em motorista-create pode ser melhorado; ;>
+<baixa; TODO; form de anoDeCompra em taxi-create pode ser melhorado; ;>
+<baixa; TODO; criar página de 404 (recurso inexistente); ;>

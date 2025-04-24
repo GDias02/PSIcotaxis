@@ -20,6 +20,7 @@ import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
 import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
 import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
+import { MessagesComponent } from './messages/messages.component';
 import { MainPageComponent } from './main-page.component';
 
 //Materials
@@ -88,7 +89,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ViagensComponent,
     ViagemCustoComponent,
     TaxiDetailComponent,
-    TaxiCreateComponent
+    TaxiCreateComponent,
+    MessagesComponent
   ],
 })
 export class MainPageModule {

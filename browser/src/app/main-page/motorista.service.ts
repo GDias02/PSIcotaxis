@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Motorista } from './motorista';
+import { MessageService } from './message.service';
 
 
 
@@ -21,6 +22,7 @@ export class MotoristaService {
 
   constructor(
     private http: HttpClient,
+    private messageService: MessageService
   ) { }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -76,5 +78,9 @@ export class MotoristaService {
       .pipe(
         catchError(this.handleError<string>(`getLocalidadeByCodigoPostal codPostal=${codPostal}`))
       );
+  }
+
+  private log(message: string) {
+    this.messageService.add(`Motorista Service: ${message}`);
   }
 }
