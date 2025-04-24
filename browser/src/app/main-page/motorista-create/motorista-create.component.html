@@ -9,13 +9,13 @@
                         <mat-form-field appearance="fill">
                         <mat-label>Nome</mat-label>
                         <input matInput placeholder="Nome" formControlName="nome" [(ngModel)]="nome">
-                        <mat-error *ngIf="motoristaForm.value.nome">O nome tem de ter entre 2 e 64 caracteres</mat-error>
+                        <mat-error *ngIf="motoristaForm.value.nome">O nome tem de ter 2 a 64 caracteres que não são dígitos</mat-error>
                         </mat-form-field>
                     </p>
                     <p>
                         <mat-form-field appearance="fill">
                         <mat-label>NIF</mat-label>
-                        <input matInput placeholder="NIF" formControlName="nif" [(ngModel)]="nif">
+                        <input matInput placeholder="NIF" formControlName="nif" [(ngModel)]="nif" (input)="duplicateNif=false">
                         <mat-error *ngIf="motoristaForm.value.nif">Nif inválido</mat-error>
                         </mat-form-field>
                     </p>
@@ -43,7 +43,7 @@
                     <p>
                         <mat-form-field appearance="fill">
                         <mat-label>Carta de Condução</mat-label>
-                        <input matInput placeholder="Carta" formControlName="cartaDeConducao" [(ngModel)]="cartaDeConducao">
+                        <input matInput placeholder="Carta" formControlName="cartaDeConducao" [(ngModel)]="cartaDeConducao" (input)="duplicateCarta=false">
                         <mat-error *ngIf="motoristaForm.value.cartaDeConducao">A carta de condução tem de ser válida</mat-error>
                         </mat-form-field>
                     </p>

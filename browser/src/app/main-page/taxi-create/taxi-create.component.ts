@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -6,6 +6,7 @@ import { Taxi } from '../taxi';
 import { TaxiService } from '../taxi.service';
 import { map, Observable, startWith } from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MessageService } from '../message.service';
 
 
 @Component({
@@ -23,12 +24,14 @@ export class TaxiCreateComponent {
   conforto?: string;
   confortos = ['básico', 'luxuoso'];
 
+  duplicateMatricula: boolean = false;
+
   taxiForm = new FormGroup({
       //marca: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
       modelo: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
       conforto: new FormControl('', [Validators.required, Validators.pattern('^básico|luxuoso$') ]),
       anoDeCompra: new FormControl('', [Validators.required, this.dataInRange()]),
-      matricula: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z|0-9]{2}\\-[a-zA-Z|0-9]{2}\\-[a-zA-Z|0-9]{2}")]),
+      matricula: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z|0-9]{2}\\-[a-zA-Z|0-9]{2}\\-[a-zA-Z|0-9]{2}"), this.duplicateMatriculaValidator()]),
     })
   optionsMarcas: string[] = [];
   filteredOptionsMarcas?: Observable<string[]>;
@@ -39,7 +42,40 @@ export class TaxiCreateComponent {
     private route: ActivatedRoute,
     private taxiService: TaxiService,
     private location: Location,
+    private messageService: MessageService
   ) { }
+
+  duplicateMatriculaValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const matricula = control.value;
+      if (!this.duplicateMatricula) return null;
+      else return { duplicateNif: true }
+    }
+  }
+
+  validMatricula(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const matricula = control.value;
+      if (this.anoDeCompra! < new Date('1992')) {
+          if (matricula.match("[A-Z]{2}\\-[0-9]{2}\\-[0-9]{2}")) return null;
+          else return {invalidMatricula: true};
+      }
+      if (this.anoDeCompra! < new Date('2005')) {
+          if (matricula.match("[0-9]{2}\\-[0-9]{2}\\-[A-Z]{2}")) return null;
+          else return {invalidMatricula: true};
+      }
+      if (this.anoDeCompra! < new Date('2020')) {
+          if (matricula.match("[0-9]{2}\\-[A-Z]{2}\\-[0-9]{2}")) return null;
+          else return {invalidMatricula: true};
+      } 
+      if (this.anoDeCompra! <= new Date()){
+          if (matricula.match("[A-Z]{2}\\-[0-9]{2}\\-[A-Z]{2}")) return null;
+          else return {invalidMatricula: true};
+      } else {
+          return {invalidMatricula: true};
+      }
+    }
+  }
 
   ngOnInit() {
     this.getMarcas();
@@ -86,13 +122,28 @@ export class TaxiCreateComponent {
       conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
     } as Taxi).subscribe({
       next: (taxi) => {
-      console.log('Created Taxi:', taxi);
-      this.goBack();
-      },
-      error: (err) => {
-      console.error('Error creating taxi:', err);
+        if (taxi.name !== "HttpErrorResponse"){
+          console.log('Created Taxi:', taxi);
+          this.goBack();
+        } else {
+          //There was a specific error
+          const error = taxi.error;
+          console.log('Error creating taxi', error);
+          if (error.code === 11000) {
+            this.showErrors(Object.keys(error.keyPattern));
+          }
+        }
       }
     });
+  }
+
+  showErrors(controlNames: string[]) {
+    for (let cname of controlNames) {
+      switch (cname) {
+        case "matricula": this.duplicateMatricula = true; this.taxiForm.controls["matricula"].updateValueAndValidity(); break;
+      }
+      this.messageService.add(`${cname} já existe na base de dados`);
+    }
   }
 
   onSubmit(): void {

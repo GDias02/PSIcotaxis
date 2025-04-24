@@ -6,7 +6,7 @@ import { FormControl, AbstractControl, FormGroup, Validators, ValidatorFn, Valid
 import { Motorista } from '../motorista';
 import { MotoristaService } from '../motorista.service';
 import { MoradaCreateComponent } from '../morada-create/morada-create.component';
-
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-motorista-create',
@@ -21,13 +21,23 @@ export class MotoristaCreateComponent {
   cartaDeConducao?: string;
   @ViewChild(MoradaCreateComponent) moradaComponent?: MoradaCreateComponent;
 
+  duplicateNif: boolean = false;
+  duplicateCarta: boolean = false;
+
   motoristaForm = new FormGroup({
-    nome: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
-    nif: new FormControl('', [Validators.required, Validators.min(100000000), Validators.max(999999999)]),
+    nome: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64), Validators.pattern('^[^\\d]*$')]),
+    nif: new FormControl('', [Validators.required, Validators.min(100000000), Validators.max(999999999), this.duplicateNifValidator()]),
     genero: new FormControl('', [Validators.required, Validators.pattern('^Masculino|Feminino$')]),
     dataDeNascimento: new FormControl('', [Validators.required, this.dataInRange()], ),
-    cartaDeConducao: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(32)])
+    cartaDeConducao: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(32), this.duplicateCartaValidator()])
   })
+
+  constructor(
+    private route: ActivatedRoute,
+    private motoristaService: MotoristaService,
+    private location: Location,
+    private messageService: MessageService
+  ) {}
 
   dataInRange(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -37,11 +47,21 @@ export class MotoristaCreateComponent {
     }
   }
 
-  constructor(
-    private route: ActivatedRoute,
-    private motoristaService: MotoristaService,
-    private location: Location
-  ) {}
+  duplicateNifValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const nif = control.value;
+      if (!this.duplicateNif) return null;
+      else return { duplicateNif: true }
+    }
+  }
+
+  duplicateCartaValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const carta = control.value;
+      if (!this.duplicateCarta) return null;
+      else return { duplicateCarta: true }
+    }
+  }
 
   goBack(): void {
     this.location.back();
@@ -78,19 +98,21 @@ export class MotoristaCreateComponent {
           //There was a specific error
           const error = motorista.error;
           console.log('Error creating motorista', error);
-          if (error.code === 11000){
-            this.showErrors(Object.keys(error.keyPattern), "Este valor já foi utilizado anteriormente");
+          if (error.code === 11000) {
+            this.showErrors(Object.keys(error.keyPattern));
           }
-          
         }
-          
       }
     });
   }
 
-  showErrors(controlNames: string[], message: string) {
-    for (let f in this.motoristaForm.controls) {
-      
+  showErrors(controlNames: string[]) {
+    for (let cname of controlNames) {
+      switch (cname) {
+        case "nif": this.duplicateNif = true; this.motoristaForm.controls["nif"].updateValueAndValidity(); break;
+        case "cartaDeConducao": this.duplicateCarta = true; this.motoristaForm.controls["cartaDeConducao"].updateValueAndValidity(); break;
+      }
+      this.messageService.add(`${cname} já existe na base de dados`);
     }
   }
 }

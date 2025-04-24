@@ -69,21 +69,14 @@ exports.motorista_create = [
       // 400 - Bad Request
       res.status(400).send({errors: errors});
     } else {
-      const sameMotorista = await Motorista.find(motorista).exec();
-      console.log(sameMotorista);
-      if (sameMotorista.length) {
-        // 200 - OK
-        res.status(200).send({warning: "Motorista Duplicado. Nenhum motorista foi criado!"});
-      } else {
-        try {
-          // Create a Motorista object with escaped and trimmed data.
-          // 201 - Created
-          await motorista.save()
-          const newMotorista = await Motorista.findById(motorista._id).exec();
-          res.status(201).send(newMotorista);
-        } catch (error) {
-          res.status(409).send(error)
-        }
+      try {
+        // Create a Motorista object with escaped and trimmed data.
+        // 201 - Created
+        await motorista.save()
+        const newMotorista = await Motorista.findById(motorista._id).exec();
+        res.status(201).send(newMotorista);
+      } catch (error) {
+        res.status(409).send(error)
       }
     }
   }),

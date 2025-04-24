@@ -59,10 +59,14 @@ export class TaxiService {
     );
   }
 
-  addTaxi(taxi: Taxi): Observable<Taxi> {
+  addTaxi(taxi: Taxi): Observable<Taxi | any> {
     const url = this.taxisUrl + "/taxis/create";
     return this.http.post<Taxi>(url, taxi, this.httpOptions).pipe(
-      catchError(this.handleError<Taxi>('addTaxi'))
+      catchError((error) => {
+        this.log(error);
+        catchError(this.handleError<Taxi>(`addTaxi id=${taxi.matricula}`));
+        return of(error);
+      })
     );
   }
 
