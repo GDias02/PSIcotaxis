@@ -32,6 +32,8 @@ export class TaxiCreateComponent {
     })
   optionsMarcas: string[] = [];
   filteredOptionsMarcas?: Observable<string[]>;
+  optionsModelos: string[] = [];
+  filteredOptionsModelos?: Observable<string[]>;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,6 +57,9 @@ export class TaxiCreateComponent {
       .subscribe(marcas => {
         for (let key of Object.getOwnPropertyNames(marcas)) {
           this.optionsMarcas.push(key);
+          for(let model of marcas[key]){
+            this.optionsModelos.push(model);
+          }
         }
       });
   }
