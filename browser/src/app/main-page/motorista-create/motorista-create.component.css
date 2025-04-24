@@ -1,10 +1,6 @@
 #motorista-create-wrapper {
-    margin-left: 20%; /* Center the wrapper horizontally */
-    margin-right: 20%;
-    margin-bottom: 10%;
+    height: 100%;
 }
-
-
 
 .header {
     margin: 0 auto; /* Center the header horizontally */

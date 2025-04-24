@@ -1,7 +1,16 @@
-.logintype {
-    flex: 1 1 auto;
-    margin: 2% 25%;
+#grid-container {
+    width: 75%;
 }
+
+.logintype {
+    width: 100%;
+}
+
+mat-icon {
+    padding-left: 0.1%;
+    padding-right: 1.5%;
+}
+
 mat-card-header {
     text-align: center;
 }
