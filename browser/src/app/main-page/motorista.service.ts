@@ -55,34 +55,31 @@ export class MotoristaService {
       catchError(this.handleError<Motorista>('updateMotorista'))
     );
   }
-/*
-  addMotorista(motorista: Motorista): Observable<Motorista> {
+
+  addMotorista(motorista: Motorista): Observable<Motorista | any> {
     const url = this.motoristasUrl + "/motoristas/create";
     return this.http.post<Motorista>(url, motorista, this.httpOptions).pipe(
-      catchError(this.handleError<Motorista>('addMotorista'))
+      catchError((error) => {
+        this.log(error);
+        catchError(this.handleError<Motorista>(`addMotorista id=${motorista.nif}`));
+        return of(error);
+      })
     );
-  }*/
-
+  }
+/*
   addMotorista(motorista: Motorista): Observable<Motorista> {
     const url = this.motoristasUrl + "/motoristas/create";
     return this.http.post<Motorista>(url, motorista, { ...this.httpOptions, observe: 'response' }).pipe(
       tap(response => {
-        if (response.status === 200) {
-          this.log(`Status 200: ${response.headers.get('warning')}`);
-          // Handle status 200 logic here
-        } else if (response.status === 400) {
-          console.error('Status 400: Bad Request.');
-          this.log('Status 400: Bad Request.');
-          // Handle status 400 logic here
-        } else if (response.status === 201) {
+        if (response.status === 409) {
           console.log('Status 201: Resource created successfully.');
-          // Handle status 201 logic here (normal behavior)
+          return response
         }
       }),
       map(response => response.body as Motorista), // Extract the body from the response
       catchError(this.handleError<Motorista>('addMotorista'))
     );
-  }
+  }*/
 
 
   deleteMotorista(id: string): Observable<Motorista> {
