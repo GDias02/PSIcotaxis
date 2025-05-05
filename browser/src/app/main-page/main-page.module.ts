@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Components and Routers
 import { MainPageRoutingModule } from './main-page-routing.module';
+import { PedidoCreateComponent } from './pedido-create/pedido-create.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConfigsComponent } from './configs/configs.component';
 import { MoradaCreateComponent } from './morada-create/morada-create.component';
@@ -22,6 +23,7 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MainPageComponent } from './main-page.component';
+import { FormPedidoCreateComponent } from './form-pedido-create/form-pedido-create.component';
 
 //Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -42,6 +44,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-form.component';
 
 @NgModule({
   imports: [
@@ -74,6 +79,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatStepperModule,
+    MatProgressSpinnerModule,
     AsyncPipe
 
   ],
@@ -90,7 +97,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ViagemCustoComponent,
     TaxiDetailComponent,
     TaxiCreateComponent,
-    MessagesComponent
+    MessagesComponent,
+    PedidoCreateComponent,
+    FormPedidoCreateComponent,
+    PedidoCreateFormComponent
   ],
 })
 export class MainPageModule {

@@ -32,6 +32,11 @@ export class DashboardComponent {
           link: 'motoristas',
           index: 1
         });
+        this.navLinks.push({
+          label: 'Criar pedido',
+          link: 'pedidos',
+          index: 1
+        })
         break;
       case User.MOTORISTA:
         this.navLinks.push({
