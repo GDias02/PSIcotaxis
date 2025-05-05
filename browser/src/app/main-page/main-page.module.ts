@@ -23,7 +23,7 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MainPageComponent } from './main-page.component';
-import { FormPedidoCreateComponent } from './form-pedido-create/form-pedido-create.component';
+import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-form.component';
 
 //Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +46,18 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-form.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MapViewerComponent } from './map-viewer/map-viewer.component';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -81,6 +92,8 @@ import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-fo
     MatAutocompleteModule,
     MatStepperModule,
     MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
     AsyncPipe
 
   ],
@@ -99,8 +112,8 @@ import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-fo
     TaxiCreateComponent,
     MessagesComponent,
     PedidoCreateComponent,
-    FormPedidoCreateComponent,
-    PedidoCreateFormComponent
+    PedidoCreateFormComponent,
+    MapViewerComponent
   ],
 })
 export class MainPageModule {
