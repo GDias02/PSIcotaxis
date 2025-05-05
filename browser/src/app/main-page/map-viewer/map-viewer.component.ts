@@ -1,10 +1,5 @@
-import {Component, Inject} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+import {Component} from '@angular/core';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-map-viewer',
@@ -13,12 +8,20 @@ export interface DialogData {
 
 })
 export class MapViewerComponent {
-  constructor(
-    public dialogRef: MatDialogRef<MapViewerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  private map!: L.Map;
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  ngAfterViewInit(): void{
+    this.map = L.map('map').setView([38.756581, -9.155152], 20);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(this.map);
+
+    this.map.on('click', (e) => {
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(this.map);
+    })
   }
-
 }
