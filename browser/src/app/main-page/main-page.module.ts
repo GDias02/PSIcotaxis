@@ -22,6 +22,8 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MainPageComponent } from './main-page.component';
+import { TurnoCreateComponent } from './turno-create/turno-create.component';
+import { TurnosComponent } from './turnos/turnos.component';
 
 //Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -90,7 +92,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ViagemCustoComponent,
     TaxiDetailComponent,
     TaxiCreateComponent,
-    MessagesComponent
+    MessagesComponent,
+    TurnoCreateComponent,
+    TurnosComponent
   ],
 })
 export class MainPageModule {
