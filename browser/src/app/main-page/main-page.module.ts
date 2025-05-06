@@ -55,6 +55,7 @@ import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogModule,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
@@ -94,6 +95,7 @@ import {
     MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatCheckboxModule,
+    MatDialogModule,
     AsyncPipe
 
   ],

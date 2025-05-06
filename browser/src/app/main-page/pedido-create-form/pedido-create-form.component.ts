@@ -8,20 +8,21 @@ import { MapViewerComponent } from "../map-viewer/map-viewer.component";
   styleUrls: ['./pedido-create-form.component.css'],
 })
 export class PedidoCreateFormComponent {
-  animal?: string;
-  name?: string;
+  coordenadasDe?: string;
+  coordenadasPara?: string;
 
   constructor(public dialog: MatDialog) {}
 
-  openDialog(): void {
+  openMap(): void {
     const dialogRef = this.dialog.open(MapViewerComponent, {
-      width: '250px',
-      data: {name: this.name, animal: this.animal}
+      height:'80%',
+      width: '80%',
+      data: {de: this.coordenadasDe, para: this.coordenadasPara}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
+      alert("You need to implement the feature of autofil for all these components")
     });
   }
 

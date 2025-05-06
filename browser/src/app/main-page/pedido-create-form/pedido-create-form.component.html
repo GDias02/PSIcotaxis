@@ -1,16 +1,13 @@
 <h1>Para onde quer viajar?</h1>
-<ol>
-    <li>
-      <mat-form-field appearance="fill">
-        <mat-label>What's your name?</mat-label>
-        <input matInput [(ngModel)]="name">
-      </mat-form-field>
-    </li>
-    <li>
-      <button mat-raised-button (click)="openDialog()">Pick one</button>
-    </li>
-    <li *ngIf="animal">
-      You chose: <i>{{animal}}</i>
-    </li>
-  </ol>
-<app-morada-create></app-morada-create>
+
+<div id="open-map-button">
+    <button mat-fab extended (click)="openMap()">
+        Escolher no mapa
+        <mat-icon>location_on</mat-icon>
+    </button>
+</div>
+
+<h2>De:</h2>
+<app-morada-create id="de-component"></app-morada-create>
+<h2>Para:</h2>
+<app-morada-create id="para-component"></app-morada-create>
