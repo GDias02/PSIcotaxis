@@ -14,8 +14,8 @@ exports.turnos_de_motorista = asyncHandler(async (req, res, next) => {
 
 // /taxis que nao estao ocupados num periodo - GET
 exports.taxis_livres = asyncHandler(async (req, res, next) => {
-    const start = req.body.inicio;
-    const end = req.body.fim;
+    const start = req.params.inicio;
+    const end = req.params.fim;
 
     const turnos = await Turno.find({ $and: [{ inicio: { $lte: end } }, { fim: { $gt: start } }] },
         { _id: 0, taxi: 1 }).exec(); // todos os turnos que intersetam com o periodo indicado
@@ -76,11 +76,9 @@ exports.turno_create = [
         const turno = new Turno({
             motorista: req.body.motorista,
             taxi: req.body.taxi,
-            viagens: [],
             inicio: req.body.inicio,
             fim: req.body.fim,
         });
-
         if (!errors.isEmpty()) {
             // 400 - Bad Request
             res.status(400).send(errors);
@@ -89,6 +87,7 @@ exports.turno_create = [
                 // 201 - Created
                 await turno.save();
                 const newTurno = await Turno.findById(turno._id).exec();
+
                 res.status(201).send(newTurno);
             } catch (error) {
                 res.status(409).send(error);

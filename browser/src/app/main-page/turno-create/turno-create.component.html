@@ -1,1 +1,47 @@
-<p>turno-create works!</p>
+<mat-stepper #stepper>
+  <mat-step [stepControl]="firstFormGroup" errorMessage="Data de inicio e fim são necessárias.">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Período do Turno</ng-template>
+      <mat-form-field>
+        <mat-label>Data de Início</mat-label>
+        <input matInput type="datetime-local" placeholder="Data Início" formControlName="inicio" [(ngModel)]="inicio"
+          (change)="updateValidityFim()">
+        <mat-error *ngIf="firstFormGroup.value.inicio">A data de inicio tem de ser anterior à data de fim da
+          viagem</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Data de Fim</mat-label>
+        <input matInput type="datetime-local" placeholder="Data Fim" formControlName="fim" [(ngModel)]="fim"
+          (change)="updateValidityInicio()">
+        <mat-error *ngIf="errors.fimBeforeInicio">A data de inicio tem de ser anterior à data de fim da
+          viagem</mat-error>
+        <mat-error *ngIf="errors.turnoMaisDeOito"> O turno pode durar no máximo 8 horas</mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-button (click)="onNext(stepper)" [disabled]="!firstFormGroup.valid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" errorMessage="Escolher um táxi é necessário.">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <p>Go to a different step to see the error state</p>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>

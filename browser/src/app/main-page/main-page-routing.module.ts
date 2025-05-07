@@ -13,6 +13,7 @@ import { MainPageComponent } from './main-page.component';
 import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
 import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
 import { AppComponent } from '../app.component';
+import { TurnoCreateComponent } from './turno-create/turno-create.component';
 
 const mainroutes: Routes = [
     { path: 'main-page', component: MainPageComponent, children: [
@@ -23,6 +24,7 @@ const mainroutes: Routes = [
       { path: 'taxis', component: TaxisComponent },
       { path: 'taxis/create', component: TaxiCreateComponent },
       { path: 'taxis/:id', component: TaxiDetailComponent },
+      { path: 'turno/create', component: TurnoCreateComponent },
       { path: 'configs', component: ConfigsComponent },
       { path: 'viagens/custo', component: ViagemCustoComponent },
     ]},
