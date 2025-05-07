@@ -1,4 +1,3 @@
-
 <div id="motorista-create-wrapper">
     <h2 class= "header">Registar um motorista </h2>
     <form [formGroup]="motoristaForm" (ngSubmit)="onSubmit()">
@@ -29,7 +28,7 @@
                             </mat-select>
                             <mat-error *ngIf="motoristaForm.value.genero">Género tem de ser masculino ou feminino</mat-error>
                         </mat-form-field>
-                        </p>
+                    </p>
                     <p>
                         <mat-form-field>
                             <mat-label>Data de Nascimento</mat-label>

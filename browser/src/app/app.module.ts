@@ -23,6 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MainPageModule } from './main-page/main-page.module';
 import { LoginComponent } from './login/login.component';
@@ -58,6 +59,7 @@ import { AppComponent } from './app.component';
     MatRadioModule,
     MatSelectModule,
     MatOptionModule,
+    MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule,
   ],

@@ -26,6 +26,7 @@ import { MainPageComponent } from './main-page.component';
 import { FormPedidoCreateComponent } from './form-pedido-create/form-pedido-create.component';
 import { TurnoCreateComponent } from './turno-create/turno-create.component';
 import { TurnosComponent } from './turnos/turnos.component';
+import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-form.component';
 
 //Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -48,7 +49,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-form.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MapViewerComponent } from './map-viewer/map-viewer.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -84,6 +88,9 @@ import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-fo
     MatStepperModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatDialogModule,
     AsyncPipe
 
   ],
@@ -102,10 +109,11 @@ import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-fo
     TaxiCreateComponent,
     MessagesComponent,
     PedidoCreateComponent,
-    FormPedidoCreateComponent,
     PedidoCreateFormComponent,
     TurnoCreateComponent,
-    TurnosComponent
+    TurnosComponent,
+    PedidoCreateFormComponent,
+    MapViewerComponent
   ],
 })
 export class MainPageModule {
