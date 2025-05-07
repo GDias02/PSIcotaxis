@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy, signal, inject, Input, Injectable } from '@angular/core';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { User } from '../user';
+import { Component, ChangeDetectionStrategy, signal, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../user';
 import { UserService } from '../user.service';
 import { LocService } from '../main-page/loc.service';
 
@@ -14,6 +13,14 @@ import { LocService } from '../main-page/loc.service';
 export class LoginComponent {
   readonly panelOpenState = signal(false);
   private readonly router = inject(Router);
+
+  user: string = 'Utilizador';
+
+  @Input()
+  userName = '';
+  userPass = '';
+  erro: string = '';
+
   constructor(
     private readonly userService: UserService,
     private locService: LocService
@@ -21,17 +28,32 @@ export class LoginComponent {
     this.locService.setLocWatcher();
   }
 
-  user: string = 'Utilizador';
-
-  @Input()
-  userName = '';
-  userPass = '';
-
   login() {
-    this.userService.setCurrentUserType(this.getUserType());
+    const tipo = this.getUserType();
+
+    this.userService.setCurrentUserType(tipo);
     this.userService.setCurrentUserName(this.userName);
-    this.router.navigate([`main-page`]);
+
+    if (tipo === User.MOTORISTA) {
+      if (!/^\d{9}$/.test(this.userName)) {
+        this.erro = 'NIF inválido. Deve conter 9 dígitos.';
+        return;
+      }
+
+      this.userService.getMotoristaByNif(this.userName).subscribe({
+        next: (motorista) => {
+          localStorage.setItem('motorista', JSON.stringify(motorista));
+          this.router.navigate(['/painel-motorista']);
+        },
+        error: () => {
+          this.erro = 'Motorista não encontrado.';
+        }
+      });
+    } else {
+      this.router.navigate([`main-page`]);
+    }
   }
+
   getUserType(): User {
     let currUser = User.NAO_AUTENTICADO;
     switch (this.user) {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from './user';
+import { HttpClient } from '@angular/common/http';
+import { Motorista } from './main-page/motorista'; 
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +27,10 @@ export class UserService {
   getCurrentUserName(): Observable<string>{
     return of(this.currentUserName);
   }
-  constructor() { }
+
+  getMotoristaByNif(nif: string): Observable<any> {
+    return this.http.get('/motoristas/${nif}'); 
+  }
+
+  constructor(private http: HttpClient) { }
 }

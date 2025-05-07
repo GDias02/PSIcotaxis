@@ -22,6 +22,8 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MainPageComponent } from './main-page.component';
+import { TurnoCreateComponent } from './turno-create/turno-create.component';
+import { TurnosComponent } from './turnos/turnos.component';
 
 //Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -42,6 +44,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   imports: [
@@ -74,6 +77,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatStepperModule,
+    MatDatepickerModule,
     AsyncPipe
 
   ],
@@ -90,7 +95,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ViagemCustoComponent,
     TaxiDetailComponent,
     TaxiCreateComponent,
-    MessagesComponent
+    MessagesComponent,
+    TurnoCreateComponent,
+    TurnosComponent
   ],
 })
 export class MainPageModule {
