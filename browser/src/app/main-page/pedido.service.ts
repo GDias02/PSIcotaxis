@@ -27,7 +27,7 @@ export class PedidoService {
   }
 
   getPedidos(): Observable<Pedido[]> {
-      const url = this.pedidosUrl + "/pedidos"
+      const url = this.pedidosUrl + "/pedidos";
       return this.http.get<Pedido[]>(url)
         .pipe(
           catchError(this.handleError<Pedido[]>('getPedidos', []))

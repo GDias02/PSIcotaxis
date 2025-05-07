@@ -4,6 +4,7 @@ import { FormControl, AbstractControl, FormGroup, Validators, ValidatorFn, Valid
 import { debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
 
 import { MotoristaService } from '../motorista.service';
+import { Morada } from '../morada';
 
 @Component({
   selector: 'app-morada-create',
@@ -46,5 +47,12 @@ export class MoradaCreateComponent {
 
   searchForLocalidade(codPostal: string):Observable<string>{
     return this.motoristaService.getLocalidadeByCodigoPostal(codPostal);
+  }
+
+  registerMorada(morada: Morada):void{
+    this.codPostal = morada.codigoPostal;
+    this.localidade = morada.localidade;
+    this.rua = morada.rua;
+    this.numero = morada.numeroDePorta;
   }
 }

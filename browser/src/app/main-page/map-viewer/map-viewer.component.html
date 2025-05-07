@@ -12,11 +12,11 @@
             <input matInput placeholder="" required [(ngModel)]="coordenadasPara">
         </mat-form-field>
     </span>
-    <div id="map" class="map-container"></div>
+    <div id="map" class="map-container"><mat-spinner></mat-spinner></div>
     <button id="submission-button" mat-fab extended
                 [disabled]="(coordenadasDe === '') || (coordenadasDe === undefined) ||
                             (coordenadasPara === '') || (coordenadasPara === undefined)"
-                onclick="sendBack">Confirmar</button>
+                (click)="sendBack()">Confirmar</button>
 </ng-container>
 
 <ng-template #desktopView>
@@ -42,8 +42,10 @@
             <button id="submission-button" mat-fab extended 
                 [disabled]="(coordenadasDe === '') || (coordenadasDe === undefined) ||
                             (coordenadasPara === '') || (coordenadasPara === undefined)"
-                onclick="sendBack">Confirmar</button>
+                (click)="sendBack()">Confirmar</button>
         </mat-grid-tile>
     </mat-grid-list>
-    <div id="map" class="map-container"></div>
+    <div id="map" class="map-container" >
+        <mat-spinner></mat-spinner>
+    </div>
 </ng-template>

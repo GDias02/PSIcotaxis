@@ -3,6 +3,10 @@
     height: 70%;
     padding-left: 2%;
     padding-right: 2%;
+    
+    display: flex;
+    justify-content: center; 
+    align-items: center;
 }
 
 #content-wrapper {

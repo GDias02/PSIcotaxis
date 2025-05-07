@@ -73,6 +73,9 @@ export class MapViewerComponent {
   }
 
   
+  public sendBack() : void {
+    this.dialogRef.close([this.coordenadasDe, this.coordenadasPara]);
+  }
 
   /**
    * Takes care of clicking on the map
