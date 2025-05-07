@@ -11,10 +11,14 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class PedidoService {
-  private pedidosUrl = 'https://localhost:3000/clientes' //pedidos
-   
+  private readonly pedidosUrl = 'https://localhost:3000/clientes' //pedidos
+  
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   constructor(
-    private http: HttpClient,
+    private readonly http: HttpClient,
     private messageService: MessageService
   ) { }
 
@@ -40,6 +44,14 @@ export class PedidoService {
       .pipe(
         catchError(this.handleError<Pedido>(`getPedido ${id}`))
       )
+  }
+
+  postPedido(pedido: Pedido): Observable<Pedido> {
+    const url = this.pedidosUrl + "/pedidos";
+    return this.http.post<Pedido>(url, pedido, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Pedido>('postPedido'))
+      );
   }
 
   deletePedido(id: string): Observable<Pedido>{

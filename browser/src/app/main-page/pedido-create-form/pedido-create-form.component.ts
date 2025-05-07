@@ -5,7 +5,8 @@ import { MapViewerComponent } from "../map-viewer/map-viewer.component";
 import { GeolocationService } from "../geolocation.service";
 import { Morada } from "../morada";
 import { MoradaCreateComponent } from "../morada-create/morada-create.component";
-import { FormControl, AbstractControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Pedido } from "../pedido";
 
 @Component({
   selector: 'app-pedido-create-form',
@@ -19,6 +20,7 @@ export class PedidoCreateFormComponent {
   nif?: number;
   genero?: string;
   nome?: string;
+  luxuoso: boolean = false;
   @ViewChild('moradaDe') moradaDeComponent!: MoradaCreateComponent;
   @ViewChild('moradaPara') moradaParaComponent!: MoradaCreateComponent;
 
@@ -28,6 +30,7 @@ export class PedidoCreateFormComponent {
     nome: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64), Validators.pattern('^[^\\d]*$')]),
     nif: new FormControl('', [Validators.required, Validators.min(100000000), Validators.max(999999999), Validators.pattern('^\\d+$')]),
     genero: new FormControl('', [Validators.required, Validators.pattern('^Masculino|Feminino$')]),
+    numDePassageiros: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(4)]),
   })
 
   constructor(public dialog: MatDialog,
@@ -47,8 +50,6 @@ export class PedidoCreateFormComponent {
     });
 
     dialogRef.afterClosed().subscribe(async result => {
-      console.log('The dialog was closed');
-      console.log(result);
       this.coordenadasDe = result[0];
       this.coordenadasPara = result[1];
       
@@ -63,15 +64,44 @@ export class PedidoCreateFormComponent {
         this.moradaParaComponent.registerMorada(moradaPara);
       }
 
-      this.openSnackBar("Confirme sempre os dados preenchidos e se necessário adicione o número da porta adequado");
+      this.openSnackBar("Confirme sempre os dados preenchidos e se for adequado adicione o número da porta");
 
       });
   }
   
+  isReadyToSubmit():boolean{
+    return this.pedidoForm.valid ?? false;
+  }
+
+  getPedido(): Pedido{
+    return {
+      _id: "",
+      moradaDe: this.moradaDeComponent.getRespectiveMorada(),
+      moradaPara: this.moradaParaComponent.getRespectiveMorada(),
+      coordenadasDe: this.coordenadasDe,
+      coordenadasPara: this.coordenadasPara,
+      numDePassageiros: this.pedidoForm.get('numDePassageiros')?.value ?? 4,
+      luxuoso: this.luxuoso,
+      nif: this.pedidoForm.get('nif')?.value ?? "999999999",
+      genero: this.pedidoForm.get('genero')?.value ?? "Masculino",
+      nome: this.pedidoForm.get('nome')?.value ?? "João",
+      status: "Pendente",
+    };
+  }
+
+  async makeSureThereAreCoordinates(): Promise<void>{
+    if (!this.coordenadasDe || !this.coordenadasPara){
+      const coordDe = await this.translateMoradaToCoordinatesAsync(this.moradaDeComponent.getRespectiveMorada());
+      this.coordenadasDe = this.extractLatLngString(coordDe);
+    
+      const coordPara = await this.translateMoradaToCoordinatesAsync(this.moradaParaComponent.getRespectiveMorada());
+      this.coordenadasPara = this.extractLatLngString(coordPara);
+    }
+  }
+
   private async translateCoordinatesToMoradaAsync(coord: string): Promise<Morada | null> {
     try {
       const json: any = await this.geolocationService.getTranslationForCoordinate(coord).toPromise();
-      console.log('The form got this JSON:', json);
   
       const morada: Morada = {
         rua: json.address?.road ?? 'Unknown Street',
@@ -87,11 +117,18 @@ export class PedidoCreateFormComponent {
     }
   }
 
-  submitPedido(){
-    
+  private async translateMoradaToCoordinatesAsync (morada: Morada): Promise<JSON> {
+    const json: any = await this.geolocationService.getTranslationForMorada(morada).toPromise();
+    return json;
   }
 
   private openSnackBar(message: string) {
     this._snackBar.open(message, 'Okay', {duration:8500});
+  }
+
+  private extractLatLngString(json: any): string {
+    const lat = json.lat;
+    const lon = json.lon;
+    return `${lat},${lon}`; 
   }
 }

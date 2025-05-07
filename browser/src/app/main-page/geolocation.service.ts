@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { catchError, Observable, of, tap } from 'rxjs';
@@ -31,6 +31,15 @@ export class GeolocationService {
     return this.http.get<JSON>(url).pipe(
       catchError(this.handleError<JSON>(`getting the tranlation for ${coord}`))
     );
+  }
+
+  getTranslationForMorada(morada: Morada): Observable<JSON>{
+    const url = `https://nominatim.openstreetmap.org/search?`;
+    const query = `country=Portugal&city=${morada.localidade}&street=${morada.rua}&postalcode=${morada.codigoPostal}`;
+    const settings = `&format=json`;
+    return this.http.get<JSON>(url+query+settings).pipe(
+      catchError(this.handleError<JSON>(`getting the translation for ${morada}`))
+    )
   }
 
 }

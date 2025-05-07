@@ -55,4 +55,14 @@ export class MoradaCreateComponent {
     this.rua = morada.rua;
     this.numero = morada.numeroDePorta;
   }
+
+  getRespectiveMorada():Morada{
+    const data = this.moradaForm.value;
+    return {
+      codigoPostal: data.codPostal ?? "0000-000",
+      localidade: data.localidade ?? "não encontrada",
+      rua: data.rua ?? "não encontrada",
+      numeroDePorta: this.numero
+    };
+  }
 }
