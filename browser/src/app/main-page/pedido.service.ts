@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class PedidoService {
-  private readonly pedidosUrl = 'https://localhost:3000/clientes' //pedidos
+  private readonly pedidosUrl = 'http://localhost:3000/clientes' //pedidos
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -48,6 +48,8 @@ export class PedidoService {
 
   postPedido(pedido: Pedido): Observable<Pedido> {
     const url = this.pedidosUrl + "/pedidos";
+    console.log("putPedido", pedido);
+    console.log("url", url);
     return this.http.post<Pedido>(url, pedido, this.httpOptions)
       .pipe(
         catchError(this.handleError<Pedido>('postPedido'))
@@ -62,7 +64,13 @@ export class PedidoService {
       );
   }
 
-  //Puts don't make sense for pedido
+  putPedido(pedido:Pedido): Observable<Pedido>{
+    const url = `http://localhost:3000/motoristas/${pedido._id}`;
+    return this.http.put<Pedido>(url, pedido,this.httpOptions)
+            .pipe(
+              catchError(this.handleError<Pedido>(`putPedido ${pedido._id}`))
+            );
+  }
 
   private log(message: string){
     this.messageService.add(`Pedido Service: ${message}`);

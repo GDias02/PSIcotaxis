@@ -12,4 +12,11 @@ router.get('/servicos', function(req, res, next) {
   res.redirect("/servicos");
 });
 
+/* GET clientes page. */
+router.get('/clientes', function(req, res, next) {
+  res.redirect("/clientes");
+});
+
+
+
 module.exports = router;

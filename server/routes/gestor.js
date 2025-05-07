@@ -19,4 +19,5 @@ router.post("/motoristas/create", motorista_controller.motorista_create);
 /// Config ROUTES ///
 router.get("/configs", config_controller.config_list);
 router.put("/configs", config_controller.config_create);
+
 module.exports = router;

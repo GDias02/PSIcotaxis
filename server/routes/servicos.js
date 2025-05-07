@@ -5,7 +5,6 @@ const servicosController = require('../controllers/servicosController');
 const initController = require('../controllers/initController');
 
 // GET - Reinicia a base de dados
-
 router.get('/initiateDebug', initController.init);
 
 // GET - Localidade by código postal

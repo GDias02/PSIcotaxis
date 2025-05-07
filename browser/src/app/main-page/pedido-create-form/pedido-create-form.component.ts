@@ -83,9 +83,9 @@ export class PedidoCreateFormComponent {
       numDePassageiros: this.pedidoForm.get('numDePassageiros')?.value ?? 4,
       luxuoso: this.luxuoso,
       nif: this.pedidoForm.get('nif')?.value ?? "999999999",
-      genero: this.pedidoForm.get('genero')?.value ?? "Masculino",
+      genero: this.pedidoForm.get('genero')?.value?.toLocaleLowerCase() ?? "Masculino",
       nome: this.pedidoForm.get('nome')?.value ?? "João",
-      status: "Pendente",
+      status: "pendente",
     };
   }
 
