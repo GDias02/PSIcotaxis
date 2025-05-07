@@ -47,7 +47,12 @@ export class DashboardComponent {
         this.navLinks.push({
           label: 'O meu perfil',
           link: '/',
-          index: 1
+          index: 2
+        });
+        this.navLinks.push({
+          label: 'Registar Turno',
+          link: 'turno/create',
+          index: 4
         });
         break;
       case User.GESTOR:
@@ -60,6 +65,11 @@ export class DashboardComponent {
           label: 'Configuracoes',
           link: 'configs',
           index: 2
+        });
+        this.navLinks.push({
+          label: 'Registar Turno',
+          link: 'turno/create',
+          index: 4
         });
         break;
     }

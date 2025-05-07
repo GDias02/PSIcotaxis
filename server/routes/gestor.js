@@ -4,6 +4,7 @@ const router = express.Router();
 const taxi_controller = require("../controllers/taxiController");
 const motorista_controller = require("../controllers/motoristaController");
 const config_controller = require("../controllers/configController");
+const turno_controller = require("../controllers/turnoController");
 
 /// Taxi ROUTES ///
 router.get("/taxis", taxi_controller.taxi_list);
@@ -15,6 +16,12 @@ router.post("/taxis/create", taxi_controller.taxi_create);
 router.get("/motoristas", motorista_controller.motorista_list);
 router.get("/motoristas/:id", motorista_controller.motorista);
 router.post("/motoristas/create", motorista_controller.motorista_create);
+
+/// Turno ROUTES ///
+router.get("/turnos", turno_controller.taxis_livres);
+router.get("/turnos/:id", turno_controller.turno);
+router.get("/turnos/motorista/:id", turno_controller.turnos_de_motorista);
+router.post("/turnos/create", turno_controller.turno_create);
 
 /// Config ROUTES ///
 router.get("/configs", config_controller.config_list);

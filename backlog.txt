@@ -7,3 +7,35 @@ USO: <prioridade; conclusao; descricao; encarregado;>
 <baixa; TODO; form de codigo-postal em motorista-create pode ser melhorado; ;>
 <baixa; TODO; form de anoDeCompra em taxi-create pode ser melhorado; ;>
 <baixa; TODO; criar página de 404 (recurso inexistente); ;>
+
+
+Notas sobre Sprint2:
+US4 - "Conta de Motorista" ´- Alberto
+- Login a partir de uma lista de motoristas da empresa ou do Nif
+RESOLUÇÃO: ALTERAR a página de LOGIN, no separador de MOTORISTA, para permitir este formulário.
+- Requisitar taxis para turnos, aceitar pedido de táxi, registo de viagem, emitir fatura.
+RESOLUÇÃO: Mudar o dashboard apresentado ao motorista, para incluir novos componentes "Requisitar Taxi", "Responder a pedidos", "Registar viagem" e "Faturas emitidas"
+
+US5 - "Requisitar Taxi" - Joao
+- Após selecionar um periodo para o turno, apresentar uma lista de taxis disponiveis para selecionar um desses taxis.
+- Apresentar a lista dos turnos que o motorista requisitou, com o turno mais antigo em cima.
+RESOLUÇÃO: Criar uma entidade Turno, com o motorista, o taxi e um periodo (máximo de 8h). Esta terá de ser persistida também. Criar o componente Requisitar Taxi, que deverá ser um Stepper: Step1: dar os dados do período. Step2: escolher um taxi da lista. Step3: Concluido - *mostrar a lista*
+
+US6 - "Pedir um Taxi" - Gui
+- Login como cliente.
+RESOLUÇÃO: Mudar o dashboard de cliente para apresentar ao cliente links para os componentes de: "Chamar um Taxi", "As Minhas Faturas"(não implementar)
+- Preencher formulário para pedir uma viagem. Aguardar a resposta de um Motorista, ou cancelar o pedido. Visualizar os dados do <<turno>> que aceitou (nome do motorista, detalhes do taxi) e a distancia do motorista ao inicio da viagem requisitada, assim como o custo estimado da viagem.
+RESOLUÇÃO: Um Stepper para preencher os dados da viagem. O Passo 2 corresponderá a ficar à espera. Receber os dados do turno e usar o método de config para simular a viagem...(?)
+
+US7 - "Aceitar pedidos" - Gui
+- Visualizar a lista de pedidos não processados, ordenada de acordo com a distancia guardada no pedido até à minha posição atual.
+- Escolher 1 e aguardar confirmação do cliente.
+RESOLUÇÃO: A nível do front-end, criar o componente de "Aceitar Pedidos". Obter a localização do motorista que está logged in. Usar a formula de Haversine para calcular a distância do motorista ao cliente e ordenar a tabela de pedidos de acordo com isso. 
+
+US8 - "Registar Viagem" - Bruno
+- Partindo do ponto anterior, registar o início de uma viagem
+- Registar o fim da viagem.
+
+US9 - "Emitir fatura" - Bruno
+
+
