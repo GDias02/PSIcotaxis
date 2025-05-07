@@ -3,6 +3,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { User } from '../user';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { LocService } from '../main-page/loc.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,12 @@ import { UserService } from '../user.service';
 export class LoginComponent {
   readonly panelOpenState = signal(false);
   private readonly router = inject(Router);
-  constructor(private readonly userService: UserService){};
+  constructor(
+    private readonly userService: UserService,
+    private locService: LocService
+  ) {
+    this.locService.setLocWatcher();
+  }
 
   user: string = 'Utilizador';
 
