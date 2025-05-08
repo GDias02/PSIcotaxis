@@ -81,6 +81,8 @@ exports.pedido_update = [
         const errors = validationResult(req);
         const pedido = new Pedido({
             _id: req.params.id,
+            motorista: req.body.motorista,
+            taxi: req.body.taxi,
             moradaDe: req.body.moradaDe,
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,
@@ -151,6 +153,8 @@ exports.pedido_create = [
         // Extract the validation errors from a request.
         const errors = validationResult(req);
         const pedido = new Pedido({
+            motorista: req.body.motorista,
+            taxi: req.body.taxi,
             moradaDe: req.body.moradaDe,
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,

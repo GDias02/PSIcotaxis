@@ -6,6 +6,8 @@ const generosPossiveis = ["feminino", "masculino"];
 const statusPossiveis = ["pendente", "aceite"];
 
 const pedidoSchema = new Schema({
+    motorista: {type: Schema.Types.ObjectId, ref: "Motorista"},
+    taxi: {type: Schema.Types.ObjectId, ref: "Taxi"},
     moradaDe: {
         type: {
             rua: { type: String, required: true },
