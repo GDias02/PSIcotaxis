@@ -40,6 +40,12 @@ const taxiSchema = new mongoose.Schema({
       message: "O ano de compra deve ser maior ou igual a 1900 e não pode ser no futuro."
     }
   },
+  lugares: {
+    type: Number,
+    min: 1,
+    required: true,
+    default: "4"
+  },
   conforto: {
     type: String,
     enum: niveisDeConforto,

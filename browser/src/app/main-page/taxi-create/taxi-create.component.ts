@@ -21,6 +21,7 @@ export class TaxiCreateComponent {
   anoDeCompra?: Date;
   marca?: string;
   modelo?: string;
+  lugares?: number;
   conforto?: string;
   confortos = ['básico', 'luxuoso'];
 
@@ -31,6 +32,7 @@ export class TaxiCreateComponent {
       modelo: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
       conforto: new FormControl('', [Validators.required, Validators.pattern('^básico|luxuoso$') ]),
       anoDeCompra: new FormControl('', [Validators.required, this.dataInRange()]),
+      lugares: new FormControl('', [Validators.required, Validators.min(1)]),
       matricula: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z|0-9]{2}\\-[a-zA-Z|0-9]{2}\\-[a-zA-Z|0-9]{2}"), this.duplicateMatriculaValidator()]),
     })
   optionsMarcas: string[] = [];
@@ -119,6 +121,7 @@ export class TaxiCreateComponent {
       anoDeCompra: this.anoDeCompra,
       marca: this.marcaControl.value,
       modelo: this.modelo,
+      lugares: this.lugares,
       conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
     } as Taxi).subscribe({
       next: (taxi) => {
@@ -164,6 +167,7 @@ export class TaxiCreateComponent {
       this.marcaControl !== undefined &&
       this.modelo !== undefined &&
       this.anoDeCompra !== undefined &&
+      this.lugares !== undefined &&
       this.conforto !== undefined;
   }
 
@@ -172,6 +176,7 @@ export class TaxiCreateComponent {
       console.log("marca "+this.marcaControl.value);
       console.log("modelo " + this.modelo);
       console.log("ano de compra "+this.anoDeCompra);
+      console.log("lugares "+this.lugares);
       console.log("conforto"+this.conforto);
   }
 }

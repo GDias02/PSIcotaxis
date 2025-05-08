@@ -114,6 +114,7 @@ const TAXIS = [
     anoDeCompra: new Date('2001'),
     marca: 'Audi',
     modelo: 'A1',
+    lugares: 5,
     conforto: 'basico',
   },
   {
@@ -121,6 +122,7 @@ const TAXIS = [
     anoDeCompra: new Date('2002'),
     marca: 'Bentley',
     modelo: 'Bentayga',
+    lugares: 4,
     conforto: 'luxuoso',
   },
   {
@@ -128,6 +130,7 @@ const TAXIS = [
     anoDeCompra: new Date('2003'),
     marca: 'Citroën',
     modelo: 'C3',
+    lugares: 7,
     conforto: 'basico',
   },
 ];

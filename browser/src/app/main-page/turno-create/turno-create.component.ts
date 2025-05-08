@@ -7,6 +7,7 @@ import { MessageService } from '../message.service';
 import { Taxi } from '../taxi';
 import { MatStepper } from '@angular/material/stepper';
 import { TurnoService } from '../turno.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-turno-create',
@@ -24,24 +25,33 @@ export class TurnoCreateComponent {
   inicio: string = this.now;
   fim: string = this.now;
   errors: any = {fimBeforeInicio: false, turnoMaisDeOito: false }
-  displayedColumns: string[] = ['', '', ]
+
+  displayedColumns: string[] = ['marca', 'conforto', 'anoDeCompra'];
   taxis: Taxi[] = [];
+  taxiSelecionado?: Taxi;
 
 firstFormGroup = new FormGroup({
   inicio: new FormControl(new Date(this.inicio), [Validators.required, this.inicioBeforeFim()]),
   fim: new FormControl(new Date(this.fim), [Validators.required, this.fimAfterInicio(), this.turnoMaximoOitoHoras()])
 });
 secondFormGroup = new FormGroup({
-  secondCtrl: new FormControl(['', Validators.required])
+  secondCtrl: new FormControl('', [this.selecionouTaxi()])
 });
 
 constructor(
   private route: ActivatedRoute,
   private motoristaService: MotoristaService,
   private messageService: MessageService,
-  private turnoService: TurnoService
+  private turnoService: TurnoService,
+  public datePipe: DatePipe
 ) { }
 
+getTaxisDisponiveis(): void {
+  this.turnoService.getTaxisDisponiveis(this.inicio, this.fim)
+      .subscribe(taxis => {
+        this.taxis = taxis;
+      });
+}
 
 inicioBeforeFim(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -53,6 +63,16 @@ inicioBeforeFim(): ValidatorFn {
     else {
       this.errors!.fimBeforeInicio = true;
       return { inicioBeforeFim: true }
+    }
+  }
+}
+
+selecionouTaxi(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (this.taxis.includes(this.taxiSelecionado!)){
+      return null;
+    } else {
+      return { taxiNaoSelecionado: true}
     }
   }
 }
@@ -89,12 +109,26 @@ updateValidityFim(): void {
   this.firstFormGroup.controls['fim'].updateValueAndValidity();
 }
 
+updateValidityTaxiEscolhido(): void {
+  this.secondFormGroup.controls['secondCtrl'].updateValueAndValidity();
+}
+
 updateValidityInicio(): void {
   this.firstFormGroup.controls['inicio'].updateValueAndValidity();
 }
 
 onNext(stepper: MatStepper) {
-  console.log("Vou chamar a minha mae!");
+  this.getTaxisDisponiveis();
+  stepper.next();
+}
+
+selected(t: Taxi){
+  this.taxiSelecionado = t;
+  this.updateValidityTaxiEscolhido();
+}
+
+onFinish(stepper: MatStepper) {
+  console.log(this.taxiSelecionado);
   stepper.next();
 }
 
