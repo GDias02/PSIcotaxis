@@ -51,18 +51,6 @@ exports.pedido_update = [
     body("luxuoso", "Luxuoso tem de ser um booleano")
         .isBoolean()
         .escape(),
-    body("nif", "Nif tem de ser composto por 9 dígitos e ser positivo")
-        .isInt({ min: 100000000, max: 999999999 })
-        .escape(),
-    body("genero", `Género tem de ser um dos seguintes valores: ${new Pessoa().generosPossiveis}`)
-        .trim()
-        .isIn(new Pessoa().generosPossiveis) // This must be always an array
-        .escape(),
-    body("nome", "O nome tem de ter entre 2 e 64 caracteres, também não pode conter dígitos")
-        .trim()
-        .matches(/^[^\d]*$/)
-        .isLength({ min: 2, max: 64 })
-        .escape(),
     body("coordenadasDe")
         .trim()
         .matches(/^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/)
@@ -85,9 +73,7 @@ exports.pedido_update = [
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,
             luxuoso: req.body.luxuoso,
-            nif: req.body.nif,
-            genero: req.body.genero,
-            nome: req.body.nome,
+            cliente: req.body.cliente,
             coordenadasDe: req.body.coordenadasDe,
             coordenadasPara: req.body.coordenadasPara,
             status: req.body.status
@@ -120,18 +106,6 @@ exports.pedido_create = [
     body("luxuoso", "Luxuoso tem de ser um booleano")
         .isBoolean()
         .escape(),
-    body("nif", "Nif tem de ser composto por 9 dígitos e ser positivo")
-        .isInt({ min: 100000000, max: 999999999 })
-        .escape(),
-    body("genero", `Género tem de ser um dos seguintes valores: ${new Pessoa().generosPossiveis}`)
-        .trim()
-        .isIn(new Pessoa().generosPossiveis) // This must be always an array
-        .escape(),
-    body("nome", "O nome tem de ter entre 2 e 64 caracteres, também não pode conter dígitos")
-        .trim()
-        .matches(/^[^\d]*$/)
-        .isLength({ min: 2, max: 64 })
-        .escape(),
     body("coordenadasDe", "Coordenadas devem ter o formato latitude,longitude")
         .trim()
         .customSanitizer(value => value.replace(/\s+/g, ''))
@@ -155,9 +129,7 @@ exports.pedido_create = [
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,
             luxuoso: req.body.luxuoso,
-            nif: req.body.nif,
-            genero: req.body.genero,
-            nome: req.body.nome,
+            cliente: req.body.cliente,
             coordenadasDe: req.body.coordenadasDe,
             coordenadasPara: req.body.coordenadasPara,
             status: req.body.status
@@ -167,13 +139,6 @@ exports.pedido_create = [
             // 400 - Bad Request
             res.status(400).send({ errors: errors.array() });
             return;
-        } else {
-            // Check to see if the pedido already exists
-            const pedidoExistente = await Pedido.findOne({ nif: pedido.nif }).exec();
-            if (pedidoExistente) {
-                res.status(400).send({ error: "Pedido já existe" });
-                return;
-            }
         }
         await pedido.save();
         res.status(201).send(pedido);

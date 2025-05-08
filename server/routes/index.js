@@ -14,7 +14,7 @@ router.get('/servicos', function(req, res, next) {
 
 /* GET clientes page. */
 router.get('/clientes', function(req, res, next) {
-  res.redirect("/clientes");
+  res.redirect("/cliente");
 });
 
 

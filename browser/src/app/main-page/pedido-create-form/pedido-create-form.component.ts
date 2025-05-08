@@ -7,6 +7,10 @@ import { Morada } from "../morada";
 import { MoradaCreateComponent } from "../morada-create/morada-create.component";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Pedido } from "../pedido";
+import { Cliente } from "../cliente";
+
+import { ClienteService } from "../cliente.service";
+import { first, firstValueFrom, Observable } from "rxjs";
 
 @Component({
   selector: 'app-pedido-create-form',
@@ -34,7 +38,8 @@ export class PedidoCreateFormComponent {
   })
 
   constructor(public dialog: MatDialog,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private clienteService: ClienteService,
   ) {}
 
   ngOnInit():void {
@@ -73,7 +78,22 @@ export class PedidoCreateFormComponent {
     return this.pedidoForm.valid ?? false;
   }
 
-  getPedido(): Pedido{
+  async getPedido(): Promise<Pedido>{
+    let cliente : Cliente = {
+      _id: "",
+      nif: this.pedidoForm.get('nif')?.value ?? "999999999",
+      nome: this.pedidoForm.get('nome')?.value ?? "João",
+      genero: this.pedidoForm.get('genero')?.value?.toLocaleLowerCase() ?? "Masculino",
+      password: "",
+    }
+
+    //Get cliente's id
+    let c = await firstValueFrom(this.clienteService.getClienteByNif(cliente.nif));
+    if (c === null || c === undefined){
+      //if there is no client with that NIF, create one
+      c = await firstValueFrom(this.clienteService.postCliente(cliente));
+    }
+
     return {
       _id: "",
       moradaDe: this.moradaDeComponent.getRespectiveMorada(),
@@ -82,9 +102,7 @@ export class PedidoCreateFormComponent {
       coordenadasPara: this.coordenadasPara,
       numDePassageiros: this.pedidoForm.get('numDePassageiros')?.value ?? 4,
       luxuoso: this.luxuoso,
-      nif: this.pedidoForm.get('nif')?.value ?? "999999999",
-      genero: this.pedidoForm.get('genero')?.value?.toLocaleLowerCase() ?? "Masculino",
-      nome: this.pedidoForm.get('nome')?.value ?? "João",
+      cliente: c._id,
       status: "pendente",
     };
   }
