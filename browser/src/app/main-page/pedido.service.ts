@@ -48,8 +48,6 @@ export class PedidoService {
 
   postPedido(pedido: Pedido): Observable<Pedido> {
     const url = this.pedidosUrl + "/pedidos";
-    console.log("putPedido", pedido);
-    console.log("url", url);
     return this.http.post<Pedido>(url, pedido, this.httpOptions)
       .pipe(
         catchError(this.handleError<Pedido>('postPedido'))

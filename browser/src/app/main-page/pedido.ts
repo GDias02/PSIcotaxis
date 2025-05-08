@@ -1,3 +1,4 @@
+import { Cliente } from './cliente';
 import { Morada } from './morada';
 
 export interface Pedido {
@@ -6,9 +7,7 @@ export interface Pedido {
     moradaPara: Morada;
     numDePassageiros: number;
     luxuoso: boolean;
-    nif: string;
-    genero: string;
-    nome: string;
+    cliente: Cliente["_id"];
     coordenadasDe: string;
     coordenadasPara: string;
     status: string;
