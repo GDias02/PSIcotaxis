@@ -46,6 +46,8 @@ export class PedidoCreateComponent implements OnInit{
     this.pedidoForm.makeSureThereAreCoordinates();
     let pedido = await this.pedidoForm.getPedido()
     
+    console.log("Trying to do this")
+    console.log(pedido)
     /**Post Pedido  */
     pedido = await firstValueFrom(this.pedidoService.postPedido(pedido));
 

@@ -85,7 +85,7 @@ exports.pedido_update = [
             return;
         } else {
             // Check to see if the pedido already exists
-            const pedidoExistente = await Pedido.findOne({ nif: pedido.nif }).exec();
+            const pedidoExistente = await Pedido.findOne({ _id: pedido._id }).exec();
             if (pedidoExistente) {
                 let updatedPedido = await Pedido.findByIdAndUpdate(req.params.id, pedido, { new: true }).exec();
                 updatedPedido = await Pedido.findById(req.params.id);
@@ -124,7 +124,7 @@ exports.pedido_create = [
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-        const pedido = new Pedido({
+        let pedido = new Pedido({
             moradaDe: req.body.moradaDe,
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,
@@ -140,7 +140,21 @@ exports.pedido_create = [
             res.status(400).send({ errors: errors.array() });
             return;
         }
-        await pedido.save();
+
+        const clienteHasPedido = await Pedido.findOne({cliente: pedido.cliente});
+        if (clienteHasPedido){
+            res.status(403).send("There is already a pedido from this cliente");
+            return;
+        }
+
+        try {
+            await pedido.save();
+        } catch (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        pedido = await Pedido.findOne({cliente: pedido.cliente});
         res.status(201).send(pedido);
     })
 ];
