@@ -1,0 +1,60 @@
+<h1>Para onde quer viajar?</h1>
+
+
+<div id="open-map-button">
+    <button mat-fab extended (click)="openMap()">
+        Escolher no mapa
+        <mat-icon>location_on</mat-icon>
+    </button>
+</div>
+<br>
+<h2>De:</h2>
+<app-morada-create #moradaDe></app-morada-create>
+<h2>Para:</h2>
+<app-morada-create #moradaPara></app-morada-create>
+
+<form [formGroup]="pedidoForm">
+    <h2>Quantas pessoas irão no taxi?</h2>
+    <mat-form-field id="numDePassageiros" class="example-full-width">
+        <mat-label>Número de pessoas</mat-label>
+        <input matInput type="number" min="1" max="4" placeholder="1" formControlName="numDePassageiros">
+        <mat-error *ngIf="pedidoForm.get('numDePassageiros')?.hasError('min')">O número de pessoas deve ser no mínimo 1.</mat-error>
+        <mat-error *ngIf="pedidoForm.get('numDePassageiros')?.hasError('max')">O número de pessoas deve ser no máximo 4.</mat-error>
+    </mat-form-field>
+    <br>
+    <p><mat-slide-toggle [(ngModel)]="luxuoso"> Taxi luxuoso </mat-slide-toggle></p>
+    <br>
+
+    <h2>Para os dados de Faturação:</h2>
+    <p>
+        <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Nome" formControlName="nome">
+        <mat-error *ngIf="pedidoForm.get('nome')?.hasError('required')">O nome é obrigatório.</mat-error>
+        <mat-error *ngIf="pedidoForm.get('nome')?.hasError('minlength')">O nome deve ter pelo menos 2 caracteres.</mat-error>
+        <mat-error *ngIf="pedidoForm.get('nome')?.hasError('maxlength')">O nome deve ter no máximo 64 caracteres.</mat-error>
+        <mat-error *ngIf="pedidoForm.get('nome')?.hasError('pattern')">O nome não pode conter dígitos.</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+    <mat-form-field class="example-full-width">
+        <mat-label>NIF</mat-label>
+        <input matInput type="number" placeholder="999999999" formControlName="nif">
+        <mat-error *ngIf="pedidoForm.get('nif')?.hasError('required')">O NIF é obrigatório.</mat-error>
+        <mat-error *ngIf="pedidoForm.get('nif')?.hasError('min')">O NIF deve ter 9 dígitos.</mat-error>
+        <mat-error *ngIf="pedidoForm.get('nif')?.hasError('max')">O NIF deve ter no máximo 9 dígitos.</mat-error>
+    </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field>
+            <mat-label>Género</mat-label>
+            <mat-select formControlName="genero" placeholder="Género">
+                <mat-option *ngFor="let gen of ['Masculino', 'Feminino']" [value]="gen">
+                {{ gen }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </p>
+
+</form>

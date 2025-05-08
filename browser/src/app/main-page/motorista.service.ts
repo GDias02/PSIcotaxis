@@ -61,7 +61,7 @@ export class MotoristaService {
     return this.http.post<Motorista>(url, motorista, this.httpOptions).pipe(
       catchError((error) => {
         this.log(error);
-        catchError(this.handleError<Motorista>(`addMotorista id=${motorista.nif}`));
+        catchError(this.handleError<Motorista>(`addMotorista ${motorista.nome}`));
         return of(error);
       })
     );

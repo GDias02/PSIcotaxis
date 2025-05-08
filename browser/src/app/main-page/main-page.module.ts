@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Components and Routers
 import { MainPageRoutingModule } from './main-page-routing.module';
+import { PedidoCreateComponent } from './pedido-create/pedido-create.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConfigsComponent } from './configs/configs.component';
 import { MoradaCreateComponent } from './morada-create/morada-create.component';
@@ -22,8 +23,10 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MainPageComponent } from './main-page.component';
+import { FormPedidoCreateComponent } from './form-pedido-create/form-pedido-create.component';
 import { TurnoCreateComponent } from './turno-create/turno-create.component';
 import { TurnosComponent } from './turnos/turnos.component';
+import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-form.component';
 
 //Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -45,6 +48,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MapViewerComponent } from './map-viewer/map-viewer.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -78,7 +86,11 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatInputModule,
     MatAutocompleteModule,
     MatStepperModule,
+    MatProgressSpinnerModule,
     MatDatepickerModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatDialogModule,
     AsyncPipe
 
   ],
@@ -96,8 +108,12 @@ import { MatStepperModule } from '@angular/material/stepper';
     TaxiDetailComponent,
     TaxiCreateComponent,
     MessagesComponent,
+    PedidoCreateComponent,
+    PedidoCreateFormComponent,
     TurnoCreateComponent,
-    TurnosComponent
+    TurnosComponent,
+    PedidoCreateFormComponent,
+    MapViewerComponent
   ],
 })
 export class MainPageModule {

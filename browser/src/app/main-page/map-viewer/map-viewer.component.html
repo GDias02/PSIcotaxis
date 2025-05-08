@@ -1,0 +1,51 @@
+<ng-container *ngIf="isMobile; else desktopView">
+    <span>
+        De:&nbsp;&nbsp;
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="" required [(ngModel)]="coordenadasDe">
+        </mat-form-field>
+    </span>
+    <br>
+    <span>
+        Para:
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="" required [(ngModel)]="coordenadasPara">
+        </mat-form-field>
+    </span>
+    <div id="map" class="map-container"><mat-spinner></mat-spinner></div>
+    <button id="submission-button" mat-fab extended
+                [disabled]="(coordenadasDe === '') || (coordenadasDe === undefined) ||
+                            (coordenadasPara === '') || (coordenadasPara === undefined)"
+                (click)="sendBack()">Confirmar</button>
+</ng-container>
+
+<ng-template #desktopView>
+    <mat-grid-list  cols="2" rowHeight="2:1">
+        <mat-grid-tile>
+            <div id="content-wrapper">
+                <span>
+                    De:&nbsp;&nbsp;
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="" required [(ngModel)]="coordenadasDe">
+                    </mat-form-field>
+                </span>
+                <br>
+                <span>
+                    Para:
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="" required [(ngModel)]="coordenadasPara">
+                    </mat-form-field>
+                </span>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <button id="submission-button" mat-fab extended 
+                [disabled]="(coordenadasDe === '') || (coordenadasDe === undefined) ||
+                            (coordenadasPara === '') || (coordenadasPara === undefined)"
+                (click)="sendBack()">Confirmar</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <div id="map" class="map-container" >
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

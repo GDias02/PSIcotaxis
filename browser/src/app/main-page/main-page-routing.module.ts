@@ -12,6 +12,7 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { MainPageComponent } from './main-page.component';
 import { TaxiCreateComponent } from './taxi-create/taxi-create.component';
 import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
+import { PedidoCreateComponent } from './pedido-create/pedido-create.component';
 import { AppComponent } from '../app.component';
 import { TurnoCreateComponent } from './turno-create/turno-create.component';
 
@@ -27,6 +28,7 @@ const mainroutes: Routes = [
       { path: 'turno/create', component: TurnoCreateComponent },
       { path: 'configs', component: ConfigsComponent },
       { path: 'viagens/custo', component: ViagemCustoComponent },
+      { path: 'pedidos', component: PedidoCreateComponent}
     ]},
     { path: '**', component: AppComponent },
 ];
