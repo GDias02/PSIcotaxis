@@ -80,6 +80,10 @@ exports.taxi_create = [
             .trim()
             .isLength({ min: 2, max: 64 })
             .escape(),
+  body("lugares", "Um taxi tem de ter pelo menos 1 lugar para o condutor.")
+            .trim()
+            .isInt({min: 1})
+            .escape(),
   body("conforto", `Conforto tem de ser um dos seguintes valores: ${new Taxi().niveisDeConforto}`)
             .trim()
             .isIn(new Taxi().niveisDeConforto) //RIA 16 - o nivel de conforto deve ser basico ou luxuoso
@@ -97,6 +101,7 @@ exports.taxi_create = [
       marca: req.body.marca,
       modelo: req.body.modelo,
       anoDeCompra: req.body.anoDeCompra,
+      lugares: req.body.lugares,
       conforto: req.body.conforto,
     });
   

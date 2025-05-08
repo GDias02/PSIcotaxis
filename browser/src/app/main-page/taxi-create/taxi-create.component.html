@@ -60,6 +60,12 @@
                             <mat-error *ngIf="taxiForm.value.matricula">A matrícula tem de ter válida e única</mat-error>
                         </mat-form-field>
                     </p>
+                    <p>
+                        <mat-form-field>
+                          <mat-label>Lugares</mat-label>
+                          <input type="number" matInput placeholder="Ex. 5" formControlName="lugares" [(ngModel)]="lugares">
+                        </mat-form-field>
+                    </p>
                     <div class="confirmation-buttons">
                         <button mat-fab extended (click)="goBack()">
                             <mat-icon fontIcon="&#8617;"></mat-icon>

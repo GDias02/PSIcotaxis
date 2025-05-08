@@ -9,7 +9,7 @@ import { Taxi } from './taxi';
 })
 export class TurnoService {
 
-  private turnoUrl = 'http://localhost:3000/gestor';
+  private turnoUrl = 'http://localhost:3000/gestor/turnos';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,7 +28,7 @@ export class TurnoService {
     }
   }
 
-  getTaxisDisponiveis(inicio: Date, fim: Date): Observable<Taxi[]> {
+  getTaxisDisponiveis(inicio: string, fim: string): Observable<Taxi[]> {
     const params = new HttpParams()
    .set('inicio', `${inicio}`)
    .set('fim', `${fim}`);

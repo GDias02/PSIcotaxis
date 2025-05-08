@@ -23,7 +23,6 @@ import { ViagemCustoComponent } from './viagem-custo/viagem-custo.component';
 import { ViagensComponent } from './viagens/viagens.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MainPageComponent } from './main-page.component';
-import { FormPedidoCreateComponent } from './form-pedido-create/form-pedido-create.component';
 import { TurnoCreateComponent } from './turno-create/turno-create.component';
 import { TurnosComponent } from './turnos/turnos.component';
 import { PedidoCreateFormComponent } from './pedido-create-form/pedido-create-form.component';

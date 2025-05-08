@@ -4,5 +4,6 @@ export interface Taxi {
     anoDeCompra: Date;
     marca: string;
     modelo: string;
+    lugares: number;
     conforto: string;
 }
