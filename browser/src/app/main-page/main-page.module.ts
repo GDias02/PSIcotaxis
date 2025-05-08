@@ -52,6 +52,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.component';
 
 @NgModule({
   imports: [
@@ -112,7 +113,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     TurnoCreateComponent,
     TurnosComponent,
     PedidoCreateFormComponent,
-    MapViewerComponent
+    MapViewerComponent,
+    MotoristaViagemComponent
   ],
 })
 export class MainPageModule {
