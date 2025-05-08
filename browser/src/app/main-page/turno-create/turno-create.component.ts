@@ -24,6 +24,7 @@ export class TurnoCreateComponent {
   inicio: string = this.now;
   fim: string = this.now;
   errors: any = {fimBeforeInicio: false, turnoMaisDeOito: false }
+  displayedColumns: string[] = ['', '', ]
   taxis: Taxi[] = [];
 
 firstFormGroup = new FormGroup({

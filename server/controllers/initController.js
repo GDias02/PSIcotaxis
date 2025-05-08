@@ -19,17 +19,13 @@ exports.init = asyncHandler(async (req, res) => {
     await Pessoa.deleteMany({});
     await Taxi.deleteMany({});
     await Config.deleteMany();
-    await Turno.collection;
-
-    Turno.collection.getIndexes({full: true}).then(indexes => {
-      console.log("indexes:", indexes);
-  }).catch(console.error);
+    await Turno.deleteMany({});
 
     await createConfigs();
     await createTaxis();
     await createMotoristas();
     await createPessoas();
-    //await createTurnos();
+    await createTurnos();
 
     res.status(200).send();
   }
@@ -62,6 +58,7 @@ exports.init = asyncHandler(async (req, res) => {
   async function turnoCreate(index, turnoJson, mi, ti) {
     
     const turno = new Turno(turnoJson);
+    console.log(turno);
     turno.motorista = motoristas[mi];
     turno.taxi = taxis[ti];
     await turno.save();
@@ -99,9 +96,7 @@ exports.init = asyncHandler(async (req, res) => {
 
   async function createTurnos() {
     await Promise.all([turnoCreate(0, TURNOS[0], 0, 0)]);
-    console.log("Primeiro turno criado");
     await Promise.all([turnoCreate(0, TURNOS[1], 1, 1)]);
-    console.log("Primeiro turno criado");
   }
 });
 
@@ -197,20 +192,14 @@ const PESSOAS = [
 
 const TURNOS = [
   {
-    motorista: 111111111,
-    taxi: "11-AA-11",
     inicio: new Date('01-01-2025 08:00:00.000'),
     fim: new Date('01-01-2025 14:30:00.000')
   },
   {
-    motorista: 222222222,
-    taxi: "22-BB-22",
     inicio: new Date('01-01-2025 07:30:00.000'),
     fim: new Date('01-01-2025 08:30:00.000')
   },
   {
-    motorista: 111111111,
-    taxi: "22-BB-22",
     inicio: new Date('01-01-2025 16:00:00.000'),
     fim: new Date('01-01-2025 18:00:00.000')
   }
