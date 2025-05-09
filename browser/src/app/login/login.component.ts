@@ -4,6 +4,8 @@ import { User } from '../user';
 import { UserService } from '../user.service';
 import { LocService } from '../main-page/loc.service';
 import { Motorista } from '../main-page/motorista';
+import { Gestor } from '../main-page/gestor';
+import { Cliente } from '../main-page/cliente';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginComponent {
   private readonly router = inject(Router);
 
   user: string = 'Utilizador';
-  loggedInUser?: Motorista;
+  loggedInUser?: Motorista | Gestor | Cliente;
 
   @Input()
   userName = '';
@@ -36,6 +38,24 @@ export class LoginComponent {
   }
   populateMotorista(motorista: Motorista): void {
     this.loggedInUser = motorista;
+    this.userService.setCurrentUser(this.loggedInUser);
+  }
+
+  getCurrentCliente(): void {
+    const nif = Number(this.userName);
+    this.userService.getCliente(nif).subscribe(cliente => this.populateCliente(cliente));
+  }
+  populateCliente(cliente: Cliente): void {
+    this.loggedInUser = cliente;
+    this.userService.setCurrentUser(this.loggedInUser);
+  }
+
+  getCurrentGestor(): void {
+    const nif = Number(this.userName);
+    this.userService.getGestor(nif).subscribe(gestor => this.populateGestor(gestor));
+  }
+  populateGestor(gestor: Gestor): void {
+    this.loggedInUser = gestor;
     this.userService.setCurrentUser(this.loggedInUser);
   }
 
@@ -63,11 +83,13 @@ export class LoginComponent {
 
     switch(tipo){
       case User.CLIENTE:
+        this.getCurrentCliente();
         break;
       case User.MOTORISTA:
         this.getCurrentMotorista();
         break;
       case User.GESTOR:
+        this.getCurrentGestor();
         break;
     }
     this.router.navigate([`main-page`]);
