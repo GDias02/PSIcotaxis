@@ -1,21 +1,27 @@
  
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!-- Morada De Column -->
+    <ng-container matColumnDef="moradaDe">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> De </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.moradaDe}} </td>
+    </ng-container>
     
-        <!-- Nif Column -->
-        <ng-container matColumnDef="nif">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> NIF </th>
-          <td mat-cell *matCellDef="let motorista"> {{motorista.nif}} </td>
-        </ng-container>
+    <!-- Morada Para Column -->
+    <ng-container matColumnDef="moradaPara">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Para </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.moradaPara}} </td>
+    </ng-container>
       
-        <!-- Nome Column -->
-        <ng-container matColumnDef="nome">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> NOME </th>
-          <td mat-cell *matCellDef="let motorista"> {{motorista.nome}} </td>
-        </ng-container>
-      
-        <!-- Registo Column which sorts the table -->
-        <ng-container matColumnDef="registo">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> REGISTO </th>
-          <td mat-cell *matCellDef="let motorista"> {{datePipe.transform(motorista.registo, "dd-MM-yyyy HH-mm-ss")}} </td>
-        </ng-container>
+    <!-- numDePassageiros Column-->
+    <ng-container matColumnDef="numDePassageiros">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Passageiros </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.numDePassageiros}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="luxuoso">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> luxuoso </th>
+        <td mat-cell *matCellDef="let pedido"> {{pedido.luxuoso}} </td>
+    </ng-container>
+
 </table>  

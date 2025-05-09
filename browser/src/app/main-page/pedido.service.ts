@@ -70,6 +70,14 @@ export class PedidoService {
             );
   }
 
+  getPedidosForMotorista(): Observable<Pedido[]>{
+    const url = `http://localhost:3000/motoristas/pedidos`;
+    return this.http.get<Pedido[]>(url)
+            .pipe(
+              catchError(this.handleError<Pedido[]>(`Getting Motoristas' pedidos`))
+            )
+  }
+
   private log(message: string){
     this.messageService.add(`Pedido Service: ${message}`);
   }

@@ -53,6 +53,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DarBoleiaComponent } from './dar-boleia/dar-boleia.component';
+import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.component';
 
 @NgModule({
   imports: [
@@ -114,7 +115,8 @@ import { DarBoleiaComponent } from './dar-boleia/dar-boleia.component';
     TurnosComponent,
     PedidoCreateFormComponent,
     MapViewerComponent,
-    DarBoleiaComponent
+    DarBoleiaComponent,
+    MotoristaViagemComponent,
   ],
 })
 export class MainPageModule {

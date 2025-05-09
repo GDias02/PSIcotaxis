@@ -35,17 +35,19 @@ export class LoginComponent {
     this.userService.setCurrentUserName(this.userName);
 
     if (tipo === User.MOTORISTA) {
-      if (!/^\d{9}$/.test(this.userName)) {
+      /*if (!/^\d{9}$/.test(this.userName)) {
         this.erro = 'NIF inválido. Deve conter 9 dígitos.';
         return;
-      }
+      }*/
 
       this.userService.getMotoristaByNif(this.userName).subscribe({
         next: (motorista) => {
-          localStorage.setItem('motorista', JSON.stringify(motorista));
-          this.router.navigate(['/painel-motorista']);
+          //localStorage.setItem('motorista', JSON.stringify(motorista));
+          //this.router.navigate(['/painel-motorista']);
+          this.router.navigate([`main-page`])
         },
         error: () => {
+          alert("MOTORISTA NÃO FOI ENCONTRADO")
           this.erro = 'Motorista não encontrado.';
         }
       });

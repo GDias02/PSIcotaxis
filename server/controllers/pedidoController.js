@@ -74,6 +74,8 @@ exports.pedido_update = [
             numDePassageiros: req.body.numDePassageiros,
             luxuoso: req.body.luxuoso,
             cliente: req.body.cliente,
+            motorista: req.body.motorista,
+            taxi: req.body.taxi,
             coordenadasDe: req.body.coordenadasDe,
             coordenadasPara: req.body.coordenadasPara,
             status: req.body.status
@@ -124,12 +126,14 @@ exports.pedido_create = [
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-        let pedido = new Pedido({
+        const pedido = new Pedido({
             moradaDe: req.body.moradaDe,
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,
             luxuoso: req.body.luxuoso,
             cliente: req.body.cliente,
+            motorista: req.body.motorista,
+            taxi: req.body.taxi,
             coordenadasDe: req.body.coordenadasDe,
             coordenadasPara: req.body.coordenadasPara,
             status: req.body.status
