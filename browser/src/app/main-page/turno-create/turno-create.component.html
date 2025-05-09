@@ -20,6 +20,7 @@
             <mat-error *ngIf="errors.fimBeforeInicio">A data de inicio tem de ser anterior à data de fim da
               viagem</mat-error>
             <mat-error *ngIf="errors.turnoMaisDeOito"> O turno pode durar no máximo 8 horas</mat-error>
+            <mat-error *ngIf="errors.intersetaOutroTurno"> Já tem um turno reservado nesse período.</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
@@ -107,9 +108,9 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-    <div>
+    <div *ngIf="user">
       <button mat-fab extended matStepperPrevious>Back</button>
-      <button mat-fab extended (click)="stepper.reset()">Reset</button>
+      <button mat-fab extended (click)="save()" [disabled]="!firstFormGroup.valid && !secondFormGroup.valid">Registar</button>
     </div>
   </mat-step>
 </mat-stepper>
