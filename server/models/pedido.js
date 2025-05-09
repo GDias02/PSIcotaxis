@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const generosPossiveis = ["feminino", "masculino"];
 const statusPossiveis = ["pendente", "aceite"];
 
 const pedidoSchema = new Schema({
+    motorista: {type: Schema.Types.ObjectId, ref: "Motorista"},
+    taxi: {type: Schema.Types.ObjectId, ref: "Taxi"},
     moradaDe: {
         type: {
             rua: { type: String, required: true },
@@ -26,14 +27,7 @@ const pedidoSchema = new Schema({
     },
     numDePassageiros: { type:Number, min:1, max:4, required:true },
     luxuoso: { type:Boolean, required: true},
-    nif: { type: Number, min: 100000000, max: 999999999, unique: true, required: true },
-    genero: {
-        type: String,
-        required: true,
-        enum: generosPossiveis,
-        default: "feminino"
-    },
-    nome: { type: String, min: 2, max:64, required:true },
+    cliente: {type: Schema.Types.ObjectId, ref: "Cliente", unique: true, required: true},
     coordenadasDe: { type: String, required: true},
     coordenadasPara: { type: String, required: true},
     status: {

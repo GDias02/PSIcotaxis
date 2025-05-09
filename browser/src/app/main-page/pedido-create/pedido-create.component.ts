@@ -1,10 +1,14 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
-import { Observable } from 'rxjs';
+
 import { PedidoCreateFormComponent } from '../pedido-create-form/pedido-create-form.component';
+
 import { Pedido } from '../pedido';
+import { Cliente } from '../cliente';
+
 import { PedidoService } from '../pedido.service';
+import { ClienteService } from '../cliente.service';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -19,6 +23,7 @@ export class PedidoCreateComponent implements OnInit{
 
   constructor(
     private pedidoService: PedidoService,
+    private clienteService: ClienteService
   ){}
 
   firstFormGroup = this._formBuilder.group({
@@ -37,20 +42,24 @@ export class PedidoCreateComponent implements OnInit{
    * Faz um POST do pedido e avança o Stepper para o passo 2
    * se o pedido for criado com sucesso.
    */
-  complete1stStep(): void {
+  async complete1stStep(): Promise<void> {
     this.pedidoForm.makeSureThereAreCoordinates();
-    this.pedidoService.postPedido(this.pedidoForm.getPedido()).subscribe({
-      next: (pedido) => {
-        if (!pedido){
-          //There was an error
-          console.error('Error creating pedido:', pedido);
-          alert('Ocorreu um erro na criação do pedido, tentar novamente.');
-        } else {
-          this.pedido = pedido;
-          this.showStep2();
-        }
+    let pedido = await this.pedidoForm.getPedido()
+    
+    console.log("Trying to do this")
+    console.log(pedido)
+    /**Post Pedido  */
+    pedido = await firstValueFrom(this.pedidoService.postPedido(pedido));
+
+    if (!pedido){
+      //There was an error
+      console.error('Error creating pedido:', pedido);
+      alert('Ocorreu um erro na criação do pedido, tentar novamente.');
+    } else {
+      this.pedido = pedido;
+      this.showStep2(); 
     }
-    });
+
   }
 
   get isFirstStepValid() : boolean {
