@@ -1,5 +1,5 @@
 .mat-mdc-form-field {
-    width: 20%;
+    width: 100%;
     margin: 50px;
 }
 
@@ -20,3 +20,6 @@
   .demo-row-is-clicked {
     font-weight: bold;
   }
+.confirmacao-turno {
+  margin: 5% 20%;
+}

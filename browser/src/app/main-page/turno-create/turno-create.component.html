@@ -1,70 +1,115 @@
-<mat-stepper #stepper>
+<mat-stepper #stepper class="confirmacao-turno">
   <mat-step [stepControl]="firstFormGroup" errorMessage="Data de inicio e fim são necessárias.">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Período do Turno</ng-template>
-      <mat-form-field>
-        <mat-label>Data de Início</mat-label>
-        <input matInput type="datetime-local" placeholder="Data Início" formControlName="inicio" [(ngModel)]="inicio"
-          (change)="updateValidityFim()">
-        <mat-error *ngIf="firstFormGroup.value.inicio">A data de inicio tem de ser anterior à data de fim da
-          viagem</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Data de Fim</mat-label>
-        <input matInput type="datetime-local" placeholder="Data Fim" formControlName="fim" [(ngModel)]="fim"
-          (change)="updateValidityInicio()">
-        <mat-error *ngIf="errors.fimBeforeInicio">A data de inicio tem de ser anterior à data de fim da
-          viagem</mat-error>
-        <mat-error *ngIf="errors.turnoMaisDeOito"> O turno pode durar no máximo 8 horas</mat-error>
-      </mat-form-field>
+      <mat-grid-list cols="2" rowHeight="1:1">
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Data de Início</mat-label>
+            <input matInput type="datetime-local" placeholder="Data Início" formControlName="inicio"
+              [(ngModel)]="inicio" (change)="updateValidityFim()">
+            <mat-error *ngIf="firstFormGroup.value.inicio">A data de inicio tem de ser anterior à data de fim da
+              viagem</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Data de Fim</mat-label>
+            <input matInput type="datetime-local" placeholder="Data Fim" formControlName="fim" [(ngModel)]="fim"
+              (change)="updateValidityInicio()">
+            <mat-error *ngIf="errors.fimBeforeInicio">A data de inicio tem de ser anterior à data de fim da
+              viagem</mat-error>
+            <mat-error *ngIf="errors.turnoMaisDeOito"> O turno pode durar no máximo 8 horas</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
       <div>
-        <button mat-button (click)="onNext(stepper)" [disabled]="!firstFormGroup.valid">Next</button>
+        <button mat-fab extended (click)="onNext(stepper)" [disabled]="!firstFormGroup.valid">Next</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" errorMessage="Escolher um táxi é necessário.">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Escolha um Taxi dos disponiveis no turno</ng-template>
-        <table mat-table [dataSource]="taxis" class="mat-elevation-z8 demo-table">
-          <!-- Position Column -->
-          <ng-container matColumnDef="marca">
-            <th mat-header-cell *matHeaderCellDef>Marca e Modelo</th>
-            <td mat-cell *matCellDef="let taxi">{{taxi.marca}} {{taxi.modelo}}</td>
-          </ng-container>
-        
-          <!-- Weight Column -->
-          <ng-container matColumnDef="conforto">
-            <th mat-header-cell *matHeaderCellDef>Conforto</th>
-            <td mat-cell *matCellDef="let taxi">{{taxi.conforto}}</td>
-          </ng-container>
-        
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="anoDeCompra">
-            <th mat-header-cell *matHeaderCellDef>Ano</th>
-            <td mat-cell *matCellDef="let taxi">{{datePipe.transform(taxi.anoDeCompra, "yyyy")}}</td>
-          </ng-container>
-        
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr
-              mat-row
-              (click)="selected(row)"
-              [class.demo-row-is-clicked]="taxiSelecionado==row"
-              *matRowDef="let row; columns: displayedColumns;"
-          ></tr>
-        </table>
-      <p>Go to a different step to see the error state</p>
-      <button mat-button matStepperPrevious>Back</button>
-      <div>
-        <button mat-button (click)="onFinish(stepper)" [disabled]="!secondFormGroup.valid">Next</button>
-      </div>
+      <table mat-table [dataSource]="taxis" class="mat-elevation-z8 demo-table">
+        <!-- Position Column -->
+        <ng-container matColumnDef="marca">
+          <th mat-header-cell *matHeaderCellDef>Marca e Modelo</th>
+          <td mat-cell *matCellDef="let taxi">{{taxi.marca}} {{taxi.modelo}}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="conforto">
+          <th mat-header-cell *matHeaderCellDef>Conforto</th>
+          <td mat-cell *matCellDef="let taxi">{{taxi.conforto}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="anoDeCompra">
+          <th mat-header-cell *matHeaderCellDef>Ano</th>
+          <td mat-cell *matCellDef="let taxi">{{datePipe.transform(taxi.anoDeCompra, "yyyy")}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row (click)="selected(row)" [class.demo-row-is-clicked]="taxiSelecionado==row"
+          *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <button mat-fab extended matStepperPrevious>Back</button>
+      <button mat-fab extended (click)="onFinish(stepper)" [disabled]="!secondFormGroup.valid">Next</button>
+
     </form>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <ng-template matStepLabel>Confirmar</ng-template>
+    <p>Está a reservar um turno</p>
+    <mat-accordion>
+      <mat-expansion-panel *ngIf="user" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Motorista </mat-panel-title>
+          <mat-panel-description> {{user.nome}} </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list role="list">
+          <h3>Dados Pessoais</h3>
+          <mat-list-item role="listitem">NIF : {{user.nif}}</mat-list-item>
+          <mat-list-item role="listitem">Género: {{user.genero}}</mat-list-item>
+          <mat-list-item role="listitem">Ano de Nascimento: {{datePipe.transform(user.anoDeNascimento, "dd-MM-yyyy")}}</mat-list-item>
+          <mat-list-item role="listitem">Carta de Condução: {{user.cartaDeConducao }}</mat-list-item>
+          <br>
+        </mat-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="taxiSelecionado" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Taxi </mat-panel-title>
+          <mat-panel-description>{{taxiMarcaModelo()}}</mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list role="list">
+          <h3>Dados do Veículo</h3>
+          <mat-list-item role="listitem">matricula : {{ taxiSelecionado.matricula }}</mat-list-item>
+          <mat-list-item role="listitem">Ano De Compra: {{ datePipe.transform(taxiSelecionado.anoDeCompra, "yyyy")
+            }}</mat-list-item>
+          <mat-list-item role="listitem">Marca: {{ taxiSelecionado.marca }}</mat-list-item>
+          <mat-list-item role="listitem">Modelo: {{ taxiSelecionado.modelo }}</mat-list-item>
+          <mat-list-item role="listitem">Lugares: {{ taxiSelecionado.lugares }}</mat-list-item>
+          <mat-list-item role="listitem">Nível de Conforto: {{ taxiSelecionado.conforto }}</mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="inicio && fim" [expanded]="true" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Turno </mat-panel-title>
+          <mat-panel-description>Inicio e Fim</mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list role="list">
+          <h3>Informação</h3>
+          <mat-list-item role="listitem">inicio do turno : {{ datePipe.transform(inicio, "dd-MM-yyyy HH:mm") }}</mat-list-item>
+          <mat-list-item role="listitem">fim do turno : {{ datePipe.transform(fim, "dd-MM-yyyy HH:mm") }}</mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-fab extended matStepperPrevious>Back</button>
+      <button mat-fab extended (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
 </mat-stepper>

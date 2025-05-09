@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MotoristaService } from '../motorista.service';
@@ -8,6 +8,8 @@ import { Taxi } from '../taxi';
 import { MatStepper } from '@angular/material/stepper';
 import { TurnoService } from '../turno.service';
 import { DatePipe } from '@angular/common';
+import { UserService } from 'src/app/user.service';
+import { Motorista } from '../motorista';
 
 @Component({
   selector: 'app-turno-create',
@@ -37,14 +39,19 @@ firstFormGroup = new FormGroup({
 secondFormGroup = new FormGroup({
   secondCtrl: new FormControl('', [this.selecionouTaxi()])
 });
+  user?: Motorista;
 
 constructor(
-  private route: ActivatedRoute,
-  private motoristaService: MotoristaService,
+  private activatedRoute: ActivatedRoute,
+  private userService: UserService,
   private messageService: MessageService,
   private turnoService: TurnoService,
   public datePipe: DatePipe
-) { }
+) { 
+  this.activatedRoute.data.subscribe(({user}) => {
+      this.user = user;
+    });;
+}
 
 getTaxisDisponiveis(): void {
   this.turnoService.getTaxisDisponiveis(this.inicio, this.fim)
@@ -128,8 +135,15 @@ selected(t: Taxi){
 }
 
 onFinish(stepper: MatStepper) {
+  console.log("selecionou o taxi:");
   console.log(this.taxiSelecionado);
+  console.log("o senhor motorista:");
+  console.log(this.user);
   stepper.next();
+}
+
+taxiMarcaModelo(): string{
+  return this.taxiSelecionado!.marca +" "+ this.taxiSelecionado!.modelo;
 }
 
   /*

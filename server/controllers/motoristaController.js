@@ -24,6 +24,17 @@ exports.motorista = asyncHandler(async (req, res, next) => {
   res.status(200).send(motorista);
 });
 
+// /motoristas/login/:nif - GET
+exports.motorista_login = asyncHandler(async (req, res, next) => {
+  const motorista = await Motorista.findOne({nif: req.params.nif})
+                                  .exec();
+  if (motorista === null) {
+    res.status(404).send();
+    return;
+  }
+  res.status(200).send(motorista);
+});
+
 // /motorista - POST
 exports.motorista_create = [
   // Validate and sanitize fields.
