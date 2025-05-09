@@ -2,8 +2,10 @@ import { ActivatedRouteSnapshot, CanActivateFn, ResolveFn, RouterStateSnapshot }
 import { Motorista } from "./motorista";
 import { inject, Injectable } from "@angular/core";
 import { UserService } from "../user.service";
+import { Gestor } from "./gestor";
+import { Cliente } from "./cliente";
 
-export const userResolver: ResolveFn<Motorista> =
+export const userResolver: ResolveFn<Motorista | Gestor | Cliente> =
     (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
       return inject(UserService).getCurrentUser();
     };

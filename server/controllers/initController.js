@@ -2,6 +2,7 @@ const Config = require("../models/config");
 const Taxi = require("../models/taxi");
 const Pessoa = require("../models/pessoa");
 const Motorista = require("../models/motorista");
+const Cliente = require("../models/cliente");
 const Turno = require("../models/turno");
 
 const asyncHandler = require("express-async-handler");
@@ -50,7 +51,7 @@ exports.init = asyncHandler(async (req, res) => {
   }
 
   async function pessoaCreate(index, pessoaJson) {
-    const pessoa = new Pessoa(pessoaJson);
+    const pessoa = new Cliente(pessoaJson);
     await pessoa.save();
     pessoas[index] = pessoa;
   }

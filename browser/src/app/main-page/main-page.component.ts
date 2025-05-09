@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { UserService } from '../user.service';
 import { Motorista } from './motorista';
 import { ActivatedRoute } from '@angular/router';
+import { Gestor } from './gestor';
+import { Cliente } from './cliente';
 
 @Component({
   selector: 'app-main-page',
@@ -11,13 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 export class MainPageComponent {
   welcome = "Bem-vindo ao Psicotaxis";
   username = "";
-  user?: Motorista;
+  user?: Motorista | Gestor | Cliente;
 
   constructor(private readonly activatedRoute: ActivatedRoute) {
   };
 
   ngOnInit(): void {
-    console.log("loading main-page-component...");
     this.activatedRoute.data.subscribe(({user}) => {
       this.user = user;
       this.username = this.user!.nome;
