@@ -15,7 +15,9 @@ import { TaxiDetailComponent } from './taxi-detail/taxi-detail.component';
 import { PedidoCreateComponent } from './pedido-create/pedido-create.component';
 import { AppComponent } from '../app.component';
 import { TurnoCreateComponent } from './turno-create/turno-create.component';
+import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.component';
 import { userResolver } from './user-resolver';
+import { MotoristaViagensComponent } from './motorista-viagens/motorista-viagens.component';
 
 const mainroutes: Routes = [
     { path: 'main-page', component: MainPageComponent, resolve: {user: userResolver}, children: [
@@ -27,6 +29,8 @@ const mainroutes: Routes = [
       { path: 'taxis/create', component: TaxiCreateComponent },
       { path: 'taxis/:id', component: TaxiDetailComponent },
       { path: 'turno/create', component: TurnoCreateComponent, resolve: {user: userResolver} },
+      { path: 'turno/:id/viagem', component: MotoristaViagemComponent, resolve: {user: userResolver} },
+      { path: 'motorista/viagens', component: MotoristaViagensComponent, resolve: {user: userResolver} },
       { path: 'configs', component: ConfigsComponent },
       { path: 'viagens/custo', component: ViagemCustoComponent },
       { path: 'pedidos', component: PedidoCreateComponent}

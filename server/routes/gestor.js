@@ -23,6 +23,7 @@ router.get("/turnos", turno_controller.taxis_livres);
 router.get("/turnos/:id", turno_controller.turno);
 router.get("/turnos/motorista/:id", turno_controller.turnos_de_motorista);
 router.post("/turnos/create", turno_controller.turno_create);
+router.post("/turnos/update", turno_controller.turno_update);
 
 /// Config ROUTES ///
 router.get("/configs", config_controller.config_list);

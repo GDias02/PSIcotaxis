@@ -3,10 +3,23 @@
   <h2 class="header">Viagem</h2>
   <mat-grid-list cols="1" rowHeight="1:2">
     <mat-grid-tile>
-      <div ngIf="iniciar" class="form-container">
-        <form [formGroup]="viagemForm" (ngSubmit)="onViagemInit()">
+      <div class="form-container">
+        <form [formGroup]="partidaForm" (ngSubmit)="onViagemInit()">
 
-          <p id="duration">{{duration * 1000 * 60 | date: 'HH:mm'}}</p>
+          <p>
+            <mat-form-field appearance="fill">
+              <mat-label>Localidade de Partida</mat-label>
+              <input matInput placeholder="Localidade" formControlName="localidade_partida" [(ngModel)]="localidade_partida">
+              <mat-error *ngIf="partidaForm.value.localidade_partida">A localidade tem de ser preenchida</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="fill">
+              <mat-label>Rua de Partida</mat-label>
+              <input matInput placeholder="Rua" formControlName="rua_partida" [(ngModel)]="rua_partida">
+              <mat-error *ngIf="partidaForm.value.rua_partida">A rua tem de ser preenchida</mat-error>
+            </mat-form-field>
+          </p>
 
           <div class="confirmation-buttons">
             <button mat-fab extended (click)="goBack()">
@@ -14,25 +27,36 @@
               Cancelar
             </button>
         
-            <button mat-fab extended type="submit" [disabled]="!viagemForm.valid">
+            <button mat-fab extended type="submit" [disabled]="!partidaForm.valid && iniciar">
               Iniciar Viagem
               <mat-icon fontIcon="&#xf5e4;"></mat-icon>
             </button>
           </div>
         </form>
       </div>
-      <div ngIf="!iniciar" class="form-container">
-        <form [formGroup]="viagemFinalForm" (ngSubmit)="onViagemStop()">
 
-          <p id="duration">{{duration * 1000 * 60 | date: 'HH:mm'}}</p>
+      <p id="duration">{{duration * 1000 * 60 | date: 'HH:mm'}}</p>
+
+      <div class="form-container">
+        <form [formGroup]="chegadaForm" (ngSubmit)="onViagemStop()">
+
+          <p>
+            <mat-form-field appearance="fill">
+              <mat-label>Localidade de Destino</mat-label>
+              <input matInput placeholder="Localidade" formControlName="localidade_chegada" [(ngModel)]="localidade_chegada">
+              <mat-error *ngIf="chegadaForm.value.localidade_chegada">A localidade tem de ser preenchida</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="fill">
+              <mat-label>Rua de Destino</mat-label>
+              <input matInput placeholder="Rua" formControlName="rua_chegada" [(ngModel)]="rua_chegada">
+              <mat-error *ngIf="chegadaForm.value.rua_chegada">A rua tem de ser preenchida</mat-error>
+            </mat-form-field>
+          </p>
 
           <div class="confirmation-buttons">
-            <button mat-fab extended (click)="goBack()">
-              <mat-icon fontIcon="&#8617;"></mat-icon>
-              Cancelar
-            </button>
-        
-            <button mat-fab extended type="submit" [disabled]="!viagemFinalForm.valid">
+            <button mat-fab extended type="submit" [disabled]="!chegadaForm.valid && !iniciar">
               Finalizar Viagem
               <mat-icon fontIcon="&#xf5e4;"></mat-icon>
             </button>

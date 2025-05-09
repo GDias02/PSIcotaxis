@@ -12,12 +12,46 @@ import { MessageService } from './message.service';
 })
 export class ViagemService {
 
+  private viagensUrl = 'http://localhost:3000/motorista';
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   constructor(
+    private http: HttpClient,
     private messageService: MessageService
   ) { }
 
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.log(`${operation} failed: ${error.message}`);
+      return of(result as T)
+    }
+  }
+
   getViagens(): Observable<Viagem[]> {
     return of([]);
+  }
+
+  getViagensMotorista(id_motorista: string): Observable<Viagem[]> {
+    const url = this.viagensUrl + `/viagens/${id_motorista}`;
+    return this.http.get<Viagem[]>(url)
+      .pipe(
+        catchError(this.handleError<Viagem[]>('getViagens', []))
+      );
+  }
+
+  addViagem(viagem: Viagem): Observable<Viagem | any> {
+    const url = this.viagensUrl + "/viagens/create";
+    return this.http.post<Viagem>(url, viagem, this.httpOptions).pipe(
+      catchError((error) => {
+        this.log(error);
+        catchError(this.handleError<Viagem>(`addViagem ${viagem._id}`));
+        return of(error);
+      })
+    );
   }
 
   deleteViagem(id: string): Observable<any> {

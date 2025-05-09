@@ -1,11 +1,16 @@
+import { Morada } from "./morada";
+
 export interface Viagem {
-    _id: string;
+    _id?: string,
+    seq: number,
     motorista: string,
     taxi: string,
     cliente: string,
     numeroDePassageiros: number,
-    partida: string,
-    chegada?: string,
+    partida: Morada,
+    chegada?: Morada,
     inicio: Date,
     fim?: Date,
+    kilometros?: number,
+    custo?: number
 }

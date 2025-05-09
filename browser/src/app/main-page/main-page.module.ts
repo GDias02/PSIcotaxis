@@ -53,6 +53,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MapViewerComponent } from './map-viewer/map-viewer.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.component';
+import { MotoristaViagensComponent } from './motorista-viagens/motorista-viagens.component';
 
 @NgModule({
   imports: [
@@ -114,7 +115,8 @@ import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.co
     TurnosComponent,
     PedidoCreateFormComponent,
     MapViewerComponent,
-    MotoristaViagemComponent
+    MotoristaViagemComponent,
+    MotoristaViagensComponent
   ],
 })
 export class MainPageModule {

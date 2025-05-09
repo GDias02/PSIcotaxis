@@ -27,6 +27,7 @@ export class LocService {
 
   morada: Morada | null = null;
   duration: number | null = null;
+  distance: number | null = null;
   loc?: GeolocationPosition;
 
   constructor(private http: HttpClient) { }
@@ -35,6 +36,10 @@ export class LocService {
   setLocWatcher(): number {
     if (!("geolocation" in navigator)) return -1;
     return navigator.geolocation.watchPosition((position: GeolocationPosition) => this.loc = position);
+  }
+
+  isActive(): boolean {
+    return "geolocation" in navigator;
   }
 
   getMorada(): Observable<Morada> {
@@ -50,6 +55,11 @@ export class LocService {
   getDuration(morada1: Morada, morada2: Morada): Observable<number> {
     if (!("geolocation" in navigator)) return of(-1);
     return this.computeDuration(morada1, morada2)
+  }
+
+  getDurationDistance(morada1: Morada, morada2: Morada): Observable<number[]> {
+    if (!("geolocation" in navigator)) return of([0, 0]);
+    return this.computeDistanceDuration(morada1, morada2)
   }
 
   //haversine formula
@@ -101,6 +111,25 @@ export class LocService {
               this.duration = 4 * distance;
             }),
             switchMap(() => of(this.duration!))
+          )
+        )
+      );
+  }
+
+  computeDistanceDuration(morada1: Morada, morada2: Morada): Observable<number[]> {
+    let loc1: GeolocationCoordinates, loc2: GeolocationCoordinates;
+
+    return this.getCoords(morada1)
+      .pipe(
+        tap((loc: GeolocationCoordinates) => loc1 = loc),
+        switchMap(() => this.getCoords(morada2)
+          .pipe(
+            tap((loc: GeolocationCoordinates) => {
+              loc2 = loc;
+              this.distance = this.getDistance(loc1.latitude, loc1.longitude, loc2.latitude, loc2.longitude);
+              this.duration = 4 * this.distance;
+            }),
+            switchMap(() => of([this.distance!, this.duration!]))
           )
         )
       );

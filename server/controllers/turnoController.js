@@ -12,6 +12,14 @@ exports.turnos_de_motorista = asyncHandler(async (req, res, next) => {
     res.status(200).send(turnos_de_motorista);
 });
 
+// /turno- GET
+exports.turno = asyncHandler(async (req, res, next) => {
+    const turno = await Turno.findById(req.params.id)
+        .sort({ inicio: "asc" })
+        .exec();
+    res.status(200).send(turno);
+});
+
 // /taxis que nao estao ocupados num periodo - GET
 exports.taxis_livres = asyncHandler(async (req, res, next) => {
     const start = req.params.inicio;
@@ -29,8 +37,7 @@ exports.taxis_livres = asyncHandler(async (req, res, next) => {
 
 // /turno/id - GET
 exports.turno = asyncHandler(async (req, res, next) => {
-    const turno = await Turno.findById(req.params.id)
-        .exec();
+    const turno = await Turno.findById(req.params.id).exec();
     if (turno === null) {
         res.status(404).send();
         return;
@@ -92,6 +99,60 @@ exports.turno_create = [
             } catch (error) {
                 res.status(409).send(error);
             }
+        }
+    }),
+];
+
+// /turno/update - POST
+exports.turno_update = [
+    // Validate and sanitize fields.
+    body("inicio", "O inicio de um turno tem de ser anterior ao seu fim.")
+        .trim()
+        .custom((i, { req }) => {
+            const inicio = new Date(i);
+            const fim = new Date(req.body.fim);
+            return (inicio < fim);
+        })
+        .withMessage("O início de um turno tem de ser anterior ao seu fim")
+        .escape(),
+    body("fim", "Um turno pode durar no maximo 8 horas")
+        .trim()
+        .custom((f, { req }) => {
+            const fim = new Date(f);
+            const inicio = new Date(req.body.inicio);
+            return ((fim - inicio) / 36e5 <= 8);
+        })
+        .escape(),
+    body("motorista", "O motorista deste turno tem de ser identificado")
+        .trim()
+        .exists({values: "falsy"})
+        .escape(),
+    body("taxi", "O taxi deste turno tem de estar identificado")
+        .trim()
+        .exists({values: "falsy"})
+        .escape(),
+
+    // Process request after validation and sanitization.
+    asyncHandler(async (req, res, next) => {
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        // Create a Taxi object with escaped and trimmed data.
+        const turno = new Turno({
+            _id: req.params.id,
+            motorista: req.body.motorista,
+            taxi: req.body.taxi,
+            viagens: req.body.viagens,
+            inicio: req.body.inicio,
+            fim: req.body.fim,
+        });
+        if (!errors.isEmpty()) {
+          // 400 - Bad Request
+          res.status(400).send({errors: errors});
+        } else {
+          // 201 - Created
+          let updatedTurno = await Turno.findByIdAndUpdate(req.params.id, turno, {}).exec();
+          res.status(200).send(updatedTurno);
         }
     }),
 ];

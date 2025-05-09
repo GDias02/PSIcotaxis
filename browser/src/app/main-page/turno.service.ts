@@ -48,8 +48,27 @@ export class TurnoService {
       );
   }
 
+  getTurno(id: string): Observable<Turno> {
+    const url = this.turnoUrl + `/${id}`;
+    return this.http.get<Turno>(url)
+      .pipe(
+        catchError(this.handleError<Turno>('getTurnosDeMotorista', {} as Turno))
+      );
+  }
+
   addTurno(turno: Turno): Observable<Turno | any> {
     const url = this.turnoUrl + "/create";
+    return this.http.post<Turno>(url, turno, this.httpOptions).pipe(
+      catchError((error) => {
+        this.log(error);
+        catchError(this.handleError<Turno>(`addTurno id=${turno.motorista}`));
+        return of(error);
+      })
+    );
+  }
+
+  updateTurno(turno: Turno): Observable<Turno | any> {
+    const url = this.turnoUrl + "/update";
     return this.http.post<Turno>(url, turno, this.httpOptions).pipe(
       catchError((error) => {
         this.log(error);
