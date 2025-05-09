@@ -1,0 +1,21 @@
+ 
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    
+        <!-- Nif Column -->
+        <ng-container matColumnDef="nif">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> NIF </th>
+          <td mat-cell *matCellDef="let motorista"> {{motorista.nif}} </td>
+        </ng-container>
+      
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> NOME </th>
+          <td mat-cell *matCellDef="let motorista"> {{motorista.nome}} </td>
+        </ng-container>
+      
+        <!-- Registo Column which sorts the table -->
+        <ng-container matColumnDef="registo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> REGISTO </th>
+          <td mat-cell *matCellDef="let motorista"> {{datePipe.transform(motorista.registo, "dd-MM-yyyy HH-mm-ss")}} </td>
+        </ng-container>
+</table>  
