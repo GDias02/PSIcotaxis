@@ -7,6 +7,7 @@ import { Pedido } from '../pedido';
 import { PedidoService } from '../pedido.service';
 import { LocService } from '../loc.service';
 import { firstValueFrom } from 'rxjs';
+import { TurnoService } from '../turno.service';
 
 
 
@@ -18,6 +19,9 @@ import { firstValueFrom } from 'rxjs';
 export class DarBoleiaComponent {
   pedidos: Pedido[] = [];
   distancias: Map<string, number> = new Map();
+
+  motorista: string = "681a7a64ae1607bd9c3e23da";
+  taxi: string = "681a7a64ae1607bd9c3e23d4";
   
   displayedColumns: string[] = ['moradaDe', 'moradaPara', 'numDePassageiros', 'distância', 'luxuoso'];
   dataSource = new MatTableDataSource<Pedido>(this.pedidos);
@@ -27,6 +31,7 @@ export class DarBoleiaComponent {
   constructor(
     private pedidoService: PedidoService,
     private locService: LocService,
+    private turnoService: TurnoService,
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +50,7 @@ export class DarBoleiaComponent {
       // Default sorting for other columns
       return (data as any)[sortHeaderId];
     };
-    
+
   }
 
   async getPedidos(): Promise<void> {
@@ -61,10 +66,25 @@ export class DarBoleiaComponent {
       const longitudePara = parseFloat(pedido.coordenadasPara.split(",")[1]);
   
       const distance = this.locService.getDistance(latitudeDe, longitudeDe, latitudePara, longitudePara);
-      
+
       const duration = distance * 4;
-      
+
       this.distancias.set(pedido._id, duration);
     }
   }
+  
+  choosePedido(row:Pedido): void {
+    
+    row.taxi = this.taxi;
+    row.motorista = this.motorista;
+    row.status = "aceite";
+    this.pedidoService.putPedido(row);
+    
+    const table = document.getElementById("pedidosTable");
+    if (table){
+      table.style.display = "None";
+    }
+    
+  }
+
 }

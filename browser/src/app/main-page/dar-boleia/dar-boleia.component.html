@@ -1,6 +1,4 @@
- 
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
+<table id="pedidosTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <!-- Morada De Column -->
     <ng-container matColumnDef="moradaDe">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> De </th>
@@ -39,7 +37,12 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row
+          (click)="choosePedido(row)"
           *matRowDef="let row; columns: displayedColumns;"
       ></tr>
       <!--(click)="showMotoristaDetail(row)"--> 
 </table>  
+
+<div id="waiting">
+    <h2 >Estamos à espera que o cliente aceite a sua proposta</h2>
+</div>
