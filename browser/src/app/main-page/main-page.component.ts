@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Motorista } from './motorista';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Gestor } from './gestor';
 import { Cliente } from './cliente';
 
@@ -14,7 +14,9 @@ export class MainPageComponent {
   username = "";
   user?: Motorista | Gestor | Cliente;
 
-  constructor(private readonly activatedRoute: ActivatedRoute) {
+  constructor(private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router
+  ) {
   };
 
   ngOnInit(): void {

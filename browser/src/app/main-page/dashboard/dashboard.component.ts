@@ -57,7 +57,12 @@ export class DashboardComponent {
         });
         this.navLinks.push({
           label: 'Registar Turno',
-          link: 'turno/create',
+          link: 'turnos/create',
+          index: 1
+        });
+        this.navLinks.push({
+          label: 'Os meus Turnos',
+          link: 'turnos',
           index: 1
         });
         this.navLinks.push({
