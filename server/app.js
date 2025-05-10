@@ -8,7 +8,7 @@ const cors = require("cors");
 const indexRouter = require('./routes/index');
 const gestorRouter = require('./routes/gestor');
 const servicosRouter = require('./routes/servicos');
-const motoristasRouter = require('./routes/motoristas');
+const motoristasRouter = require('./routes/motorista');
 const clientesRouter = require('./routes/cliente');
 
 const app = express();
@@ -36,7 +36,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/gestor', gestorRouter);
 app.use('/servicos', servicosRouter);
-app.use('/mostoristas',motoristasRouter);
+app.use('/motoristas',motoristasRouter);
 app.use('/clientes', clientesRouter);
 
 // catch 404 and forward to error handler

@@ -8,3 +8,5 @@ router.get("/pedidos", pedido_controller.pedido_list_pendentes);
 router.get("/pedidos/:id", pedido_controller.pedido);
 router.put("/pedidos/:id", pedido_controller.pedido_update);
 router.delete("/pedidos/:id", pedido_controller.pedido_delete);
+
+module.exports = router;
