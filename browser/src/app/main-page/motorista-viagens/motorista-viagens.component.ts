@@ -17,7 +17,7 @@ export class MotoristaViagensComponent {
   motorista?: Motorista;
   viagens: Viagem[] = [];
   
-  displayedColumns: string[] = ['taxi', 'partida', 'chegada', 'inicio', 'fim'];
+  displayedColumns: string[] = ['seq', 'taxi', 'partida', 'chegada', 'inicio', 'fim'];
   dataSource = new MatTableDataSource<Viagem>(this.viagens);
 
   @ViewChild(MatSort) sort!: MatSort;

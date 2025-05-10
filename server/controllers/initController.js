@@ -4,6 +4,8 @@ const Pessoa = require("../models/pessoa");
 const Motorista = require("../models/motorista");
 const Cliente = require("../models/cliente");
 const Turno = require("../models/turno");
+const Pedido = require("../models/pedido");
+const Viagem = require("../models/viagem");
 
 const asyncHandler = require("express-async-handler");
 
@@ -17,6 +19,8 @@ exports.init = asyncHandler(async (req, res) => {
   main().catch((err) => console.log(err));
 
   async function main() {
+    await Pedido.deleteMany({});
+    await Viagem.deleteMany({});
     await Pessoa.deleteMany({});
     await Taxi.deleteMany({});
     await Config.deleteMany();

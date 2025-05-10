@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
@@ -13,6 +13,7 @@ import { Morada } from '../morada';
 import { LocService } from '../loc.service';
 import { ViagemService } from '../viagem.service';
 import { CustoService } from '../custo.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-motorista-viagem',
@@ -20,6 +21,8 @@ import { CustoService } from '../custo.service';
   styleUrls: ['./motorista-viagem.component.css']
 })
 export class MotoristaViagemComponent {
+
+  private _snackBar = inject(MatSnackBar);
   
   Motorista?: Motorista;
   turno?: Turno;
@@ -68,13 +71,13 @@ export class MotoristaViagemComponent {
     private viagemService: ViagemService,
     private custoService: CustoService
   ) {
-    this.route.data.subscribe(({ user }) => this.motorista = user);
+    //this.route.data.subscribe(({ user }) => this.Motorista = user);
   }
 
   locOrFilled(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
-      if (this.locService.isActive() || value !== '') return null;
+      if (this.locService.isActive() || (value !== '' && value !== undefined)) return null;
       else return { missingFields: true }
     }
   }
@@ -90,7 +93,10 @@ export class MotoristaViagemComponent {
   }
 
   getPedido(): void {
-    const id = this.Motorista!._id;
+    /* const id = this.Motorista!._id;
+    this.pedidoService.getPedidoMotorista(id!)
+      .subscribe((pedido: Pedido) => this.pedido = pedido); */
+    const id = "681fd93b8163a26948fc755a";
     this.pedidoService.getPedido(id!)
       .subscribe((pedido: Pedido) => this.pedido = pedido);
   }
@@ -108,7 +114,15 @@ export class MotoristaViagemComponent {
     this.cliente = this.pedido!.cliente;
     this.numDePassageiros = this.pedido!.numDePassageiros;
 
-    this.locService.getMorada().subscribe(morada => this.keepFillingViagem(morada));
+    if (this.locService.isActive()) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) =>
+          this.locService.getMoradaWithLoc(position).subscribe(morada => this.keepFillingViagem(morada)),
+        error => {},
+        { enableHighAccuracy: true }
+      );
+    }
+    else this.keepFillingViagem({} as Morada);
   }
 
   keepFillingViagem(morada: Morada) {
@@ -121,6 +135,11 @@ export class MotoristaViagemComponent {
 
     this.inicio = new Date();
 
+    if (!this.between(new Date(this.inicio!), new Date(this.turno!.inicio), new Date(this.turno!.fim))) {
+      this.openSnackBar('Não pode começar uma viagem fora do seu turno');
+      return;
+    }
+
     this.viagem = {seq: this.seq, motorista: this.motorista, taxi: this.taxi, cliente: this.cliente, numeroDePassageiros: this.numDePassageiros, 
       partida: this.partida, inicio: this.inicio} as Viagem;
 
@@ -132,13 +151,33 @@ export class MotoristaViagemComponent {
     this.counter = setInterval(() => this.duration++, 60 * 1000);
   }
 
-  onViagemStop(): void {
+  async onViagemStop() {
     if (this.chegadaForm.invalid) return;
 
     clearInterval(this.counter!);
     this.fim = new Date();
-    this.fim.setMinutes(this.inicio!.getMinutes());
-    this.locService.getMorada().subscribe(morada => this.keepFillingViagemStop(morada));
+    this.fim.setMinutes(this.inicio!.getMinutes() + this.duration);
+
+    if (!this.between(new Date(this.fim!), new Date(this.turno!.inicio), new Date(this.turno!.fim))) {
+      this.openSnackBar('Não pode terminar uma viagem fora do seu turno');
+      return;
+    }
+
+    let intersects: boolean = await this.intersects();
+    if (intersects) {
+      this.openSnackBar('Não pode registar uma viagem enquanto outra está a decorrer');
+      return;
+    }
+
+    if (this.locService.isActive()) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) =>
+          this.locService.getMoradaWithLoc(position).subscribe(morada => this.keepFillingViagemStop(morada)),
+        error => {},
+        { enableHighAccuracy: true }
+      );
+    }
+    else this.keepFillingViagemStop({} as Morada);
   }
 
   keepFillingViagemStop(morada: Morada) {
@@ -173,7 +212,26 @@ export class MotoristaViagemComponent {
   }
 
   deletePedido(): void {
-    this.pedidoService.deletePedido(this.pedido!._id).subscribe();
-    this.router.navigate(['motorista/viagens']);
+    this.pedidoService.deletePedido(this.pedido!._id).subscribe(pedido =>
+      this.router.navigate(['main-page/motorista/viagens'])
+    );
+  }
+
+  between(middle: Date, left: Date, right: Date): boolean {
+    return left.getTime() <= middle.getTime() && middle.getTime() <= right.getTime();
+  }
+
+  async intersects(): Promise<boolean> {
+    for (let viagem_id of this.turno!.viagens) {
+      let viagem: Viagem | undefined = await this.viagemService.getViagem(viagem_id).toPromise()
+      if (this.between(new Date(viagem!.inicio), new Date(this.inicio!), new Date(this.fim!)) 
+        || this.between(new Date(viagem!.fim!), new Date(this.inicio!), new Date(this.fim!)))
+        return Promise.resolve(true);
+    }
+    return Promise.resolve(false);
+  }
+
+  openSnackBar(message: string): void {
+    this._snackBar.open(message, 'Okay', {duration:8500});
   }
 }

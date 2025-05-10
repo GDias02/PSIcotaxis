@@ -47,6 +47,11 @@ export class LocService {
     return this.locToMorada(this.loc!);
   }
 
+  getMoradaWithLoc(loc: GeolocationPosition): Observable<Morada> {
+    if (!("geolocation" in navigator)) return of({} as Morada);
+    return this.locToMorada(loc);
+  }
+
   getCoords(morada: Morada): Observable<GeolocationCoordinates> {
     if (!("geolocation" in navigator)) return of({latitude: 38.756734, longitude: -9.155412} as GeolocationCoordinates); //Default FCUL
     return this.moradaToLoc(morada);

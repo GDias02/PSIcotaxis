@@ -8,8 +8,24 @@ const viagemSchema = new Schema({
     taxi: { type: Schema.Types.ObjectId, ref: "Taxi", required: true },
     cliente: { type: Schema.Types.ObjectId, ref: "Cliente", required: true},
     numeroDePassageiros: {type: Number, min: 1, required: true},
-    partida: { type: Schema.Types.ObjectId, ref: "Morada", required: true},
-    chegada: { type: Schema.Types.ObjectId, ref: "Morada", required: true},
+    partida: {
+        type: {
+            rua: { type: String, required: true },
+            localidade: { type: String, required: true },
+            codigoPostal: { type: String },
+            numeroDePorta: {type: String}
+        },
+        required: true
+    },
+    chegada: {
+        type: {
+            rua: { type: String, required: true },
+            localidade: { type: String, required: true },
+            codigoPostal: { type: String },
+            numeroDePorta: {type: String}
+        },
+        required: true
+    },
     inicio: { type: Date, required: true },
     fim: { type: Date },
     kilometros: { type: Number, min: 0 },

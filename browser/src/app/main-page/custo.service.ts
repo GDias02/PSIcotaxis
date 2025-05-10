@@ -14,7 +14,9 @@ export class CustoService {
   constructor(private configService: ConfigService) { }
 
   calcularCustoViagem(inicio: string, fim: string, conforto: string): Observable<number> {
-    if(new Date(inicio!) >= new Date(fim!)) return of(-1);
+    console.log(inicio)
+    console.log(fim)
+    if(new Date(inicio).getTime() >= new Date(fim).getTime()) return of(-1);
 
     return this.configService.getConfigs()
       .pipe(

@@ -94,6 +94,7 @@ exports.turno_create = [
                 // 201 - Created
                 await turno.save();
                 const newTurno = await Turno.findById(turno._id).exec();
+                console.log("SAVED TURNO = " + newTurno);
 
                 res.status(201).send(newTurno);
             } catch (error) {

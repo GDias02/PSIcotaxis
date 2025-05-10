@@ -12,7 +12,7 @@ import { MessageService } from './message.service';
 })
 export class ViagemService {
 
-  private viagensUrl = 'http://localhost:3000/motorista';
+  private viagensUrl = 'http://localhost:3000/motoristas';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,10 +36,18 @@ export class ViagemService {
   }
 
   getViagensMotorista(id_motorista: string): Observable<Viagem[]> {
-    const url = this.viagensUrl + `/viagens/${id_motorista}`;
+    const url = this.viagensUrl + `/viagens/motorista${id_motorista}`;
     return this.http.get<Viagem[]>(url)
       .pipe(
         catchError(this.handleError<Viagem[]>('getViagens', []))
+      );
+  }
+
+  getViagem(id: string): Observable<Viagem> {
+    const url = `${this.viagensUrl}/viagens/${id}`;
+    return this.http.get<Viagem>(url)
+      .pipe(
+        catchError(this.handleError<Viagem>(`getViagem id=${id}`))
       );
   }
 

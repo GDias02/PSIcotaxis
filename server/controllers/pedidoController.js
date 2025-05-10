@@ -23,6 +23,17 @@ exports.pedido = asyncHandler(async (req, res, next) => {
     res.status(200).send(pedido);
 });
 
+// /pedidos/id_motorista - GET BY MOTORISTA
+exports.pedido_motorista = asyncHandler(async (req, res, next) => {
+    const pedido = await Pedido.find({ motorista: req.params.id_motorista })
+                               .exec();
+    if (pedido === null) {
+        res.status(404).send();
+        return;
+    }
+    res.status(200).send(pedido);
+});
+
 // /pedidos - GET
 exports.pedido_list_pendentes = asyncHandler(async (req, res, next) => {
     const pedidos = await Pedido.find({ status: "pendente" })
@@ -127,8 +138,6 @@ exports.pedido_create = [
         // Extract the validation errors from a request.
         const errors = validationResult(req);
         const pedido = new Pedido({
-            motorista: req.body.motorista,
-            taxi: req.body.taxi,
             moradaDe: req.body.moradaDe,
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,
@@ -136,7 +145,7 @@ exports.pedido_create = [
             cliente: req.body.cliente,
             coordenadasDe: req.body.coordenadasDe,
             coordenadasPara: req.body.coordenadasPara,
-            status: req.body.status
+            status: req.body.status,
         });
 
         if (!errors.isEmpty()) {
@@ -151,6 +160,8 @@ exports.pedido_create = [
             return;
         }
 
+        console.log("IM ABOUT TO SAVE THIS: " + pedido);
+
         try {
             await pedido.save();
         } catch (err) {
@@ -158,7 +169,7 @@ exports.pedido_create = [
             return;
         }
 
-        pedido = await Pedido.findOne({cliente: pedido.cliente});
-        res.status(201).send(pedido);
+        const savedPedido = await Pedido.findOne({cliente: pedido.cliente});
+        res.status(201).send(savedPedido);
     })
 ];

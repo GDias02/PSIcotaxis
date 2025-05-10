@@ -3,10 +3,20 @@ const Viagem = require("../models/viagem");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
-// /viagens - GET
+// /viagens/motorista - GET
 exports.motorista_viagem_list = asyncHandler(async (req, res, next) => {
   const viagens = await Viagem.find({ motorista: req.params.id_motorista }).exec();
   res.status(200).send(viagens);
+});
+
+// /viagem/id - GET
+exports.viagem = asyncHandler(async (req, res, next) => {
+  const viagem = await Viagem.findById(req.params.id).exec();
+  if (viagem === null) {
+    res.status(404).send();
+    return;
+  }
+  res.status(200).send(viagem);
 });
 
 // /viagem - POST
@@ -35,13 +45,14 @@ exports.viagem_create = [
       res.status(400).send({errors: errors});
     } else {
       try {
-        // Create a Motorista object with escaped and trimmed data.
+        // Create a Viagem object with escaped and trimmed data.
         // 201 - Created
         await viagem.save();
         const newViagem = await Viagem.findById(viagem._id).exec();
         res.status(201).send(newViagem);
       } catch (error) {
-        res.status(409).send(error)
+        console.log(error);
+        res.status(409).send(error);
       }
     }
   }),

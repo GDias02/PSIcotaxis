@@ -3,6 +3,12 @@
     <h2>Viagens</h2>
     
     <table mat-table [dataSource]="viagens" matSort class="mat-elevation-z8">
+
+      <!-- Seq Column -->
+      <ng-container matColumnDef="seq">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> SEQ </th>
+        <td mat-cell *matCellDef="let viagem"> {{viagem.seq}} </td>
+      </ng-container>
     
       <!-- Taxi Column -->
       <ng-container matColumnDef="taxi">

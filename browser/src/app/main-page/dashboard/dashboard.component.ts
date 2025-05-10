@@ -67,7 +67,7 @@ export class DashboardComponent {
         });
         this.navLinks.push({
           label: 'Viagens',
-          link: 'viagens',
+          link: 'motorista/viagens',
           index: 3
         });
         break;

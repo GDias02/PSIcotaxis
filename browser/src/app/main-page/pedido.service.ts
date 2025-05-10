@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class PedidoService {
-  private readonly pedidosUrl = 'http://localhost:3000/clientes' //pedidos
+  private readonly pedidosUrl = 'http://localhost:3000' //pedidos
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,7 +31,7 @@ export class PedidoService {
   }
 
   getPedidos(): Observable<Pedido[]> {
-      const url = this.pedidosUrl + "/pedidos";
+      const url = this.pedidosUrl + "/clientes/pedidos";
       return this.http.get<Pedido[]>(url)
         .pipe(
           catchError(this.handleError<Pedido[]>('getPedidos', []))
@@ -39,15 +39,23 @@ export class PedidoService {
   }
 
   getPedido(id: string): Observable<Pedido> {
-    const url = this.pedidosUrl + "/pedidos/" + id;
+    const url = this.pedidosUrl + "/clientes/pedidos/" + id;
     return this.http.get<Pedido>(url)
       .pipe(
         catchError(this.handleError<Pedido>(`getPedido ${id}`))
       )
   }
 
+  getPedidoMotorista(id_motorista: string): Observable<Pedido> {
+    const url = this.pedidosUrl + "/motoristas/pedidos/" + id_motorista;
+    return this.http.get<Pedido>(url)
+      .pipe(
+        catchError(this.handleError<Pedido>(`getPedido ${id_motorista}`))
+      )
+  }
+
   postPedido(pedido: Pedido): Observable<Pedido> {
-    const url = this.pedidosUrl + "/pedidos";
+    const url = this.pedidosUrl + "/clientes/pedidos";
     return this.http.post<Pedido>(url, pedido, this.httpOptions)
       .pipe(
         catchError(this.handleError<Pedido>('postPedido'))
@@ -55,7 +63,7 @@ export class PedidoService {
   }
 
   deletePedido(id: string): Observable<Pedido>{
-    const url = this.pedidosUrl + "/pedidos/" + id;
+    const url = this.pedidosUrl + "/clientes/pedidos/" + id;
     return this.http.delete<Pedido>(url)
       .pipe(
         catchError(this.handleError<Pedido>(`deletePedido ${id}`))

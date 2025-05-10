@@ -1,7 +1,7 @@
 <div class="motorista-viagem-wrapper">
     
   <h2 class="header">Viagem</h2>
-  <mat-grid-list cols="1" rowHeight="1:2">
+  <mat-grid-list cols="1" rowHeight="1:1">
     <mat-grid-tile>
       <div class="form-container">
         <form [formGroup]="partidaForm" (ngSubmit)="onViagemInit()">
@@ -27,16 +27,17 @@
               Cancelar
             </button>
         
-            <button mat-fab extended type="submit" [disabled]="!partidaForm.valid && iniciar">
+            <button mat-fab extended type="submit" [disabled]="!partidaForm.valid || !iniciar">
               Iniciar Viagem
-              <mat-icon fontIcon="&#xf5e4;"></mat-icon>
+              <mat-icon>local_taxi</mat-icon>
             </button>
+            <p id="duration">{{duration * 1000 * 60 | date: 'HH:mm' : 'UTC'}}</p>
           </div>
         </form>
       </div>
+    </mat-grid-tile>
 
-      <p id="duration">{{duration * 1000 * 60 | date: 'HH:mm'}}</p>
-
+    <mat-grid-tile>
       <div class="form-container">
         <form [formGroup]="chegadaForm" (ngSubmit)="onViagemStop()">
 
@@ -56,9 +57,9 @@
           </p>
 
           <div class="confirmation-buttons">
-            <button mat-fab extended type="submit" [disabled]="!chegadaForm.valid && !iniciar">
+            <button mat-fab extended type="submit" [disabled]="!chegadaForm.valid || iniciar">
               Finalizar Viagem
-              <mat-icon fontIcon="&#xf5e4;"></mat-icon>
+              <mat-icon>local_taxi</mat-icon>
             </button>
           </div>
         </form>
