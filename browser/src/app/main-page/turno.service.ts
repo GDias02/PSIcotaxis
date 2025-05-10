@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
 import { catchError, Observable, of } from 'rxjs';
 import { Taxi } from './taxi';
-import { Turno } from './turno';
+import { Turno, TurnoCompleto } from './turno';
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +40,11 @@ export class TurnoService {
       );
   }
 
-  getTurnosDeMotorista(id_motorista: string): Observable<Turno[]> {
+  getTurnosDeMotorista(id_motorista: string): Observable<TurnoCompleto[]> {
     const url = this.turnoUrl + `/motorista/${id_motorista}`;
-    return this.http.get<Turno[]>(url)
+    return this.http.get<TurnoCompleto[]>(url)
       .pipe(
-        catchError(this.handleError<Turno[]>('getTurnosDeMotorista', []))
+        catchError(this.handleError<TurnoCompleto[]>('getTurnosDeMotorista', []))
       );
   }
 

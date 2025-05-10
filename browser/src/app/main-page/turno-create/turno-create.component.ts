@@ -12,7 +12,7 @@ import { TurnoService } from '../turno.service';
 import { DatePipe } from '@angular/common';
 import { UserService } from 'src/app/user.service';
 import { Motorista } from '../motorista';
-import { Turno } from '../turno';
+import { Turno, TurnoCompleto } from '../turno';
 
 @Component({
   selector: 'app-turno-create',
@@ -145,11 +145,20 @@ export class TurnoCreateComponent {
   getTurnosRegistados(): void {
     this.turnoService.getTurnosDeMotorista(this.user!._id)
       .subscribe(t => {
-        this.turnosRegistados = t;
+        this.turnosRegistados = t.map(v => this.convertTurnoCompletoToSimples(v));
       });
   }
 
-
+  convertTurnoCompletoToSimples(tc: TurnoCompleto): Turno {
+    return {
+      _id: tc._id,
+      motorista: tc.motorista,
+      taxi: tc.taxi._id,
+      viagens: tc.viagens,
+      inicio: tc.inicio,
+      fim: tc.fim
+    } as Turno;
+  }
 
   updateValidityFim(): void {
     this.firstFormGroup.controls['fim'].updateValueAndValidity();

@@ -7,6 +7,7 @@ const { body, validationResult } = require("express-validator");
 // /turnos de um motorista- GET
 exports.turnos_de_motorista = asyncHandler(async (req, res, next) => {
     const turnos_de_motorista = await Turno.find({ motorista: req.params.id })
+        .populate('taxi')
         .sort({ inicio: "asc" })
         .exec();
     res.status(200).send(turnos_de_motorista);
