@@ -26,8 +26,8 @@ const pedidoSchema = new Schema({
     numDePassageiros: { type:Number, min:1, max:9, required:true },
     luxuoso: { type:Boolean, required: true},
     cliente: {type: Schema.Types.ObjectId, ref: "Cliente", unique: true, required: true},
-    motorista: {type: Schema.Types.ObjectId, ref: "Motorista", unique: true},
-    taxi: {type: Schema.Types.ObjectId, ref: "Taxi"},
+    motorista: {type: Schema.Types.ObjectId, ref: "Motorista", default: null},
+    taxi: {type: Schema.Types.ObjectId, ref: "Taxi", default: null},
     coordenadasDe: { type: String, required: true},
     coordenadasPara: { type: String, required: true},
     status: {

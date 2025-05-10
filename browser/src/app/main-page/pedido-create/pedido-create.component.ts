@@ -69,13 +69,28 @@ export class PedidoCreateComponent implements OnInit{
   showStep2(): void {
     const step1Element = document.getElementById('step1');
     if (step1Element) {
-      step1Element.style.display = "None";
+      step1Element.style.display = "none";
     }
     
     const step2Element = document.getElementById("step2");
     if (step2Element) {
       step2Element.style.display = "block";
     }
-
   }
+
+  abortPedido(): void {
+    console.log("hello")
+    this.pedidoService.deletePedido(this.pedido._id);
+    const step1Element = document.getElementById('step1');
+    if (step1Element) {
+      step1Element.style.display = "block";
+    }
+    console.log(step1Element)
+    const step2Element = document.getElementById("step2");
+    if (step2Element) {
+      step2Element.style.display = "none";
+    }
+    console.log(step2Element)
+  }
+
 }

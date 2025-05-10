@@ -126,14 +126,14 @@ exports.pedido_create = [
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-        const pedido = new Pedido({
+        let pedido = new Pedido({
             moradaDe: req.body.moradaDe,
             moradaPara: req.body.moradaPara,
             numDePassageiros: req.body.numDePassageiros,
             luxuoso: req.body.luxuoso,
             cliente: req.body.cliente,
-            motorista: req.body.motorista,
-            taxi: req.body.taxi,
+            motorista: null,
+            taxi: null,
             coordenadasDe: req.body.coordenadasDe,
             coordenadasPara: req.body.coordenadasPara,
             status: req.body.status
@@ -150,15 +150,16 @@ exports.pedido_create = [
             res.status(403).send("There is already a pedido from this cliente");
             return;
         }
-
+        
         try {
             await pedido.save();
         } catch (err) {
             res.status(500).send(err);
             return;
         }
-
+        
         pedido = await Pedido.findOne({cliente: pedido.cliente});
+        
         res.status(201).send(pedido);
     })
 ];

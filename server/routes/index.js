@@ -17,6 +17,10 @@ router.get('/clientes', function(req, res, next) {
   res.redirect("/cliente");
 });
 
+/* GET motoristas page. */
+router.get('/motoristas', function(req, res, next) {
+  res.redirect("/motorista");
+});
 
 
 module.exports = router;

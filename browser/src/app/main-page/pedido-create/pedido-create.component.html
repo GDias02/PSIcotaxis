@@ -11,11 +11,11 @@
     </div>
     <div id="step2" style="display: none;">
         <form [formGroup]="secondFormGroup">
-            <div>
+            <div id="ndFormWrapper">
                 <h2>Estamos à procura de um Motorista para si</h2>
                 <h3>Aguarde uns momentos</h3>
                 <mat-spinner></mat-spinner>
-                <button mat-button >Back</button>
+                <button mat-button id="abortButton" (click)="abortPedido()">Cancelar Pedido</button>
                 <h2>
                     This next button should be invisible and should be called 
                     when the motorista clicks on "accept, after that it shows the next step"
