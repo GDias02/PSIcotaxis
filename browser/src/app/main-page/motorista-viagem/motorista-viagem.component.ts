@@ -84,7 +84,10 @@ export class MotoristaViagemComponent {
   }
 
   ngOnInit(): void {
-    this.getTurno();
+      this.route.data.subscribe(({ user }) => {
+        this.Motorista = user;
+        this.getTurno();
+    });
   }
 
   getTurno(): void {

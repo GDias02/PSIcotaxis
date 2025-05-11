@@ -63,17 +63,22 @@ export class DashboardComponent {
         this.navLinks.push({
           label: 'Os meus Turnos',
           link: 'turnos',
-          index: 1
+          index: 2
         });
         this.navLinks.push({
           label: 'Taxis',
           link: 'taxis',
-          index: 2
+          index: 3
+        });
+        this.navLinks.push({
+          label: 'Pedidos',
+          link: 'motoristas/pedidos',
+          index: 4
         });
         this.navLinks.push({
           label: 'Viagens',
           link: 'motorista/viagens',
-          index: 3
+          index: 5
         });
         break;
       case User.GESTOR:

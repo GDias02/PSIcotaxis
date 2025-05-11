@@ -5,8 +5,8 @@ const pedido_controller = require("../controllers/pedidoController");
 const viagem_controller = require("../controllers/viagemController");
 
 /// Pedido ROUTES ///
-router.get("/pedidos", pedido_controller.pedido_list_pendentes);
 router.get("/pedidos/:id_motorista", pedido_controller.pedido_motorista);
+router.get("/pedidos", pedido_controller.pedido_list_pendentes);
 router.put("/pedidos/:id", pedido_controller.pedido_update);
 router.delete("/pedidos/:id", pedido_controller.pedido_delete);
 

@@ -19,9 +19,10 @@ router.get("/motoristas/:id", motorista_controller.motorista);
 router.post("/motoristas/create", motorista_controller.motorista_create);
 
 /// Turno ROUTES ///
-router.get("/turnos", turno_controller.taxis_livres);
-router.get("/turnos/:id", turno_controller.turno);
+router.get("/turnos/motorista/atual", turno_controller.turno_atual);
 router.get("/turnos/motorista/:id", turno_controller.turnos_de_motorista);
+router.get("/turnos/:id", turno_controller.turno);
+router.get("/turnos", turno_controller.taxis_livres);
 router.post("/turnos/create", turno_controller.turno_create);
 router.post("/turnos/update", turno_controller.turno_update);
 
