@@ -111,7 +111,8 @@ exports.init = asyncHandler(async (req, res) => {
     await Promise.all([
       turnoCreate(0, TURNOS[0], 1, 0),
       turnoCreate(1, TURNOS[1], 1, 1),
-      turnoCreate(2, TURNOS[2], 2, 2)
+      turnoCreate(2, TURNOS[2], 2, 2),
+      turnoCreate(3, TURNOS[3], 0, 2)
     ]);
   }
 
@@ -235,6 +236,10 @@ const TURNOS = [
   {
     inicio: Date.parse('2025-05-20T13:30:00.000Z'),
     fim: Date.parse('2025-05-20T20:00:00.000Z')
+  },
+  {
+    inicio: Date.parse('2025-05-11T13:30:00.000Z'),
+    fim: Date.parse('2025-05-11T20:00:00.000Z')
   }
 ];
 

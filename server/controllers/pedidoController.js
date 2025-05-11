@@ -64,11 +64,13 @@ exports.pedido_update = [
         .escape(),
     body("coordenadasDe")
         .trim()
-        .matches(/^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/)
+        .customSanitizer(value => value.replace(/\s+/g, ''))
+        .matches(/^[-+]?\d{1,3}(?:\.\d+)?,[-+]?\d{1,3}(?:\.\d+)?$/)
         .escape(),
     body("coordenadasPara")
         .trim()
-        .matches(/^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/)
+        .customSanitizer(value => value.replace(/\s+/g, ''))
+        .matches(/^[-+]?\d{1,3}(?:\.\d+)?,[-+]?\d{1,3}(?:\.\d+)?$/)
         .escape(),
     body("status", `Status tem de ser um dos seguintes valores: ${new Pedido().statusPossiveis}`)
         .trim()

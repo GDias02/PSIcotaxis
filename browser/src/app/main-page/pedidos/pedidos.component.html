@@ -1,0 +1,45 @@
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <h2>Pedidos por atender</h2>
+        <mat-card-actions>
+        </mat-card-actions>
+
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+            <!-- Morada origem Column -->
+            <ng-container matColumnDef="morada_origem">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Morada de Origem </th>
+                <td mat-cell *matCellDef="let pedido"> {{pedido.moradaDe.localidade}} </td>
+            </ng-container>
+            <!-- Morada destino Column -->
+            <ng-container matColumnDef="morada_destino">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Morada de Destino </th>
+                <td mat-cell *matCellDef="let pedido"> {{pedido.moradaPara.localidade}} </td>
+            </ng-container>
+
+            <!-- Luxo -->
+            <ng-container matColumnDef="luxuoso">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Confortável </th>
+                <td mat-cell *matCellDef="let pedido"> {{pedido.luxuoso}} </td>
+            </ng-container>
+
+            <!-- conforto Column -->
+            <ng-container matColumnDef="passageiros">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Número de Passageiros </th>
+                <td mat-cell *matCellDef="let pedido"> {{pedido.numDePassageiros}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="atender">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Atender </th>
+                <td mat-cell *matCellDef="let pedido">
+                    <button mat-fab extended (click)="atenderPedido(pedido)">
+                    Responder
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

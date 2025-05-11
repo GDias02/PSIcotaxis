@@ -40,6 +40,17 @@ export class TurnoService {
       );
   }
 
+  getTurnoAtual(m: string, agora: string): Observable<Turno[]> {
+    const params = new HttpParams()
+      .set('id', `${m}`)
+      .set('agora', `${agora}`);
+    const url = this.turnoUrl + `/motorista/atual`;
+    return this.http.get<Turno[]>(url, { params })
+      .pipe(
+        catchError(this.handleError<Turno[]>('getTurnoAtual', []))
+      );
+  }
+
   getTurnosDeMotorista(id_motorista: string): Observable<TurnoCompleto[]> {
     const url = this.turnoUrl + `/motorista/${id_motorista}`;
     return this.http.get<TurnoCompleto[]>(url)

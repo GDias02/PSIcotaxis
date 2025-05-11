@@ -23,8 +23,8 @@ exports.turno = asyncHandler(async (req, res, next) => {
 
 // /taxis que nao estao ocupados num periodo - GET
 exports.taxis_livres = asyncHandler(async (req, res, next) => {
-    const start = req.params.inicio;
-    const end = req.params.fim;
+    const start = req.query.inicio;
+    const end = req.query.fim;
 
     const turnos = await Turno.find({ $and: [{ inicio: { $lte: end } }, { fim: { $gt: start } }] },
         { _id: 0, taxi: 1 }).exec(); // todos os turnos que intersetam com o periodo indicado
@@ -34,6 +34,23 @@ exports.taxis_livres = asyncHandler(async (req, res, next) => {
     const taxis_livres = await Taxi.find({ _id: { $nin: list_of_taxi_ids } })
         .exec();                              // todos os taxis que nao estao nesses turnos
     res.status(200).send(taxis_livres);
+});
+
+// /turno atual de um motorista - GET
+exports.turno_atual = asyncHandler(async (req, res, next) => {
+    const id_motorista = req.query.id;
+    const agora = req.query.agora;
+    const turnos = await Turno.find({ $and: [
+                                    { motorista: id_motorista }, 
+                                    { inicio: { $lte: agora } }, 
+                                    { fim: { $gte: agora }}
+                                ]})
+        .sort({ inicio: "asc" })
+        .exec();
+    if(turnos.length > 0)
+        res.status(200).send(turnos);
+    else 
+        res.status(202).send(turnos);
 });
 
 // /turno/id - GET

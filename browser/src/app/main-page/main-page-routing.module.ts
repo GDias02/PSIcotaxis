@@ -19,18 +19,20 @@ import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.co
 import { userResolver } from './user-resolver';
 import { MotoristaViagensComponent } from './motorista-viagens/motorista-viagens.component';
 import { TurnosComponent } from './turnos/turnos.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 const mainroutes: Routes = [
     { path: 'main-page', component: MainPageComponent, resolve: {user: userResolver}, children: [
       { path: 'viagens', component: ViagensComponent, resolve: {user: userResolver} },
       { path: 'motoristas', component: MotoristasComponent },
       { path: 'motoristas/create', component: MotoristaCreateComponent },
+      { path: 'motoristas/pedidos', component: PedidosComponent, resolve: {user: userResolver} },
       { path: 'motoristas/:id', component: MotoristaDetailComponent, resolve: {user: userResolver} },
       { path: 'taxis', component: TaxisComponent },
       { path: 'taxis/create', component: TaxiCreateComponent },
       { path: 'taxis/:id', component: TaxiDetailComponent },
       { path: 'turnos/create', component: TurnoCreateComponent, resolve: {user: userResolver} },
-      { path: 'turnos/:id/viagem', component: MotoristaViagemComponent}, //resolve: {user: userResolver} },
+      { path: 'turnos/:id/viagem', component: MotoristaViagemComponent, resolve: {user: userResolver} },
       { path: 'turnos', component: TurnosComponent, resolve: {user: userResolver} },
       { path: 'motorista/viagens', component: MotoristaViagensComponent, resolve: {user: userResolver} },
       { path: 'configs', component: ConfigsComponent },

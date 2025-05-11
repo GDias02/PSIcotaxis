@@ -24,7 +24,7 @@ export class MotoristaViagemComponent {
 
   private _snackBar = inject(MatSnackBar);
   
-  Motorista?: Motorista;
+  user?: Motorista;
   turno?: Turno;
   pedido?: Pedido;
   viagem?: Viagem;
@@ -83,7 +83,10 @@ export class MotoristaViagemComponent {
   }
 
   ngOnInit(): void {
-    this.getTurno();
+      this.route.data.subscribe(({ user }) => {
+        this.getTurno();
+        this.user = user;
+    });
   }
 
   getTurno(): void {
@@ -95,8 +98,10 @@ export class MotoristaViagemComponent {
   getPedido(): void {
     /* const id = this.Motorista!._id;
     this.pedidoService.getPedidoMotorista(id!)
-      .subscribe((pedido: Pedido) => this.pedido = pedido); */
+      .subscribe((pedido: Pedido) => this.pedido = pedido); 
     const id = "681fd93b8163a26948fc755a";
+    */
+    const id = "68206f3b16ec104dc0a52c91";
     this.pedidoService.getPedido(id!)
       .subscribe((pedido: Pedido) => this.pedido = pedido);
   }

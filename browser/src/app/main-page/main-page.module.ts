@@ -54,6 +54,7 @@ import { MapViewerComponent } from './map-viewer/map-viewer.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.component';
 import { MotoristaViagensComponent } from './motorista-viagens/motorista-viagens.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 @NgModule({
   imports: [
@@ -116,7 +117,8 @@ import { MotoristaViagensComponent } from './motorista-viagens/motorista-viagens
     PedidoCreateFormComponent,
     MapViewerComponent,
     MotoristaViagemComponent,
-    MotoristaViagensComponent
+    MotoristaViagensComponent,
+    PedidosComponent
   ],
 })
 export class MainPageModule {

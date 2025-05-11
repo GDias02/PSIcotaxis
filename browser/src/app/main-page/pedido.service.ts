@@ -38,6 +38,14 @@ export class PedidoService {
         )
   }
 
+  getPedidosPendentes(): Observable<Pedido[]> {
+      const url = this.pedidosUrl + "/motoristas/pedidos";
+      return this.http.get<Pedido[]>(url)
+        .pipe(
+          catchError(this.handleError<Pedido[]>('getPedidos', []))
+        )
+  }
+
   getPedido(id: string): Observable<Pedido> {
     const url = this.pedidosUrl + "/clientes/pedidos/" + id;
     return this.http.get<Pedido>(url)
@@ -71,7 +79,7 @@ export class PedidoService {
   }
 
   putPedido(pedido:Pedido): Observable<Pedido>{
-    const url = `http://localhost:3000/motoristas/${pedido._id}`;
+    const url = `http://localhost:3000/motoristas/pedidos/${pedido._id}`;
     return this.http.put<Pedido>(url, pedido,this.httpOptions)
             .pipe(
               catchError(this.handleError<Pedido>(`putPedido ${pedido._id}`))
