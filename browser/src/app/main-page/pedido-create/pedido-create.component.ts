@@ -150,14 +150,14 @@ export class PedidoCreateComponent implements OnInit{
   }
 
   rejeitar(): void {
-    this.pedido.status = "Rejeitado";
+    this.pedido.status = "rejeitado";
     this.pedidoService.putPedido(this.pedido).subscribe(pedido => {
       this.location.back();
     })
   }
 
   aceitar(): void {
-    this.pedido.status = "Confirmado";
+    this.pedido.status = "confirmado";
     this.pedidoService.putPedido(this.pedido).subscribe(pedido => {
       this.pedido = pedido;
       this.showStep4();
@@ -205,5 +205,15 @@ export class PedidoCreateComponent implements OnInit{
 
   goBack(): void {
     this.pedidoService.deletePedido(this.pedido._id).subscribe(pedido => this.location.back());
+  }
+
+  canLoadStep3(): boolean {
+    return this.motorista !== undefined && this.motorista.nome !== undefined &&
+      this.distance !== undefined && this.duration !== undefined && this.custo !== undefined &&
+      this.taxi !== undefined;
+  }
+
+  canLoadStep5(): boolean {
+    return this.pedido !== undefined && this.pedido.custo !== undefined;
   }
 }

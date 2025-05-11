@@ -103,8 +103,6 @@ export class PedidoCreateFormComponent {
       numDePassageiros: this.pedidoForm.get('numDePassageiros')?.value ?? 4,
       luxuoso: this.luxuoso,
       cliente: c._id,
-      motorista: "",
-      taxi: "",
       status: "pendente",
     };
   }

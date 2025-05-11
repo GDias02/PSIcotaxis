@@ -217,7 +217,7 @@ export class MotoristaViagemComponent {
   }
 
   putPedido(): void {
-    this.pedido!.status = "Terminado";
+    this.pedido!.status = "terminado";
     this.pedido!.custo = this.custo;
     this.pedidoService.putPedido(this.pedido!).subscribe(pedido =>
       this.router.navigate(['main-page/motorista/viagens'])

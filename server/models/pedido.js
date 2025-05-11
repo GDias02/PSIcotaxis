@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const statusPossiveis = ["pendente", "aceite"];
+const statusPossiveis = ["pendente", "aceite", "rejeitado", "confirmado", "terminado"];
 
 const pedidoSchema = new Schema({
     motorista: {type: Schema.Types.ObjectId, ref: "Motorista"},
@@ -11,7 +11,7 @@ const pedidoSchema = new Schema({
         type: {
             rua: { type: String, required: true },
             localidade: { type: String, required: true },
-            codigoPostal: { type: String, required: true },
+            codigoPostal: { type: String },
             numeroDePorta: {type: String}
         },
         required: true
@@ -20,10 +20,18 @@ const pedidoSchema = new Schema({
         type: {
             rua: { type: String, required: true },
             localidade: { type: String, required: true },
-            codigoPostal: { type: String, required: true },
+            codigoPostal: { type: String },
             numeroDePorta: {type: String}
         },
         required: true
+    },
+    moradaMotorista: {
+        type: {
+            rua: { type: String, required: true },
+            localidade: { type: String, required: true },
+            codigoPostal: { type: String },
+            numeroDePorta: {type: String}
+        }
     },
     numDePassageiros: { type:Number, min:1, max:4, required:true },
     luxuoso: { type:Boolean, required: true},
@@ -35,7 +43,8 @@ const pedidoSchema = new Schema({
         required: true,
         enum: statusPossiveis,
         default: "pendente"
-    }
+    },
+    custo: { type:Number },
 });
 
 pedidoSchema.virtual('statusPossiveis').get(function() {

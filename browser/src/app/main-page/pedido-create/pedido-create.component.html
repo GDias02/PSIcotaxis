@@ -18,7 +18,7 @@
             </div>
         </form>
     </div>
-    <div id="step3" style="display: none;">
+    <div id="step3" *ngIf="canLoadStep3()" style="display: none;">
         <ng-template >Done</ng-template>
         <h2>MOTORISTA {{motorista!.nome | uppercase}} ATENDEU AO SEU PEDIDO</h2>
 
@@ -45,7 +45,7 @@
             <mat-spinner></mat-spinner>
         </div>
     </div>
-    <div id="step5" style="display: none;">
+    <div id="step5" *ngIf="canLoadStep5()" style="display: none;">
         <div>
             <h2>Viagem Terminada</h2>
             <h3>Custo da Viagem: {{ pedido!.custo! }}€</h3>

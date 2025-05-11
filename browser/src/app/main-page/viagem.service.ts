@@ -36,7 +36,7 @@ export class ViagemService {
   }
 
   getViagensMotorista(id_motorista: string): Observable<Viagem[]> {
-    const url = this.viagensUrl + `/viagens/motorista${id_motorista}`;
+    const url = this.viagensUrl + `/viagens/motorista/${id_motorista}`;
     return this.http.get<Viagem[]>(url)
       .pipe(
         catchError(this.handleError<Viagem[]>('getViagens', []))

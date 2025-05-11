@@ -104,6 +104,7 @@ exports.init = asyncHandler(async (req, res) => {
       clienteCreate(0, CLIENTES[0]),
       clienteCreate(1, CLIENTES[1]),
       clienteCreate(2, CLIENTES[2]),
+      clienteCreate(3, CLIENTES[3]),
     ]);
   }
 
@@ -221,6 +222,11 @@ const CLIENTES = [
     nif: 777777777,
     nome: "Umbelina Ulmeiro",
     genero: 'feminino'
+  },
+  {
+    nif: 666666666,
+    nome: "Tiago Teixeira",
+    genero: 'masculino'
   },
 ];
 

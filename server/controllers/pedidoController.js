@@ -86,12 +86,14 @@ exports.pedido_update = [
             taxi: req.body.taxi,
             moradaDe: req.body.moradaDe,
             moradaPara: req.body.moradaPara,
+            moradaMotorista: req.body.moradaMotorista,
             numDePassageiros: req.body.numDePassageiros,
             luxuoso: req.body.luxuoso,
             cliente: req.body.cliente,
             coordenadasDe: req.body.coordenadasDe,
             coordenadasPara: req.body.coordenadasPara,
-            status: req.body.status
+            status: req.body.status,
+            custo: req.body.custo
         });
 
         if (!errors.isEmpty()) {
