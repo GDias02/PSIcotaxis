@@ -17,7 +17,7 @@ const app = express();
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://fc57163:12345678B@cluster0.c11fmyj.mongodb.net/psicotaxis?retryWrites=true&w=majority&appName=Cluster0";
+const mongoDB = "mongodb+srv://fc60522:HRDdVWyjTAIzu8VD@myunicluster.6zu4p.mongodb.net/?retryWrites=true&w=majority&appName=myUniCluster";
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);

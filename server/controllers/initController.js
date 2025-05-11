@@ -13,8 +13,9 @@ exports.init = asyncHandler(async (req, res) => {
   const configs = [];
   const taxis = [];
   const motoristas = [];
-  const pessoas = [];
+  const clientes = [];
   const turnos = [];
+  const pedidos = [];
 
   main().catch((err) => console.log(err));
 
@@ -29,8 +30,9 @@ exports.init = asyncHandler(async (req, res) => {
     await createConfigs();
     await createTaxis();
     await createMotoristas();
-    await createPessoas();
+    await createClientes();
     await createTurnos();
+    await createPedidos();
 
     res.status(200).send();
   }
@@ -54,20 +56,25 @@ exports.init = asyncHandler(async (req, res) => {
     motoristas[index] = motorista;
   }
 
-  async function pessoaCreate(index, pessoaJson) {
+  async function clienteCreate(index, pessoaJson) {
     const pessoa = new Cliente(pessoaJson);
     await pessoa.save();
-    pessoas[index] = pessoa;
+    clientes[index] = pessoa;
   }
 
   async function turnoCreate(index, turnoJson, mi, ti) {
-    
     const turno = new Turno(turnoJson);
-    console.log(turno);
     turno.motorista = motoristas[mi];
     turno.taxi = taxis[ti];
     await turno.save();
     turnos[index] = turno;
+  }
+
+  async function pedidoCreate(index, pedidoJson, ci) {
+    const pedido = new Pedido(pedidoJson);
+    pedido.cliente = clientes[ci];
+    await pedido.save();
+    pedidos[index] = pedido;
   }
 
   async function createConfigs() {
@@ -92,16 +99,29 @@ exports.init = asyncHandler(async (req, res) => {
     ]);
   }
 
-  async function createPessoas() {
+  async function createClientes() {
     await Promise.all([
-      pessoaCreate(0, PESSOAS[0]),
-      pessoaCreate(1, PESSOAS[1]),
+      clienteCreate(0, CLIENTES[0]),
+      clienteCreate(1, CLIENTES[1]),
+      clienteCreate(2, CLIENTES[2]),
     ]);
   }
 
   async function createTurnos() {
-    await Promise.all([turnoCreate(0, TURNOS[0], 0, 0)]);
-    await Promise.all([turnoCreate(0, TURNOS[1], 1, 1)]);
+    await Promise.all([
+      turnoCreate(0, TURNOS[0], 1, 0),
+      turnoCreate(1, TURNOS[1], 1, 1),
+      turnoCreate(2, TURNOS[2], 2, 2)
+    ]);
+  }
+
+  async function createPedidos() {
+    await Promise.all([
+      pedidoCreate(0, PEDIDOS[0], 0),
+      pedidoCreate(1, PEDIDOS[1], 1),
+      pedidoCreate(2, PEDIDOS[2], 2)
+    ]);
+    await Promise.all([]);
   }
 });
 
@@ -185,7 +205,7 @@ const MOTORISTAS = [
   },
 ];
 
-const PESSOAS = [
+const CLIENTES = [
   {
     nif: 999999999,
     nome: 'Waldo Where',
@@ -195,20 +215,86 @@ const PESSOAS = [
     nif: 888888888,
     nome: "Vitorina Veneza",
     genero: 'feminino'
-  }
+  },
+  {
+    nif: 777777777,
+    nome: "Umbelina Ulmeiro",
+    genero: 'feminino'
+  },
 ];
 
 const TURNOS = [
   {
-    inicio: new Date('01-01-2025 08:00:00.000'),
-    fim: new Date('01-01-2025 14:30:00.000')
+    inicio: Date.parse('2025-05-01T08:00:00.000Z'),
+    fim: Date.parse('2025-05-01T14:30:00.000Z')
   },
   {
-    inicio: new Date('01-01-2025 07:30:00.000'),
-    fim: new Date('01-01-2025 08:30:00.000')
+    inicio: Date.parse('2025-05-12T07:30:00.000Z'),
+    fim: Date.parse('2025-05-12T13:00:00.000Z')
   },
   {
-    inicio: new Date('01-01-2025 16:00:00.000'),
-    fim: new Date('01-01-2025 18:00:00.000')
+    inicio: Date.parse('2025-05-20T13:30:00.000Z'),
+    fim: Date.parse('2025-05-20T20:00:00.000Z')
   }
+];
+
+const PEDIDOS = [
+  {
+    moradaDe: {
+      rua: "R. Ernesto de Vasconcelos",
+      localidade: "Campo Grande, Lisboa",
+      codigoPostal: "1749-016",
+      numeroDePorta: "C8"
+    },
+    moradaPara: {
+      rua: "Alameda das Comunidades Portuguesas",
+      localidade: "Lisboa",
+      codigoPostal: "1700-111",
+      numeroDePorta: "1"
+    },
+    numDePassageiros: 4,
+    luxuoso: false,
+    coordenadasDe: "38.75701927708848, -9.156780305122467",
+    coordenadasPara: "38.77870772499119, -9.132030178350218",
+    status: "pendente"
+  },
+  {
+    moradaDe: {
+      rua: "R. Ernesto de Vasconcelos",
+      localidade: "Campo Grande, Lisboa",
+      codigoPostal: "1749-016",
+      numeroDePorta: "C8"
+    },
+    moradaPara: {
+      rua: "Praia do Rei",
+      localidade: "Costa da Caparica",
+      codigoPostal: "2825-491",
+      numeroDePorta: "1"
+    },
+    numDePassageiros: 2,
+    luxuoso: true,
+    coordenadasDe: "38.75701927708848, -9.156780305122467",
+    coordenadasPara: "38.606444967143915, -9.212492203308729",
+    status: "pendente"
+  },
+    {
+    moradaDe: {
+      rua: "Largo do Mercado",
+      localidade: "Fornos de Algodres",
+      codigoPostal: "6370-142",
+      numeroDePorta: "1"
+    },
+    moradaPara: {  
+      rua: "Largo dos Navegantes",
+      localidade: "Ericeira",
+      codigoPostal: "2655-320",
+      numeroDePorta: "1"
+    },
+    numDePassageiros: 2,
+    luxuoso: false,
+    coordenadasDe: "40.6213180721912, -7.5402981464079755",
+    coordenadasPara: "38.960654296736145, -9.416904492590183",
+    status: "pendente"
+  }
+  ,  
 ];
