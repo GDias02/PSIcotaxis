@@ -78,6 +78,14 @@ export class LocService {
     lat2 = this.radians(lat2);
     a = Math.sin(dlat / 2) * Math.sin(dlat / 2) + Math.sin(dlon / 2) * Math.sin(dlon / 2) * Math.cos(lat1) * Math.cos(lat2)
     c = 2 * Math.asin(Math.sqrt(a));
+
+    console.log("LAT1 = " + lat1);
+    console.log("LON1 = " + lon1);
+    console.log("LAT2 = " + lat2);
+    console.log("LON2 = " + lon2);
+    console.log("R = " + R);
+    console.log("c = " + c);
+    console.log("DISTACE = " + R * c);
     return R * c;
   }
   //////////////////////////////
@@ -93,11 +101,16 @@ export class LocService {
   }
 
   moradaToLoc(morada: Morada): Observable<GeolocationCoordinates> {
-    const url = `https://nominatim.openstreetmap.org/search?q=${morada.localidade}%20${morada.codigoPostal}%20${morada.rua}&format=json`;
+    console.log("MORADA LOCALIDADE = " + morada.localidade);
+    console.log("MORADA RUA = " + morada.rua);
+    console.log("MORADA POSTAL = " + morada.codigoPostal);
+    let url = `https://nominatim.openstreetmap.org/search?q=${morada.localidade}%20${morada.rua}&format=json`;
     return this.http.get<GeolocationCoordinates>(url)
       .pipe(
         catchError(this.handleError<GeolocationCoordinates>('getAddress', {} as GeolocationCoordinates)),
-        first()
+        first(),
+        tap((json: any) => {console.log("JSON"); console.log(json[0]); console.log("JSON LAT = " + json[0]["lat"]); console.log("JSON LON = " + json[0]["lon"]); this.loc = {coords: {latitude: json[0]["lat"], longitude: json[0]["lon"]} as GeolocationCoordinates} as GeolocationPosition}),
+        switchMap(() => of(this.loc!.coords))
       )
   }
 

@@ -121,12 +121,21 @@ export class PedidoCreateComponent implements OnInit{
               this.duration = dist_dur[1];
               this.locService.getDuration(this.pedido.moradaDe, this.pedido.moradaPara).subscribe(duration => {
                 this.durationToObjective = duration;
-                let inicio = new Date();
+                console.log("DURATION = " + this.duration);
+                console.log("DURATION TO OBJECTIVE = " + this.durationToObjective);
+                const inicio = new Date();
                 inicio.setMinutes(inicio.getMinutes() + this.duration!);
-                let fim = new Date();
+                console.log("INICIO");
+                console.log(inicio);
+                const fim = new Date();
                 fim.setMinutes(fim.getMinutes() + this.duration! + this.durationToObjective!);
-                this.custoService.calcularCustoViagem(inicio.toLocaleString(), fim.toLocaleString(), this.pedido.taxi!).subscribe(custo => {
+                console.log("FIM");
+                console.log(fim);
+                this.custoService.calcularCustoViagem(inicio.toLocaleString(), fim.toLocaleString(), this.taxi!.conforto).subscribe(custo => {
                   this.custo = custo;
+                  console.log("CONFORTO = " + this.taxi!.conforto)
+                  console.log("CUSTO = " + this.custo);
+                  console.log("PROCEED TO STEP 3? " + this.canLoadStep3());
                   this.showStep3();
                 })
               })

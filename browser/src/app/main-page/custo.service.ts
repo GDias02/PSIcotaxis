@@ -60,6 +60,13 @@ export class CustoService {
       }
     }
 
+    console.log("MINUTOS DE DIA = " + minutosDeDia);
+    console.log("MINUTOS DE NOITE = " + minutosDeNoite);
+    console.log("PPM = " + ppm);
+    console.log("AGRAVAMENTO = " + agravamento);
+    console.log("INICIO EM CUSTO = " + inicio);
+    console.log("FIM EM CUSTO = " + fim);
+
     this.custo = Math.round(((minutosDeDia * ppm) + (minutosDeNoite * ppm * agravamento))*100)/100;
   }
 
@@ -82,7 +89,10 @@ export class CustoService {
     porDoSol.setHours(21, 0, 0);
     let startpoint = (start < nascerDoSol) ? nascerDoSol : start;
     let endpoint = (end > porDoSol) ? porDoSol : end;
-    return Math.floor((endpoint.getTime() - startpoint.getTime())/60000);;
+    if (endpoint.getTime() - startpoint.getTime() < 0) {
+      return 0;
+    }
+    return Math.floor((endpoint.getTime() - startpoint.getTime())/60000);
   }
 
   depoisDoPorDoSol(start: Date, end: Date): number{
