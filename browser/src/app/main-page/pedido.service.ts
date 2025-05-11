@@ -54,11 +54,11 @@ export class PedidoService {
       )
   }
 
-  getPedidoMotorista(id_motorista: string): Observable<Pedido> {
+  getPedidoMotorista(id_motorista: string): Observable<Pedido[]> {
     const url = this.pedidosUrl + "/motoristas/pedidos/" + id_motorista;
-    return this.http.get<Pedido>(url)
+    return this.http.get<Pedido[]>(url)
       .pipe(
-        catchError(this.handleError<Pedido>(`getPedido ${id_motorista}`))
+        catchError(this.handleError<Pedido[]>(`getPedido ${id_motorista}`))
       )
   }
 

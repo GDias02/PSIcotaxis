@@ -14,6 +14,7 @@ import { LocService } from '../loc.service';
 import { ViagemService } from '../viagem.service';
 import { CustoService } from '../custo.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-motorista-viagem',
@@ -70,10 +71,9 @@ export class MotoristaViagemComponent {
     public datePipe: DatePipe,
     private locService: LocService,
     private viagemService: ViagemService,
-    private custoService: CustoService
-  ) {
-    this.route.data.subscribe(({ user }) => this.Motorista = user);
-  }
+    private custoService: CustoService,
+    private userService: UserService
+  ) {}
 
   locOrFilled(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -84,10 +84,14 @@ export class MotoristaViagemComponent {
   }
 
   ngOnInit(): void {
-      this.route.data.subscribe(({ user }) => {
+      /* this.route.data.subscribe(({ user }) => {
         this.Motorista = user;
         this.getTurno();
-    });
+      }); */
+      this.userService.getCurrentUser().subscribe(user => {
+        this.Motorista = user as Motorista;
+        this.getTurno();
+      })
   }
 
   getTurno(): void {
@@ -98,8 +102,9 @@ export class MotoristaViagemComponent {
 
   getPedido(): void {
     const id = this.Motorista!._id;
+    console.log("MOTORISTA ID = " + id);
     this.pedidoService.getPedidoMotorista(id!)
-      .subscribe((pedido: Pedido) => this.pedido = pedido);
+      .subscribe((pedido: Pedido[]) => this.pedido = pedido[0]);
     /* const id = "6820bdadd728010f7f9e5248";
     this.pedidoService.getPedido(id!)
       .subscribe((pedido: Pedido) => this.pedido = pedido); */
@@ -111,6 +116,9 @@ export class MotoristaViagemComponent {
 
   onViagemInit(): void {
     if (this.partidaForm.invalid) return;
+
+    console.log("PEDIDO")
+    console.log(this.pedido);
     
     this.seq = this.turno!.viagens.length + 1;
     this.motorista = this.turno!.motorista;
@@ -152,7 +160,7 @@ export class MotoristaViagemComponent {
   }
 
   setClock(): void {
-    this.counter = setInterval(() => this.duration++, 60 * 1000);
+    this.counter = setInterval(() => this.duration++, 1000);
   }
 
   async onViagemStop() {
@@ -208,6 +216,8 @@ export class MotoristaViagemComponent {
   saveViagem(custo: number): void {
     this.custo = custo;
     this.viagem!.custo = custo;
+    console.log("VIAGEM");
+    console.log(this.viagem);
     this.viagemService.addViagem(this.viagem!).subscribe(viagem => this.saveTurno(viagem));
   }
 

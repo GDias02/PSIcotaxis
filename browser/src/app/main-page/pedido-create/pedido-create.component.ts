@@ -147,15 +147,16 @@ export class PedidoCreateComponent implements OnInit{
   }
 
   showStep3(): void {
-    const step1Element = document.getElementById('step2');
-    if (step1Element) {
-      step1Element.style.display = "None";
+    const step2Element = document.getElementById('step2');
+    if (step2Element) {
+      step2Element.style.display = "None";
     }
     
-    const step2Element = document.getElementById("step3");
-    if (step2Element) {
-      step2Element.style.display = "block";
-    }
+    const step3Element = document.getElementById("step3");
+    console.log("STEP 3");
+    console.log(step3Element);
+    console.log("VOU METER O STEP 3");
+    step3Element!.style.display = "block";
   }
 
   rejeitar(): void {

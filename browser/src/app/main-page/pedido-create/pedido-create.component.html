@@ -18,26 +18,28 @@
             </div>
         </form>
     </div>
-    <div id="step3" *ngIf="canLoadStep3()" style="display: none;">
-        <ng-template >Done</ng-template>
-        <h2>MOTORISTA {{motorista!.nome | uppercase}} ATENDEU AO SEU PEDIDO</h2>
-
-        <mat-list role="list">
-            <mat-list-item role="listitem">Distância a si : {{ distance! }}</mat-list-item>
-            <mat-list-item role="listitem">Tempo estimado até chegar a si: {{ duration! }} minutos</mat-list-item>
-            <mat-list-item role="listitem">Custo estimado da viagem: {{ custo! }}€</mat-list-item>
-            <br>
-            <h3>Dados do Táxi</h3>
-            <mat-list-item role="listitem">Matricula : {{ taxi!.matricula! }}</mat-list-item>
-            <mat-list-item role="listitem">Ano De Compra: {{ datePipe.transform(taxi!.anoDeCompra!, "yyyy") }}</mat-list-item>
-            <mat-list-item role="listitem">Marca: {{ taxi!.marca! }}</mat-list-item>
-            <mat-list-item role="listitem">Modelo: {{ taxi!.modelo! }}</mat-list-item>
-            <mat-list-item role="listitem">Lugares: {{ taxi!.lugares! }}</mat-list-item>
-            <mat-list-item role="listitem">Nível de Conforto: {{ taxi!.conforto! }}</mat-list-item>
-        </mat-list>
-
-        <button mat-button (click)="rejeitar()">Rejeitar</button>
-        <button mat-button (click)="aceitar()">Aceitar</button>
+    <div id="step3" style="display: none;">
+        <div *ngIf="canLoadStep3()">
+            <ng-template >Done</ng-template>
+            <h2>MOTORISTA {{motorista!.nome | uppercase}} ATENDEU AO SEU PEDIDO</h2>
+    
+            <mat-list role="list">
+                <mat-list-item role="listitem">Distância a si : {{ distance! }} Km</mat-list-item>
+                <mat-list-item role="listitem">Tempo estimado até chegar a si: {{ duration! }} minutos</mat-list-item>
+                <mat-list-item role="listitem">Custo estimado da viagem: {{ custo! }}€</mat-list-item>
+                <br>
+                <h3>Dados do Táxi</h3>
+                <mat-list-item role="listitem">Matricula : {{ taxi!.matricula! }}</mat-list-item>
+                <mat-list-item role="listitem">Ano De Compra: {{ datePipe.transform(taxi!.anoDeCompra!, "yyyy") }}</mat-list-item>
+                <mat-list-item role="listitem">Marca: {{ taxi!.marca! }}</mat-list-item>
+                <mat-list-item role="listitem">Modelo: {{ taxi!.modelo! }}</mat-list-item>
+                <mat-list-item role="listitem">Lugares: {{ taxi!.lugares! }}</mat-list-item>
+                <mat-list-item role="listitem">Nível de Conforto: {{ taxi!.conforto! }}</mat-list-item>
+            </mat-list>
+    
+            <button mat-fab extended (click)="rejeitar()">Rejeitar</button>
+            <button mat-fab extended (click)="aceitar()">Aceitar</button>
+        </div>
     </div>
     <div id="step4" style="display: none;">
         <div>
@@ -45,11 +47,13 @@
             <mat-spinner></mat-spinner>
         </div>
     </div>
-    <div id="step5" *ngIf="canLoadStep5()" style="display: none;">
-        <div>
-            <h2>Viagem Terminada</h2>
-            <h3>Custo da Viagem: {{ pedido!.custo! }}€</h3>
-            <button mat-button (click)="goBack()">Voltar</button>
+    <div id="step5" style="display: none;">
+        <div *ngIf="canLoadStep5()">
+            <div>
+                <h2>Viagem Terminada</h2>
+                <h3>Custo da Viagem: {{ pedido!.custo! }}€</h3>
+                <button mat-button (click)="goBack()">Voltar</button>
+            </div>
         </div>
     </div>
 </mat-card>

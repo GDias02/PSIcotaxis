@@ -31,6 +31,8 @@ exports.pedido_motorista = asyncHandler(async (req, res, next) => {
         res.status(404).send();
         return;
     }
+    console.log("PEDIDO")
+    console.log(pedido);
     res.status(200).send(pedido);
 });
 

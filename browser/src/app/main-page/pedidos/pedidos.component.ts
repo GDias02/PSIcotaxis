@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { Pedido } from '../pedido';
 import { Motorista } from '../motorista';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +10,7 @@ import { Turno } from '../turno';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocService } from '../loc.service';
 import { Morada } from '../morada';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-pedidos',
@@ -27,6 +28,8 @@ export class PedidosComponent {
 
   displayedColumns: string[] = ['morada_origem', 'morada_destino', 'luxuoso', 'passageiros', 'atender'];
   dataSource = new MatTableDataSource<Pedido>(this.pedidos);
+  
+  @ViewChild(MatSort) sort!: MatSort;
 
   private _snackBar = inject(MatSnackBar);
 
@@ -78,6 +81,7 @@ export class PedidosComponent {
         .subscribe(t => {
           this.pedidos = t;
           this.dataSource.data = t;
+          this.waitClienteConfirmation();
         })
     });
   }
@@ -92,6 +96,7 @@ export class PedidosComponent {
       if (this.pedido.status === 'rejeitado') {
         clearInterval(this.counter);
         this.openSnackBar("Cliente rejeitou o pedido", "OK");
+        this.pedidoService.deletePedido(this.pedido._id).subscribe();
       }
       if (this.pedido.status === 'confirmado') {
         clearInterval(this.counter);
