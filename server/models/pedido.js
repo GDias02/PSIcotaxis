@@ -27,7 +27,7 @@ const pedidoSchema = new Schema({
     },
     numDePassageiros: { type:Number, min:1, max:4, required:true },
     luxuoso: { type:Boolean, required: true},
-    cliente: {type: Schema.Types.ObjectId, ref: "Cliente", required: true},
+    cliente: {type: Schema.Types.ObjectId, ref: "Cliente", unique: true, required: true},
     coordenadasDe: { type: String, required: true},
     coordenadasPara: { type: String, required: true},
     status: {
