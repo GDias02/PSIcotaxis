@@ -30,7 +30,7 @@ const mainroutes: Routes = [
       { path: 'taxis/create', component: TaxiCreateComponent },
       { path: 'taxis/:id', component: TaxiDetailComponent },
       { path: 'turnos/create', component: TurnoCreateComponent, resolve: {user: userResolver} },
-      { path: 'turnos/:id/viagem', component: MotoristaViagemComponent}, //resolve: {user: userResolver} },
+      { path: 'turnos/:id/viagem', component: MotoristaViagemComponent, resolve: {user: userResolver} },
       { path: 'turnos', component: TurnosComponent, resolve: {user: userResolver} },
       { path: 'motorista/viagens', component: MotoristaViagensComponent, resolve: {user: userResolver} },
       { path: 'configs', component: ConfigsComponent },

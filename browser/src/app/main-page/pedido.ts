@@ -3,6 +3,9 @@ import { Morada } from './morada';
 
 export interface Pedido {
     _id: string;
+    motorista?: string;
+    taxi?: string;
+    moradaMotorista?: Morada;
     moradaDe: Morada;
     moradaPara: Morada;
     numDePassageiros: number;
@@ -11,4 +14,5 @@ export interface Pedido {
     coordenadasDe: string;
     coordenadasPara: string;
     status: string;
+    custo?: number;
 }

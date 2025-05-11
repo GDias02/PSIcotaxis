@@ -9,6 +9,14 @@ import { Cliente } from '../cliente';
 import { PedidoService } from '../pedido.service';
 import { ClienteService } from '../cliente.service';
 import { firstValueFrom } from 'rxjs';
+import { Motorista } from '../motorista';
+import { MotoristaService } from '../motorista.service';
+import { TaxiService } from '../taxi.service';
+import { Taxi } from '../taxi';
+import { LocService } from '../loc.service';
+import { CustoService } from '../custo.service';
+import { DatePipe, Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -19,11 +27,27 @@ import { firstValueFrom } from 'rxjs';
 export class PedidoCreateComponent implements OnInit{
   private _formBuilder = inject(FormBuilder);
   @ViewChild('pedidoForm') pedidoForm!: PedidoCreateFormComponent;
-  private pedido!: Pedido;
+  pedido!: Pedido;
+
+  counter: any;
+  motorista?: Motorista;
+  taxi?: Taxi;
+  distance?: number;
+  duration?: number;
+  durationToObjective?: number;
+  custo?: number;
 
   constructor(
     private pedidoService: PedidoService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private motoristaService: MotoristaService,
+    private taxiService: TaxiService,
+    private locService: LocService,
+    private custoService: CustoService,
+    public datePipe: DatePipe,
+    private router: Router,
+    private location: Location,
+    private route: ActivatedRoute
   ){}
 
   firstFormGroup = this._formBuilder.group({
@@ -76,6 +100,110 @@ export class PedidoCreateComponent implements OnInit{
     if (step2Element) {
       step2Element.style.display = "block";
     }
+    this.waitMotoristaConfirmation();
+  }
 
+  waitMotoristaConfirmation(): void {
+    this.counter = setInterval(() => this.checkMotoristaInPedido(), 10 * 1000);
+  }
+
+  checkMotoristaInPedido() {
+    this.pedidoService.getPedido(this.pedido._id).subscribe(pedido => {
+      this.pedido = pedido;
+      if (this.pedido.motorista !== undefined && this.pedido.motorista !== '') {
+        clearInterval(this.counter);
+        this.motoristaService.getMotorista(this.pedido.motorista).subscribe(motorista => {
+          this.motorista = motorista;
+          this.taxiService.getTaxi(this.pedido.taxi!).subscribe(taxi => {
+            this.taxi = taxi;
+            this.locService.getDurationDistance(this.pedido.moradaMotorista!, this.pedido.moradaDe).subscribe(dist_dur => {
+              this.distance = dist_dur[0];
+              this.duration = dist_dur[1];
+              this.locService.getDuration(this.pedido.moradaDe, this.pedido.moradaPara).subscribe(duration => {
+                this.durationToObjective = duration;
+                let inicio = new Date();
+                inicio.setMinutes(inicio.getMinutes() + this.duration!);
+                let fim = new Date();
+                fim.setMinutes(fim.getMinutes() + this.duration! + this.durationToObjective!);
+                this.custoService.calcularCustoViagem(inicio.toLocaleString(), fim.toLocaleString(), this.pedido.taxi!).subscribe(custo => {
+                  this.custo = custo;
+                  this.showStep3();
+                })
+              })
+            })
+          })
+        })
+      }
+    })
+  }
+
+  showStep3(): void {
+    const step1Element = document.getElementById('step2');
+    if (step1Element) {
+      step1Element.style.display = "None";
+    }
+    
+    const step2Element = document.getElementById("step3");
+    if (step2Element) {
+      step2Element.style.display = "block";
+    }
+  }
+
+  rejeitar(): void {
+    this.pedido.status = "Rejeitado";
+    this.pedidoService.putPedido(this.pedido).subscribe(pedido => {
+      this.location.back();
+    })
+  }
+
+  aceitar(): void {
+    this.pedido.status = "Confirmado";
+    this.pedidoService.putPedido(this.pedido).subscribe(pedido => {
+      this.pedido = pedido;
+      this.showStep4();
+    })
+  }
+
+  showStep4(): void {
+    const step1Element = document.getElementById('step3');
+    if (step1Element) {
+      step1Element.style.display = "None";
+    }
+    
+    const step2Element = document.getElementById("step4");
+    if (step2Element) {
+      step2Element.style.display = "block";
+    }
+    this.waitViagemEnd();
+  }
+
+  waitViagemEnd(): void {
+    this.counter = setInterval(() => this.checkCustoInPedido(), 10 * 1000);
+  }
+
+  checkCustoInPedido() {
+    this.pedidoService.getPedido(this.pedido._id).subscribe(pedido => {
+      this.pedido = pedido;
+      if (this.pedido.custo !== undefined) {
+        clearInterval(this.counter);
+        this.showStep5();
+      }
+    })
+  }
+
+  showStep5(): void {
+    const step1Element = document.getElementById('step4');
+    if (step1Element) {
+      step1Element.style.display = "None";
+    }
+    
+    const step2Element = document.getElementById("step5");
+    if (step2Element) {
+      step2Element.style.display = "block";
+    }
+  }
+
+  goBack(): void {
+    this.pedidoService.deletePedido(this.pedido._id).subscribe(pedido => this.location.back());
   }
 }

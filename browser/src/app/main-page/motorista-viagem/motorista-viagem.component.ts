@@ -47,6 +47,7 @@ export class MotoristaViagemComponent {
   chegada?: Morada;
   inicio?: Date
   fim?: Date;
+  custo?: number;
 
   iniciar: boolean = true;
 
@@ -71,7 +72,7 @@ export class MotoristaViagemComponent {
     private viagemService: ViagemService,
     private custoService: CustoService
   ) {
-    //this.route.data.subscribe(({ user }) => this.Motorista = user);
+    this.route.data.subscribe(({ user }) => this.Motorista = user);
   }
 
   locOrFilled(): ValidatorFn {
@@ -93,12 +94,12 @@ export class MotoristaViagemComponent {
   }
 
   getPedido(): void {
-    /* const id = this.Motorista!._id;
+    const id = this.Motorista!._id;
     this.pedidoService.getPedidoMotorista(id!)
-      .subscribe((pedido: Pedido) => this.pedido = pedido); */
-    const id = "681fd93b8163a26948fc755a";
-    this.pedidoService.getPedido(id!)
       .subscribe((pedido: Pedido) => this.pedido = pedido);
+    /* const id = "6820bdadd728010f7f9e5248";
+    this.pedidoService.getPedido(id!)
+      .subscribe((pedido: Pedido) => this.pedido = pedido); */
   }
 
   goBack(): void {
@@ -126,7 +127,7 @@ export class MotoristaViagemComponent {
   }
 
   keepFillingViagem(morada: Morada) {
-    if (morada !== {} as Morada) {
+    if (morada !== {} as Morada && !this.filled(this.rua_partida) && !this.filled(this.localidade_partida)) {
       this.rua_partida = morada.rua;
       this.localidade_partida = morada.localidade;
       this.partida = morada;
@@ -181,7 +182,7 @@ export class MotoristaViagemComponent {
   }
 
   keepFillingViagemStop(morada: Morada) {
-    if (morada !== {} as Morada) {
+    if (morada !== {} as Morada && !this.filled(this.rua_chegada) && !this.filled(this.localidade_chegada)) {
       this.rua_chegada = morada.rua;
       this.localidade_chegada = morada.localidade;
       this.chegada = morada;
@@ -202,17 +203,20 @@ export class MotoristaViagemComponent {
   }
 
   saveViagem(custo: number): void {
+    this.custo = custo;
     this.viagem!.custo = custo;
     this.viagemService.addViagem(this.viagem!).subscribe(viagem => this.saveTurno(viagem));
   }
 
   saveTurno(viagem: Viagem): void {
     this.turno!.viagens.push(viagem._id!);
-    this.turnoService.updateTurno(this.turno!).subscribe(turno => this.deletePedido());
+    this.turnoService.updateTurno(this.turno!).subscribe(turno => this.putPedido());
   }
 
-  deletePedido(): void {
-    this.pedidoService.deletePedido(this.pedido!._id).subscribe(pedido =>
+  putPedido(): void {
+    this.pedido!.status = "Terminado";
+    this.pedido!.custo = this.custo;
+    this.pedidoService.putPedido(this.pedido!).subscribe(pedido =>
       this.router.navigate(['main-page/motorista/viagens'])
     );
   }
@@ -229,6 +233,10 @@ export class MotoristaViagemComponent {
         return Promise.resolve(true);
     }
     return Promise.resolve(false);
+  }
+
+  filled(field: string | undefined): boolean {
+    return field !== undefined && field !== '';
   }
 
   openSnackBar(message: string): void {

@@ -87,8 +87,7 @@ export class LocService {
     return this.http.get<Address>(url)
       .pipe(
         catchError(this.handleError<Address>('getAddress', {} as Address)),
-        tap((address: Address) => this.morada =
-          {rua: address.address.road, codigoPostal: address.address.postcode, localidade: address.address.town, numeroDePorta: address.address.house_number} as Morada),
+        tap((address: Address) => this.morada = this.convertAddressToMorada(address)),
         switchMap(() => of(this.morada!))
       );
   }
@@ -144,6 +143,35 @@ export class LocService {
     // degrees to radians
     let rad: number = degree * Math.PI / 180;
     return rad;
+  }
+
+  convertAddressToMorada(ad: Address): Morada {
+    return {
+      rua: this.ruaPriority(ad),
+      localidade: this.localidadePriority(ad),
+      codigoPostal: ad.address.postcode,
+      numeroDePorta: this.portaPriority(ad)
+    } as Morada;
+  }
+
+  ruaPriority(ad: Address): string {
+    if(ad.address.road) return ad.address.road;
+    if (ad.address.neighbourhood) return ad.address.neighbourhood;
+    if (ad.address.town) return ad.address.town;
+    return "rua nao encontrada"
+  }
+
+  localidadePriority(ad: Address): string {
+    if (ad.address.town) return ad.address.town;
+    if (ad.address.hamlet) return ad.address.hamlet;
+    if (ad.address.municipality) return ad.address.municipality;
+    if (ad.address.county) return ad.address.county;
+    return "localidade nao encontrada"
+  }
+  
+  portaPriority(ad: Address): string {
+    if(ad.address.house_number) return ad.address.house_number;
+    return "numero da porta desconhecido";
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
