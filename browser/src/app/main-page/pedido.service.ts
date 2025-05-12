@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { catchError } from 'rxjs';
 
 import { Pedido } from './pedido';
@@ -11,7 +11,8 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class PedidoService {
-  private readonly pedidosUrl = 'http://localhost:3000' //pedidos
+  private readonly motoristaUrl = 'http://localhost:3000/motorista/pedidos' //pedidos
+  private readonly clienteUrl = 'http://localhost:3000/cliente/pedidos' //pedidos
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,40 +31,33 @@ export class PedidoService {
     }
   }
 
-  getPedidos(): Observable<Pedido[]> {
-      const url = this.pedidosUrl + "/clientes/pedidos";
-      return this.http.get<Pedido[]>(url)
-        .pipe(
-          catchError(this.handleError<Pedido[]>('getPedidos', []))
-        )
-  }
-
   getPedidosPendentes(): Observable<Pedido[]> {
-      const url = this.pedidosUrl + "/motoristas/pedidos";
+      const url = this.motoristaUrl;
       return this.http.get<Pedido[]>(url)
         .pipe(
-          catchError(this.handleError<Pedido[]>('getPedidos', []))
+          catchError(this.handleError<Pedido[]>('getPedidosPendentes', []))
         )
   }
 
   getPedido(id: string): Observable<Pedido> {
-    const url = this.pedidosUrl + "/clientes/pedidos/" + id;
+    const url = this.clienteUrl + "/" + id;
     return this.http.get<Pedido>(url)
       .pipe(
         catchError(this.handleError<Pedido>(`getPedido ${id}`))
       )
   }
 
-  getPedidoMotorista(id_motorista: string): Observable<Pedido[]> {
-    const url = this.pedidosUrl + "/motoristas/pedidos/" + id_motorista;
+  getPedidoMotorista(id_motorista: string): Observable<Pedido> {
+    const url = this.motoristaUrl + "/eu/" + id_motorista;
     return this.http.get<Pedido[]>(url)
       .pipe(
-        catchError(this.handleError<Pedido[]>(`getPedido ${id_motorista}`))
+        catchError(this.handleError<Pedido[]>(`getPedido ${id_motorista}`)),
+        map(x => x[0])
       )
   }
 
   postPedido(pedido: Pedido): Observable<Pedido> {
-    const url = this.pedidosUrl + "/clientes/pedidos";
+    const url = this.clienteUrl + "/create";
     return this.http.post<Pedido>(url, pedido, this.httpOptions)
       .pipe(
         catchError(this.handleError<Pedido>('postPedido'))
@@ -71,7 +65,7 @@ export class PedidoService {
   }
 
   deletePedido(id: string): Observable<Pedido>{
-    const url = this.pedidosUrl + "/clientes/pedidos/" + id;
+    const url = this.motoristaUrl +"/"+ id;
     return this.http.delete<Pedido>(url)
       .pipe(
         catchError(this.handleError<Pedido>(`deletePedido ${id}`))
@@ -79,7 +73,7 @@ export class PedidoService {
   }
 
   putPedido(pedido:Pedido): Observable<Pedido>{
-    const url = `http://localhost:3000/motoristas/pedidos/${pedido._id}`;
+    const url = `${this.motoristaUrl}/${pedido._id}`;
     return this.http.put<Pedido>(url, pedido,this.httpOptions)
             .pipe(
               catchError(this.handleError<Pedido>(`putPedido ${pedido._id}`))

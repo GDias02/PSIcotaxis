@@ -9,7 +9,6 @@ const indexRouter = require('./routes/index');
 const gestorRouter = require('./routes/gestor');
 const servicosRouter = require('./routes/servicos');
 const motoristaRouter = require('./routes/motorista')
-const motoristasRouter = require('./routes/motoristas');
 const clientesRouter = require('./routes/cliente');
 
 const app = express();
@@ -34,10 +33,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/motoristas',motoristaRouter);
-app.use('/servicos', servicosRouter);
+app.use('/motorista',motoristaRouter);
 app.use('/gestor', gestorRouter);
-app.use('/clientes', clientesRouter);
+app.use('/cliente', clientesRouter);
+app.use('/servicos', servicosRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

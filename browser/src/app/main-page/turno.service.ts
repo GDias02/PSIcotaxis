@@ -10,7 +10,7 @@ import { Turno, TurnoCompleto } from './turno';
 })
 export class TurnoService {
 
-  private turnoUrl = 'http://localhost:3000/gestor/turnos';
+  private turnoUrl = 'http://localhost:3000/motorista/turnos';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -44,7 +44,7 @@ export class TurnoService {
     const params = new HttpParams()
       .set('id', `${m}`)
       .set('agora', `${agora}`);
-    const url = this.turnoUrl + `/motorista/atual`;
+    const url = this.turnoUrl + `/atual`;
     return this.http.get<Turno[]>(url, { params })
       .pipe(
         catchError(this.handleError<Turno[]>('getTurnoAtual', []))
@@ -79,11 +79,11 @@ export class TurnoService {
   }
 
   updateTurno(turno: Turno): Observable<Turno | any> {
-    const url = this.turnoUrl + "/update";
-    return this.http.post<Turno>(url, turno, this.httpOptions).pipe(
+    const url = this.turnoUrl +`/${turno._id}`;
+    return this.http.put<Turno>(url, turno, this.httpOptions).pipe(
       catchError((error) => {
         this.log(error);
-        catchError(this.handleError<Turno>(`addTurno id=${turno.motorista}`));
+        catchError(this.handleError<Turno>(`update Turno id=${turno._id}`));
         return of(error);
       })
     );

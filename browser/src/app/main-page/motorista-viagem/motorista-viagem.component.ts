@@ -104,7 +104,7 @@ export class MotoristaViagemComponent {
     const id = this.Motorista!._id;
     console.log("MOTORISTA ID = " + id);
     this.pedidoService.getPedidoMotorista(id!)
-      .subscribe((pedido: Pedido[]) => this.pedido = pedido[0]);
+      .subscribe((pedido: Pedido) => this.pedido = pedido);
     /* const id = "6820bdadd728010f7f9e5248";
     this.pedidoService.getPedido(id!)
       .subscribe((pedido: Pedido) => this.pedido = pedido); */

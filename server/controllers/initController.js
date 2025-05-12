@@ -3,6 +3,7 @@ const Taxi = require("../models/taxi");
 const Pessoa = require("../models/pessoa");
 const Motorista = require("../models/motorista");
 const Cliente = require("../models/cliente");
+const Gestor = require("../models/gestor");
 const Turno = require("../models/turno");
 const Pedido = require("../models/pedido");
 const Viagem = require("../models/viagem");
@@ -14,6 +15,7 @@ exports.init = asyncHandler(async (req, res) => {
   const taxis = [];
   const motoristas = [];
   const clientes = [];
+  const gestores = [];
   const turnos = [];
   const pedidos = [];
 
@@ -31,6 +33,7 @@ exports.init = asyncHandler(async (req, res) => {
     await createTaxis();
     await createMotoristas();
     await createClientes();
+    await createGestores();
     await createTurnos();
     await createPedidos();
 
@@ -60,6 +63,12 @@ exports.init = asyncHandler(async (req, res) => {
     const pessoa = new Cliente(pessoaJson);
     await pessoa.save();
     clientes[index] = pessoa;
+  }
+
+  async function gestorCreate(index, pessoaJson) {
+    const pessoa = new Gestor(pessoaJson);
+    await pessoa.save();
+    gestores[index] = pessoa;
   }
 
   async function turnoCreate(index, turnoJson, mi, ti) {
@@ -105,6 +114,12 @@ exports.init = asyncHandler(async (req, res) => {
       clienteCreate(1, CLIENTES[1]),
       clienteCreate(2, CLIENTES[2]),
       clienteCreate(3, CLIENTES[3]),
+    ]);
+  }
+
+  async function createGestores() {
+    await Promise.all([
+      gestorCreate(0, GESTORES[0])
     ]);
   }
 
@@ -228,6 +243,14 @@ const CLIENTES = [
     nome: "Tiago Teixeira",
     genero: 'masculino'
   },
+];
+
+const GESTORES = [
+  {
+    nif: 101010101,
+    nome: 'Zacarias Zebedeu',
+    genero: 'masculino'
+  }
 ];
 
 const TURNOS = [

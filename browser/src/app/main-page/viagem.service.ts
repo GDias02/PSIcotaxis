@@ -12,7 +12,9 @@ import { MessageService } from './message.service';
 })
 export class ViagemService {
 
-  private viagensUrl = 'http://localhost:3000/motoristas';
+  private motoristaUrl = 'http://localhost:3000/motorista';
+  private clienteUrl = 'http://localhost:3000/cliente';
+  private servicosUrl = 'http://localhost:3000/servicos';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,7 +38,7 @@ export class ViagemService {
   }
 
   getViagensMotorista(id_motorista: string): Observable<Viagem[]> {
-    const url = this.viagensUrl + `/viagens/motorista/${id_motorista}`;
+    const url = this.motoristaUrl + `/viagens/motorista/${id_motorista}`;
     return this.http.get<Viagem[]>(url)
       .pipe(
         catchError(this.handleError<Viagem[]>('getViagens', []))
@@ -44,7 +46,7 @@ export class ViagemService {
   }
 
   getViagem(id: string): Observable<Viagem> {
-    const url = `${this.viagensUrl}/viagens/${id}`;
+    const url = `${this.motoristaUrl}/viagens/${id}`;
     return this.http.get<Viagem>(url)
       .pipe(
         catchError(this.handleError<Viagem>(`getViagem id=${id}`))
@@ -52,7 +54,7 @@ export class ViagemService {
   }
 
   addViagem(viagem: Viagem): Observable<Viagem | any> {
-    const url = this.viagensUrl + "/viagens/create";
+    const url = this.motoristaUrl + "/viagens/create";
     return this.http.post<Viagem>(url, viagem, this.httpOptions).pipe(
       catchError((error) => {
         this.log(error);

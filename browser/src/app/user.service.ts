@@ -14,8 +14,9 @@ export class UserService {
   currentUserType: User = User.NAO_AUTENTICADO;
   currentUserName: string = "";
   currentUser?: Motorista | Gestor | Cliente;
-  private gestorUrl = 'http://localhost:3000/gestor';
-  private clienteUrl = 'http://localhost:3000/clientes';
+  private readonly gestorUrl = 'http://localhost:3000/gestor';
+  private readonly clienteUrl = 'http://localhost:3000/cliente';
+  private readonly motoristaUrl = 'http://localhost:3000/motorista';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -55,7 +56,7 @@ export class UserService {
   }
 
   getMotorista(nif: Number): Observable<Motorista> {
-    const url = `${this.gestorUrl}/motoristas/login/${nif}`;
+    const url = `${this.motoristaUrl}/login/${nif}`;
     return this.http.get<Motorista>(url)
       .pipe(
         catchError(this.handleError<Motorista>(`getMotorista nif=${nif}`))
@@ -63,17 +64,15 @@ export class UserService {
   }
 
   getGestor(nif: Number): Observable<Gestor> {
-    const gestor:Gestor = {
-      _id: '1',
-      nome: 'MasterMind',
-      nif: 159753456,
-      password: 'sure'
-    }
-    return of(gestor);
+    const url = `${this.gestorUrl}/login/${nif}`;
+    return this.http.get<Gestor>(url)
+      .pipe(
+        catchError(this.handleError<Gestor>(`getGestor nif=${nif}`))
+      );
   }
 
   getCliente(nif: Number): Observable<Cliente> {
-    const url = `${this.clienteUrl}/cliente/nif/${nif}`;
+    const url = `${this.clienteUrl}/login/${nif}`;
     return this.http.get<Cliente>(url)
       .pipe(
         catchError(this.handleError<Cliente>(`getCliente nif=${nif}`))

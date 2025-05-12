@@ -12,7 +12,7 @@ import { MessageService } from './message.service';
 })
 export class ConfigService {
 
-  private configsUrl = 'http://localhost:3000/gestor';
+  private configsUrl = 'http://localhost:3000/gestor/configs';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -32,7 +32,7 @@ export class ConfigService {
   }
 
   getConfigs(): Observable<Config> {
-    const url = this.configsUrl + "/configs";
+    const url = this.configsUrl;
     return this.http.get<Config>(url)
       .pipe(
         catchError(this.handleError<Config>('getConfigs', {} as Config))
@@ -40,7 +40,7 @@ export class ConfigService {
   }
 
   updateConfig(config: Config): Observable<Config> {
-    const url = `${this.configsUrl}/configs`;
+    const url = this.configsUrl;
     return this.http.put<Config>(url, config, this.httpOptions).pipe(
       catchError(this.handleError<Config>('updateConfig'))
     );

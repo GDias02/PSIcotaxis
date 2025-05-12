@@ -14,7 +14,8 @@ import { MessageService } from './message.service';
 })
 export class MotoristaService {
 
-  private motoristasUrl = 'http://localhost:3000/gestor';
+  private motoristaUrl = 'http://localhost:3000/motorista';
+  private gestorUrl = 'http://localhost:3000/gestor';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -34,7 +35,7 @@ export class MotoristaService {
   }
 
   getMotoristas(): Observable<Motorista[]> {
-    const url = this.motoristasUrl + "/motoristas";
+    const url = this.gestorUrl + "/motoristas";
     return this.http.get<Motorista[]>(url)
       .pipe(
         catchError(this.handleError<Motorista[]>('getMotoristas', []))
@@ -42,7 +43,7 @@ export class MotoristaService {
   }
 
   getMotorista(id: string): Observable<Motorista> {
-    const url = `${this.motoristasUrl}/motoristas/${id}`;
+    const url = `${this.motoristaUrl}/id/${id}`;
     return this.http.get<Motorista>(url)
       .pipe(
         catchError(this.handleError<Motorista>(`getMotorista id=${id}`))
@@ -50,14 +51,14 @@ export class MotoristaService {
   }
 
   updateMotorista(motorista: Motorista): Observable<Motorista> {
-    const url = `${this.motoristasUrl}/motoristas/${motorista._id}`;
+    const url = `${this.motoristaUrl}/id/${motorista._id}`;
     return this.http.put<Motorista>(url, motorista, this.httpOptions).pipe(
       catchError(this.handleError<Motorista>('updateMotorista'))
     );
   }
 
   addMotorista(motorista: Motorista): Observable<Motorista | any> {
-    const url = this.motoristasUrl + "/motoristas/create";
+    const url = this.motoristaUrl + "/create";
     return this.http.post<Motorista>(url, motorista, this.httpOptions).pipe(
       catchError((error) => {
         this.log(error);
@@ -66,30 +67,16 @@ export class MotoristaService {
       })
     );
   }
-/*
-  addMotorista(motorista: Motorista): Observable<Motorista> {
-    const url = this.motoristasUrl + "/motoristas/create";
-    return this.http.post<Motorista>(url, motorista, { ...this.httpOptions, observe: 'response' }).pipe(
-      tap(response => {
-        if (response.status === 409) {
-          console.log('Status 201: Resource created successfully.');
-          return response
-        }
-      }),
-      map(response => response.body as Motorista), // Extract the body from the response
-      catchError(this.handleError<Motorista>('addMotorista'))
-    );
-  }*/
-
 
   deleteMotorista(id: string): Observable<Motorista> {
-    const url = `${this.motoristasUrl}/motoristas/${id}`;
+    const url = `${this.motoristaUrl}/id/${id}`;
 
     return this.http.delete<Motorista>(url, this.httpOptions).pipe(
       catchError(this.handleError<Motorista>('deleteMotorista'))
     );
   }
 
+  //TODO - refatorizar para ir para loc.service.ts
   getLocalidadeByCodigoPostal(codPostal: string): Observable<string> {
     const url = `http://localhost:3000/servicos/localidade/${codPostal}`;
      

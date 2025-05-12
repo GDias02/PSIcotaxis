@@ -9,7 +9,9 @@ import { MessageService } from './message.service';
 })
 export class TaxiService {
 
-  private taxisUrl = 'http://localhost:3000/gestor';
+  private clienteUrl = 'http://localhost:3000/cliente';
+  private motoristaUrl = 'http://localhost:3000/motorista';
+  private gestorUrl = 'http://localhost:3000/gestor';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -29,7 +31,7 @@ export class TaxiService {
   }
 
   getTaxis(): Observable<Taxi[]> {
-    const url = this.taxisUrl + "/taxis";
+    const url = this.gestorUrl + "/taxis";
     return this.http.get<Taxi[]>(url)
       .pipe(
         catchError(this.handleError<Taxi[]>('getTaxis', []))
@@ -37,7 +39,7 @@ export class TaxiService {
   }
 
   getMarcasEModelos(): Observable<any> {
-    const url = `${this.taxisUrl}/taxis/marcas_e_modelos`;
+    const url = `${this.gestorUrl}/taxis/marcas_e_modelos`;
     return this.http.get<any>(url)
       .pipe(
         catchError(this.handleError<any>('getMarcasEModelos', []))
@@ -45,7 +47,7 @@ export class TaxiService {
   }
 
   getTaxi(id: string): Observable<Taxi> {
-    const url = `${this.taxisUrl}/taxis/${id}`;
+    const url = `${this.motoristaUrl}/taxis/${id}`;
     return this.http.get<Taxi>(url)
       .pipe(
         catchError(this.handleError<Taxi>(`getTaxi id=${id}`))
@@ -53,14 +55,14 @@ export class TaxiService {
   }
 
   updateTaxi(taxi: Taxi): Observable<Taxi> {
-    const url = `${this.taxisUrl}/taxis/${taxi._id}`;
+    const url = `${this.gestorUrl}/taxis/${taxi._id}`;
     return this.http.put<Taxi>(url, taxi, this.httpOptions).pipe(
       catchError(this.handleError<Taxi>('updateTaxi'))
     );
   }
 
   addTaxi(taxi: Taxi): Observable<Taxi | any> {
-    const url = this.taxisUrl + "/taxis/create";
+    const url = this.gestorUrl + "/taxis/create";
     return this.http.post<Taxi>(url, taxi, this.httpOptions).pipe(
       catchError((error) => {
         this.log(error);
@@ -71,7 +73,7 @@ export class TaxiService {
   }
 
   deleteTaxi(id: string): Observable<Taxi> {
-    const url = `${this.taxisUrl}/taxis/${id}`;
+    const url = `${this.gestorUrl}/taxis/${id}`;
 
     return this.http.delete<Taxi>(url, this.httpOptions).pipe(
       catchError(this.handleError<Taxi>('deleteTaxi'))

@@ -8,15 +8,15 @@ const { body, validationResult } = require("express-validator");
 // /motoristas - GET
 exports.motorista_list = asyncHandler(async (req, res, next) => {
   const motoristas = await Motorista.find()
-                                    .sort({ registo: 1 })
-                                    .exec();
+    .sort({ registo: 1 })
+    .exec();
   res.status(200).send(motoristas);
 });
-  
+
 // /motorista/id - GET
 exports.motorista = asyncHandler(async (req, res, next) => {
   const motorista = await Motorista.findById(req.params.id)
-                                  .exec();
+    .exec();
   if (motorista === null) {
     res.status(404).send();
     return;
@@ -26,8 +26,8 @@ exports.motorista = asyncHandler(async (req, res, next) => {
 
 // /motoristas/login/:nif - GET
 exports.motorista_login = asyncHandler(async (req, res, next) => {
-  const motorista = await Motorista.findOne({nif: req.params.nif})
-                                  .exec();
+  const motorista = await Motorista.findOne({ nif: req.params.nif })
+    .exec();
   if (motorista === null) {
     res.status(404).send();
     return;
@@ -35,31 +35,44 @@ exports.motorista_login = asyncHandler(async (req, res, next) => {
   res.status(200).send(motorista);
 });
 
+exports.motorista_delete = asyncHandler(async (req, res, next) => {
+    const motorista = await Motorista.findById(req.params.id)
+                                .exec();
+    //TODO - confirmar delete (?)
+    if (motorista === null) {
+        res.status(404).send();
+        return;
+    }
+    await Motorista.findByIdAndDelete(req.params.id)
+                .exec();
+    res.status(204).send();
+});
+
 // /motorista - POST
 exports.motorista_create = [
   // Validate and sanitize fields.
   body("nif", "Nif tem de ser composto por 9 dígitos e ser positivo")
-            .trim()
-            .isInt({min: 100000000, max: 999999999})
-            .escape(),
+    .trim()
+    .isInt({ min: 100000000, max: 999999999 })
+    .escape(),
   body("nome", "O nome tem de ter entre 2 e 64 caracteres, também não pode ter dígitos")
-            .trim()
-            .matches(/^[^\d]*$/)
-            .isLength({ min: 2, max: 64 })
-            .escape(),
-  body("genero", `Género tem de ser um dos seguintes valores: ${ new Pessoa().generosPossiveis}`)
-            .trim()
-            .isIn(new Pessoa().generosPossiveis)//This must be always an array
-            .escape(),
+    .trim()
+    .matches(/^[^\d]*$/)
+    .isLength({ min: 2, max: 64 })
+    .escape(),
+  body("genero", `Género tem de ser um dos seguintes valores: ${new Pessoa().generosPossiveis}`)
+    .trim()
+    .isIn(new Pessoa().generosPossiveis)//This must be always an array
+    .escape(),
   body("anoDeNascimento", `A idade do motorista deve ser maior que 18`)
-            .trim()
-            .isAfter("1900")
-            .isBefore(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000).toISOString())
-            .escape(),
+    .trim()
+    .isAfter("1900")
+    .isBefore(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000).toISOString())
+    .escape(),
   body("cartaDeConducao", 'A carta de condução tem de ter entre 2 e 32 caracteres')
-            .trim()
-            .isLength({min:2,max:32})
-            .escape(),
+    .trim()
+    .isLength({ min: 2, max: 32 })
+    .escape(),
 
   // Process request after validation and sanitization.
   asyncHandler(async (req, res, next) => {
@@ -74,11 +87,11 @@ exports.motorista_create = [
       cartaDeConducao: req.body.cartaDeConducao,
       morada: req.body.morada
     });
-  
-    
+
+
     if (!errors.isEmpty()) {
       // 400 - Bad Request
-      res.status(400).send({errors: errors});
+      res.status(400).send({ errors: errors });
     } else {
       try {
         // Create a Motorista object with escaped and trimmed data.
@@ -91,4 +104,64 @@ exports.motorista_create = [
       }
     }
   }),
+];
+
+exports.motorista_update = [
+  // Validate and sanitize fields.
+  body("nif", "Nif tem de ser composto por 9 dígitos e ser positivo")
+    .trim()
+    .isInt({ min: 100000000, max: 999999999 })
+    .escape(),
+  body("nome", "O nome tem de ter entre 2 e 64 caracteres, também não pode ter dígitos")
+    .trim()
+    .matches(/^[^\d]*$/)
+    .isLength({ min: 2, max: 64 })
+    .escape(),
+  body("genero", `Género tem de ser um dos seguintes valores: ${new Pessoa().generosPossiveis}`)
+    .trim()
+    .isIn(new Pessoa().generosPossiveis)//This must be always an array
+    .escape(),
+  body("anoDeNascimento", `A idade do motorista deve ser maior que 18`)
+    .trim()
+    .isAfter("1900")
+    .isBefore(new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000).toISOString())
+    .escape(),
+  body("cartaDeConducao", 'A carta de condução tem de ter entre 2 e 32 caracteres')
+    .trim()
+    .isLength({ min: 2, max: 32 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+    const motorista = new Motorista({
+      _id: req.params.id,
+      registo: Date.now(),
+      nif: req.body.nif,
+      nome: req.body.nome,
+      genero: req.body.genero,
+      anoDeNascimento: req.body.anoDeNascimento,
+      cartaDeConducao: req.body.cartaDeConducao,
+      morada: req.body.morada
+    });
+
+
+    if (!errors.isEmpty()) {
+      // 400 - Bad Request
+      res.status(400).send({ errors: errors.array() });
+      return;
+    } else {
+      // Check to see if the pedido already exists
+      const motoristaExistente = await Motorista.findOne({ _id: pedido._id }).exec();
+      if (motoristaExistente) {
+        let updatedMotorista = await Motorista.findByIdAndUpdate(req.params.id, motorista, { new: true }).exec();
+        updatedMotorista = await Motorista.findById(req.params.id);
+        // 201 - Created
+        return res.status(201).send(updatedMotorista);
+      }
+    }
+    // Pedido does not exist, cannot update it
+    res.status(400).send({ error: "Pedido não existe" });
+    })
 ];

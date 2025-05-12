@@ -9,6 +9,12 @@ exports.motorista_viagem_list = asyncHandler(async (req, res, next) => {
   res.status(200).send(viagens);
 });
 
+// /viagens/motorista - GET
+exports.cliente_viagem_list = asyncHandler(async (req, res, next) => {
+  const viagens = await Viagem.find({ cliente: req.params.id_cliente }).exec();
+  res.status(200).send(viagens);
+});
+
 // /viagem/id - GET
 exports.viagem = asyncHandler(async (req, res, next) => {
   const viagem = await Viagem.findById(req.params.id).exec();
