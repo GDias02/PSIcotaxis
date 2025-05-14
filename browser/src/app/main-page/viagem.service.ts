@@ -47,10 +47,10 @@ export class ViagemService {
       );
   }
 
-  getViagensInInterval(desde: Date, ate: Date): Observable<ViagemCompleta[]> {
+  getViagensInInterval(desde: string, ate: string): Observable<ViagemCompleta[]> {
     const params = new HttpParams()
-      .set('inicio', `${desde.toISOString()}`)
-      .set('fim', `${ate.toISOString()}`);
+      .set('inicio', `${desde}`)
+      .set('fim', `${ate}`);
     const url = this.gestorUrl + '/viagens/estatisticas'
     return this.http.get<ViagemCompleta[]>(url, { params })
       .pipe(

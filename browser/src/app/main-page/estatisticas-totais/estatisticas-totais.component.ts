@@ -62,7 +62,7 @@ export class EstatisticasTotaisComponent implements OnInit {
   }
 
   loadViagens(): void {
-    this.viagemService.getViagensInInterval(new Date(this.desde), new Date(this.ate)).subscribe(viagens => {
+    this.viagemService.getViagensInInterval(this.desde, this.ate).subscribe(viagens => {
       this.viagens = viagens;
       this.loadStats();
     })
@@ -96,7 +96,7 @@ export class EstatisticasTotaisComponent implements OnInit {
   computeHoras(): number {
     let horas: number = 0;
     for (const viagem of this.viagens) {
-      horas += (viagem.fim!.getTime() - viagem.inicio.getTime()) / (3600 * 1000);
+      horas += (new Date(viagem.fim!).getTime() - new Date(viagem.inicio).getTime()) / (3600 * 1000);
     }
     return horas;
   }
