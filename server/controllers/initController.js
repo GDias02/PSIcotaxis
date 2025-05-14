@@ -18,6 +18,7 @@ exports.init = asyncHandler(async (req, res) => {
   const gestores = [];
   const turnos = [];
   const pedidos = [];
+  const viagens = [];
 
   main().catch((err) => console.log(err));
 
@@ -28,6 +29,7 @@ exports.init = asyncHandler(async (req, res) => {
     await Taxi.deleteMany({});
     await Config.deleteMany();
     await Turno.deleteMany({});
+    await Viagem.deleteMany({});
 
     await createConfigs();
     await createTaxis();
@@ -36,6 +38,7 @@ exports.init = asyncHandler(async (req, res) => {
     await createGestores();
     await createTurnos();
     await createPedidos();
+    await createViagens();
 
     res.status(200).send();
   }
@@ -84,6 +87,15 @@ exports.init = asyncHandler(async (req, res) => {
     pedido.cliente = clientes[ci];
     await pedido.save();
     pedidos[index] = pedido;
+  }
+
+  async function viagemCreate(index, viagemJson, mi, ti, ci, ) {
+    const viagem = new Viagem(viagemJson);
+    viagem.cliente = clientes[ci];
+    viagem.taxi = taxis[ti];
+    viagem.motorista = motoristas[mi];
+    await viagem.save();
+    viagens[index] = viagem;
   }
 
   async function createConfigs() {
@@ -138,7 +150,16 @@ exports.init = asyncHandler(async (req, res) => {
       pedidoCreate(1, PEDIDOS[1], 1),
       pedidoCreate(2, PEDIDOS[2], 2)
     ]);
-    await Promise.all([]);
+  }
+
+  async function createViagens() {
+    await Promise.all([
+      viagemCreate(0, VIAGENS[0], 0, 0, 0),
+      viagemCreate(1, VIAGENS[1], 1, 1, 0),
+      viagemCreate(2, VIAGENS[2], 2, 2, 0),
+      viagemCreate(3, VIAGENS[1], 1, 0, 0),
+      viagemCreate(4, VIAGENS[2], 2, 0, 0)
+    ]);
   }
 });
 
@@ -330,5 +351,107 @@ const PEDIDOS = [
     coordenadasPara: "38.960654296736145, -9.416904492590183",
     status: "pendente"
   }
-  ,  
+];
+
+const VIAGENS = [
+  {
+    seq: 1,
+    partida: {
+      rua: "R. Ernesto de Vasconcelos",
+      localidade: "Campo Grande, Lisboa",
+      codigoPostal: "1749-016",
+      numeroDePorta: "C8"
+    },
+    chegada: {
+      rua: "Alameda das Comunidades Portuguesas",
+      localidade: "Lisboa",
+      codigoPostal: "1700-111",
+      numeroDePorta: "1"
+    },
+    numeroDePassageiros: 4,
+    inicio: Date.parse('2025-05-01T08:00:00.000Z'),
+    fim: Date.parse('2025-05-01T08:15:00.000Z'),
+    kilometros: 5,
+    custo: 14
+  },
+  {
+    seq: 2,
+    partida: {
+      rua: "R. Ernesto de Vasconcelos",
+      localidade: "Campo Grande, Lisboa",
+      codigoPostal: "1749-016",
+      numeroDePorta: "C8"
+    },
+    chegada: {
+      rua: "Praia do Rei",
+      localidade: "Costa da Caparica",
+      codigoPostal: "2825-491",
+      numeroDePorta: "1"
+    },
+    numeroDePassageiros: 2,
+    inicio: Date.parse('2025-08-01T14:00:00.000Z'),
+    fim: Date.parse('2025-08-01T15:07:00.000Z'),
+    kilometros: 30,
+    custo: 60
+  },
+    {
+    seq: 3,
+    partida: {
+      rua: "Largo do Mercado",
+      localidade: "Fornos de Algodres",
+      codigoPostal: "6370-142",
+      numeroDePorta: "1"
+    },
+    chegada: {  
+      rua: "Largo dos Navegantes",
+      localidade: "Ericeira",
+      codigoPostal: "2655-320",
+      numeroDePorta: "1"
+    },
+    numeroDePassageiros: 2,
+    inicio: Date.parse('2025-03-01T06:00:00.000Z'),
+    fim: Date.parse('2025-03-01T09:30:00.000Z'),
+    kilometros: 207,
+    custo: 150
+  },
+    {
+    seq: 4,
+    partida: {
+      rua: "R. Ernesto de Vasconcelos",
+      localidade: "Campo Grande, Lisboa",
+      codigoPostal: "1749-016",
+      numeroDePorta: "C8"
+    },
+    chegada: {  
+      rua: "Largo dos Navegantes",
+      localidade: "Ericeira",
+      codigoPostal: "2655-320",
+      numeroDePorta: "1"
+    },
+    numeroDePassageiros: 2,
+    inicio: Date.parse('2025-04-01T10:15:00.000Z'),
+    fim: Date.parse('2025-04-01T10:57:00.000Z'),
+    kilometros: 80,
+    custo: 76
+  },
+    {
+    seq: 5,
+    partida: {
+      rua: "R. Ernesto de Vasconcelos",
+      localidade: "Campo Grande, Lisboa",
+      codigoPostal: "1749-016",
+      numeroDePorta: "C8"
+    },
+    chegada: {
+      rua: "Largo do Mercado",
+      localidade: "Fornos de Algodres",
+      codigoPostal: "6370-142",
+      numeroDePorta: "1"
+    },
+    numeroDePassageiros: 2,
+    inicio: Date.parse('2025-05-01T10:15:00.000Z'),
+    fim: Date.parse('2025-05-01T16:35:00.000Z'),
+    kilometros: 296,
+    custo: 204
+  }
 ];
