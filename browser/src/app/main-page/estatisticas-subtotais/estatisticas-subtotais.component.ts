@@ -43,12 +43,9 @@ export class EstatisticasSubtotaisComponent implements OnInit {
   tipo: string = "motoristas";
   categoria?: string;
 
-  queryParams?: Observable<any>;
-
   constructor(
     private location: Location,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit(): void {
