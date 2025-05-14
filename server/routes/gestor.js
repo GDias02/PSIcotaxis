@@ -7,6 +7,7 @@ const config_controller = require("../controllers/configController");
 const turno_controller = require("../controllers/turnoController");
 const cliente_controller = require("../controllers/clienteController");
 const gestor_controller = require("../controllers/gestorController");
+const viagem_controller = require("../controllers/viagemController");
 
 /// Gestor (self) ROUTES ///
 router.get("/login/:nif", gestor_controller.gestor_nif);
@@ -37,5 +38,8 @@ router.get("/turnos/:id", turno_controller.turno);
 /// Config ROUTES ///
 router.get("/configs", config_controller.config_list);
 router.put("/configs", config_controller.config_create);
+
+/// Viagens ROUTES ///
+router.get("/viagens/estatisticas", viagem_controller.viagem_list_in_periodo);
 
 module.exports = router;

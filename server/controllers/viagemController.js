@@ -10,6 +10,14 @@ exports.motorista_viagem_list = asyncHandler(async (req, res, next) => {
 });
 
 // /viagens/motorista - GET
+exports.viagem_list_in_periodo = asyncHandler(async (req, res, next) => {
+  const viagens = await Viagem.find( { $and: [{ inicio: { $gte: req.query.inicio } }, { fim: { $lte: req.query.fim } }] })
+  .populate('motorista taxi')
+  .exec();
+  res.status(200).send(viagens);
+});
+
+// /viagens/motorista - GET
 exports.cliente_viagem_list = asyncHandler(async (req, res, next) => {
   const viagens = await Viagem.find({ cliente: req.params.id_cliente }).exec();
   res.status(200).send(viagens);
