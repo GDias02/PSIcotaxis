@@ -1,0 +1,62 @@
+#estatisticas-create-wrapper {
+    height: 100%;
+}
+
+.header {
+    margin: 0 auto; /* Center the header horizontally */
+    padding: 0; /* Remove default padding */
+    text-align: center; /* Center the text inside the header */
+    font-weight: bold; /* Make the header bold */
+    margin-bottom: 16px; /* Add spacing below the header */
+    width: 100%; /* Ensure the header spans the full width */
+}
+
+mat-grid-list {
+    width: 100%; /* Ensure the grid list spans the full width of the container */
+    height: 10%;
+}
+
+.form-container {
+    height: 100%;
+}
+    
+#submit-button {
+    align-self: flex-end; /* Align the button at the bottom */
+    background-color: lightblue;
+}
+
+.confirmation-buttons {
+    display: block;
+}
+.confirmation-buttons *{
+    margin: 5px;
+}
+
+/* Ensure the datepicker toggle aligns properly with the input */
+.mat-form-field {
+    display: flex;
+    align-items: center; /* Align input and toggle button vertically */
+}
+
+/* Optional: Ensure consistent width for all form fields */
+.mat-form-field-appearance-fill {
+    width: 85%; /* Make all form fields take up the same width */
+}
+
+p {
+    margin-bottom: 7%;
+}
+
+.demo-table {
+  width: 100%;
+}
+  
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+  
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}

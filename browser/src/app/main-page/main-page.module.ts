@@ -55,6 +55,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MotoristaViagemComponent } from './motorista-viagem/motorista-viagem.component';
 import { MotoristaViagensComponent } from './motorista-viagens/motorista-viagens.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
+import { EstatisticasTotaisComponent } from './estatisticas-totais/estatisticas-totais.component';
+import { EstatisticasSubtotaisComponent } from './estatisticas-subtotais/estatisticas-subtotais.component';
+import { EstatisticasDetailsComponent } from './estatisticas-details/estatisticas-details.component';
 
 @NgModule({
   imports: [
@@ -118,7 +121,10 @@ import { PedidosComponent } from './pedidos/pedidos.component';
     MapViewerComponent,
     MotoristaViagemComponent,
     MotoristaViagensComponent,
-    PedidosComponent
+    PedidosComponent,
+    EstatisticasTotaisComponent,
+    EstatisticasSubtotaisComponent,
+    EstatisticasDetailsComponent
   ],
 })
 export class MainPageModule {

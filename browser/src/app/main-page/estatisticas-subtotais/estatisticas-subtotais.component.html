@@ -1,0 +1,56 @@
+<div id="estatisticas-create-wrapper">
+  <h2 class= "header">{{categoria | uppercase}}</h2>
+    <p>
+      <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <mat-select [(ngModel)]="tipo" placeholder="Tipo" [value]="'motoristas'">
+            <mat-option value="motoristas">motoristas</mat-option>
+            <mat-option value="taxis">táxis</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <div class="confirmation-buttons">
+      <button mat-fab extended (click)="goBack()">
+        <mat-icon fontIcon="&#8617;"></mat-icon>
+        Voltar
+      </button>
+    </div>
+
+  <table *ngIf="tipo === 'motoristas'" mat-table [dataSource]="estatisticasMotoristas" matSort class="mat-elevation-z8">  
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef> NOME </th>
+      <td mat-cell *matCellDef="let motorista"> {{motorista.nome}} </td>
+    </ng-container>
+      
+    <!-- Nif Column -->
+    <ng-container matColumnDef="nif">
+      <th mat-header-cell *matHeaderCellDef> NIF </th>
+      <td mat-cell *matCellDef="let motorista"> {{motorista.nif}} </td>
+    </ng-container>
+
+    <!-- Total Column -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> TOTAL </th>
+      <td mat-cell *matCellDef="let motorista"> {{motorista.total}} </td>
+    </ng-container>
+
+    <!-- Detalhes Column -->
+    <ng-container matColumnDef="detalhes">
+      <th mat-header-cell *matHeaderCellDef> DETALHES DO MOTORISTA </th>
+      <td mat-cell *matCellDef="let motorista">
+        <button mat-fab extended (click)="showDetailsMotorista(motorista)">
+          <mat-icon>info</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+      
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsMotorista"></tr>
+    <tr
+        mat-row
+        (click)="showDetailsViagensMotorista(row)"
+        *matRowDef="let row; columns: displayedColumnsMotorista;"
+    ></tr>
+  </table>
+</div>
+

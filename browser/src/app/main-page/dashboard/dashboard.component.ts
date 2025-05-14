@@ -102,6 +102,11 @@ export class DashboardComponent {
           link: 'configs',
           index: 3
         });
+        this.navLinks.push({
+          label: 'Estatísticas',
+          link: 'estatisticas/total',
+          index: 4
+        });
         break;
     }
   }

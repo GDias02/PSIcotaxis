@@ -1,0 +1,57 @@
+<div id="estatisticas-create-wrapper">
+  <h2 class= "header">Estatísticas Globais</h2>
+  <form [formGroup]="estatisticasForm" (ngSubmit)="onSubmit()">
+    <mat-grid-list cols="2" rowHeight="1:1.5">
+      <mat-grid-tile>
+        <div class="form-container">
+          <p>
+            <mat-form-field>
+              <mat-label>Desde</mat-label>
+              <input matInput type="datetime-local" placeholder="Desde" formControlName="desde" [(ngModel)]="desde" (change)="updateValidityAte()">
+              <mat-error *ngIf="estatisticasForm.value.desde">Desde tem de ser uma data anterior a Até</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field>
+              <mat-label>Até</mat-label>
+              <input matInput type="datetime-local" placeholder="Até" formControlName="ate" [(ngModel)]="ate" (change)="updateValidityDesde()">
+              <mat-error *ngIf="estatisticasForm.value.ate">Desde tem de ser uma data anterior a Até</mat-error>
+            </mat-form-field>
+          </p>
+          <div class="confirmation-buttons">
+            <button mat-fab extended (click)="goBack()">
+              <mat-icon fontIcon="&#8617;"></mat-icon>
+              Voltar
+            </button>
+            
+            <button mat-fab extended type="submit" [disabled]="!estatisticasForm.valid">
+              <mat-icon>query_stats</mat-icon>
+              Procurar
+            </button>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <table mat-table [dataSource]="estatisticas" matSort class="mat-elevation-z8">  
+    <!-- Categoria Column -->
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef> CATEGORIA </th>
+      <td mat-cell *matCellDef="let estatistica"> {{estatistica.categoria}} </td>
+    </ng-container>
+      
+    <!-- Valor Column -->
+    <ng-container matColumnDef="valor">
+      <th mat-header-cell *matHeaderCellDef> VALOR </th>
+      <td mat-cell *matCellDef="let estatistica"> {{estatistica.valor}} </td>
+    </ng-container>
+      
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+        mat-row
+        (click)="showSubTotal(row)"
+        *matRowDef="let row; columns: displayedColumns;"
+    ></tr>
+  </table>
+</div>
+

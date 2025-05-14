@@ -20,6 +20,9 @@ import { userResolver } from './user-resolver';
 import { MotoristaViagensComponent } from './motorista-viagens/motorista-viagens.component';
 import { TurnosComponent } from './turnos/turnos.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
+import { EstatisticasTotaisComponent } from './estatisticas-totais/estatisticas-totais.component';
+import { EstatisticasSubtotaisComponent } from './estatisticas-subtotais/estatisticas-subtotais.component';
+import { EstatisticasDetailsComponent } from './estatisticas-details/estatisticas-details.component';
 
 const mainroutes: Routes = [
     { path: 'main-page', component: MainPageComponent, resolve: {user: userResolver}, children: [
@@ -37,7 +40,10 @@ const mainroutes: Routes = [
       { path: 'motorista/viagens', component: MotoristaViagensComponent, resolve: {user: userResolver} },
       { path: 'configs', component: ConfigsComponent },
       { path: 'viagens/custo', component: ViagemCustoComponent },
-      { path: 'pedidos', component: PedidoCreateComponent}
+      { path: 'pedidos', component: PedidoCreateComponent},
+      { path: 'estatisticas/details', component: EstatisticasDetailsComponent },
+      { path: 'estatisticas/subtotal', component: EstatisticasSubtotaisComponent },
+      { path: 'estatisticas/total', component: EstatisticasTotaisComponent }
     ]},
     { path: '**', component: AppComponent },
 ];

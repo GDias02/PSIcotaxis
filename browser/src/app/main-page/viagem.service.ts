@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Viagem } from './viagem';
 import { MessageService } from './message.service';
+import { ViagemCompleta } from './viagem-completa';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViagemService {
 
+  private gestorUrl = 'http://localhost:3000/gestor';
   private motoristaUrl = 'http://localhost:3000/motorista';
   private clienteUrl = 'http://localhost:3000/cliente';
   private servicosUrl = 'http://localhost:3000/servicos';
@@ -42,6 +44,17 @@ export class ViagemService {
     return this.http.get<Viagem[]>(url)
       .pipe(
         catchError(this.handleError<Viagem[]>('getViagens', []))
+      );
+  }
+
+  getViagensInInterval(desde: Date, ate: Date): Observable<ViagemCompleta[]> {
+    const params = new HttpParams()
+      .set('desde', `${desde.toISOString()}`)
+      .set('ate', `${ate.toISOString()}`);
+    const url = this.gestorUrl + '/viagens/estatisticas'
+    return this.http.get<ViagemCompleta[]>(url, { params })
+      .pipe(
+        catchError(this.handleError<ViagemCompleta[]>('getViagensInInterval', []))
       );
   }
 
