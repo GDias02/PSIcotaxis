@@ -58,6 +58,7 @@ import { PedidosComponent } from './pedidos/pedidos.component';
 import { EstatisticasTotaisComponent } from './estatisticas-totais/estatisticas-totais.component';
 import { EstatisticasSubtotaisComponent } from './estatisticas-subtotais/estatisticas-subtotais.component';
 import { EstatisticasDetailsComponent } from './estatisticas-details/estatisticas-details.component';
+import { MotoristaUpdateComponent } from './motorista-update/motorista-update.component';
 
 @NgModule({
   imports: [
@@ -124,7 +125,8 @@ import { EstatisticasDetailsComponent } from './estatisticas-details/estatistica
     PedidosComponent,
     EstatisticasTotaisComponent,
     EstatisticasSubtotaisComponent,
-    EstatisticasDetailsComponent
+    EstatisticasDetailsComponent,
+    MotoristaUpdateComponent
   ],
 })
 export class MainPageModule {

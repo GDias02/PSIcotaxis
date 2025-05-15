@@ -11,3 +11,11 @@
 .mat-mdc-row:hover .mat-mdc-cell {
   border-color: currentColor;
 }
+
+.edit-button{
+  margin-right: 5%;
+}
+
+td {
+  height: 70px;;
+}
