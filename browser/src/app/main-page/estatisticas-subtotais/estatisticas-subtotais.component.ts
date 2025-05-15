@@ -67,6 +67,17 @@ export class EstatisticasSubtotaisComponent implements OnInit {
       return acc;
     }, new Map());
 
+    this.taxiIDs_viagens = this.viagens.reduce((acc: Map<string, ViagemCompleta[]>, current: ViagemCompleta) => {
+      let viagens = acc.get(current.taxi._id);
+      if (viagens === undefined) {
+        acc.set(current.taxi._id, [current]);
+        this.taxiIDs_taxi.set(current.taxi._id, current.taxi);
+      }
+      else
+        viagens.push(current);
+      return acc;
+    }, new Map());
+
     //mesma lógica para táxis
 
     this.fillEstatisticas();
@@ -92,8 +103,18 @@ export class EstatisticasSubtotaisComponent implements OnInit {
         }
       )
     });
+    this.taxiIDs_viagens.forEach((viagens: ViagemCompleta[], id: string) => {
+      let taxi: Taxi = this.taxiIDs_taxi.get(id)!;
+      this.estatisticasTaxis.push(
+        {
+          _id: id,
+          marcamodelo: taxi.marca +" "+ taxi.modelo,
+          matricula: taxi.matricula,
+          total: this.getViagens(viagens)
+        }
+      )
+    });
 
-    //mesma lógica para táxis
   }
 
   getViagens(viagens: ViagemCompleta[]): number {
@@ -112,8 +133,18 @@ export class EstatisticasSubtotaisComponent implements OnInit {
         }
       )
     });
+    this.taxiIDs_viagens.forEach((viagens: ViagemCompleta[], id: string) => {
+      let taxi: Taxi = this.taxiIDs_taxi.get(id)!;
+      this.estatisticasTaxis.push(
+        {
+          _id: id,
+          marcamodelo: taxi.marca + " "+ taxi.modelo,
+          matricula: taxi.matricula,
+          total: this.getHoras(viagens)
+        }
+      )
+    });
 
-    //mesma lógica para táxis
   }
 
   getHoras(viagens: ViagemCompleta[]): number {
@@ -136,8 +167,18 @@ export class EstatisticasSubtotaisComponent implements OnInit {
         }
       )
     });
+    this.taxiIDs_viagens.forEach((viagens: ViagemCompleta[], id: string) => {
+      let taxi: Taxi = this.taxiIDs_taxi.get(id)!;
+      this.estatisticasTaxis.push(
+        {
+          _id: id,
+          marcamodelo: taxi.marca + " " + taxi.modelo,
+          matricula: taxi.matricula,
+          total: this.getQuilometros(viagens)
+        }
+      )
+    });
 
-    //mesma lógica para táxis
   }
 
   getQuilometros(viagens: ViagemCompleta[]): number {
@@ -155,8 +196,14 @@ export class EstatisticasSubtotaisComponent implements OnInit {
   showDetailsMotorista(motorista: EstatisticasMotorista): void {
     this.router.navigate([`main-page/motoristas/${motorista._id}`]);
   }
+  showDetailsTaxi(taxi: EstatisticasTaxi): void {
+    this.router.navigate([`main-page/taxis/${taxi._id}`]);
+  }
 
   showDetailsViagensMotorista(row: EstatisticasMotorista): void {
     this.router.navigate([`main-page/estatisticas/details`], { state: { categoria: this.categoria, viagens: this.motoristaIDs_viagens.get(row._id) } });
+  }
+  showDetailsViagensTaxi(row: EstatisticasTaxi): void {
+    this.router.navigate([`main-page/estatisticas/details`], { state: { categoria: this.categoria, viagens: this.taxiIDs_viagens.get(row._id) } });
   }
 }
