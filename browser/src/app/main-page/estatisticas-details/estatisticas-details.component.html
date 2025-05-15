@@ -1,1 +1,15 @@
-<p>estatisticas-details works!</p>
+
+<section class="example-section">
+  <ng-container *ngFor="let col of displayedColumns">
+  <p><mat-checkbox (change)="addOrRemove($event)" value={{col}} checked="true">{{columnNameConvert(col)}}</mat-checkbox></p>
+</ng-container>
+</section>
+<table mat-table [dataSource]="viagens" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef> {{columnNameConvert(column)}} </th>
+      <td mat-cell *matCellDef="let element"> {{cellDataFrom(element, column)}} </td>
+    </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+</table>

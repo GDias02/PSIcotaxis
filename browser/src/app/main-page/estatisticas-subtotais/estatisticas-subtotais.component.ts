@@ -119,7 +119,7 @@ export class EstatisticasSubtotaisComponent implements OnInit {
   getHoras(viagens: ViagemCompleta[]): number {
     let horas: number = 0;
     for (const viagem of viagens) {
-      horas += (viagem.fim!.getTime() - viagem.inicio.getTime()) / (3600 * 1000);
+      horas += (new Date(viagem.fim!).getTime() - new Date(viagem.inicio).getTime()) / (3600 * 1000);
     }
     return horas;
   }
