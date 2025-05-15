@@ -23,12 +23,14 @@ import { PedidosComponent } from './pedidos/pedidos.component';
 import { EstatisticasTotaisComponent } from './estatisticas-totais/estatisticas-totais.component';
 import { EstatisticasSubtotaisComponent } from './estatisticas-subtotais/estatisticas-subtotais.component';
 import { EstatisticasDetailsComponent } from './estatisticas-details/estatisticas-details.component';
+import { MotoristaUpdateComponent } from './motorista-update/motorista-update.component';
 
 const mainroutes: Routes = [
     { path: 'main-page', component: MainPageComponent, resolve: {user: userResolver}, children: [
       { path: 'viagens', component: ViagensComponent, resolve: {user: userResolver} },
       { path: 'motoristas', component: MotoristasComponent },
       { path: 'motoristas/create', component: MotoristaCreateComponent },
+      { path: 'motoristas/update/:id', component: MotoristaUpdateComponent},
       { path: 'motoristas/pedidos', component: PedidosComponent, resolve: {user: userResolver} },
       { path: 'motoristas/:id', component: MotoristaDetailComponent, resolve: {user: userResolver} },
       { path: 'taxis', component: TaxisComponent },

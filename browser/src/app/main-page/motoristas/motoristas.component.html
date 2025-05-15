@@ -28,6 +28,18 @@
         <td mat-cell *matCellDef="let motorista"> {{datePipe.transform(motorista.registo, "dd-MM-yyyy HH-mm-ss")}} </td>
       </ng-container>
     
+      <ng-container id="acooes-column" matColumnDef="accoes">
+        <th mat-header-cell *matHeaderCellDef ></th>
+        <td mat-cell *matCellDef="let motorista">
+          <button class="edit-button" mat-fab (click)="editarMotorista(motorista);$event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+          </button>
+          <button class="edit-button" mat-fab (click)="apagarMotorista(motorista);$event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
           mat-row

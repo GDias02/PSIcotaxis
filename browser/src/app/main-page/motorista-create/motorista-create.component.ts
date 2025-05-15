@@ -19,7 +19,7 @@ export class MotoristaCreateComponent {
   genero?: string;
   dataDeNascimento?: Date;
   cartaDeConducao?: string;
-  @ViewChild(MoradaCreateComponent) moradaComponent?: MoradaCreateComponent;
+  @ViewChild(MoradaCreateComponent) moradaComponent!: MoradaCreateComponent;
 
   duplicateNif: boolean = false;
   duplicateCarta: boolean = false;
@@ -114,5 +114,35 @@ export class MotoristaCreateComponent {
       }
       this.messageService.add(`${cname} já existe na base de dados`);
     }
+  }
+
+  setMotorista(motorista : Motorista) : void {
+    this.nif = motorista.nif;
+    this.nome = motorista.nome;
+    this.genero = motorista.genero;
+    this.dataDeNascimento = motorista.anoDeNascimento;
+    this.cartaDeConducao = motorista.cartaDeConducao;
+    this.motoristaForm.controls["nif"].setValue(String(motorista.nif));
+    this.motoristaForm.controls["nome"].setValue(motorista.nome);
+    this.motoristaForm.controls["genero"].setValue(motorista.genero);
+    this.motoristaForm.controls["dataDeNascimento"].setValue(String(motorista.anoDeNascimento));
+    this.motoristaForm.controls["cartaDeConducao"].setValue(motorista.cartaDeConducao);
+    this.moradaComponent.setMorada(motorista.morada);
+  }
+
+  getMotorista(): Motorista {
+    return {
+      nif: this.nif,
+      nome: this.nome,
+      genero: this.genero,
+      anoDeNascimento: this.dataDeNascimento,
+      cartaDeConducao: this.cartaDeConducao,
+      morada: {
+        rua: this.moradaComponent?.rua,
+        codigoPostal: this.moradaComponent?.codPostal,
+        localidade: this.moradaComponent?.localidade,
+        numeroDePorta: this.moradaComponent?.numero ?? ''
+      }
+    } as Motorista;
   }
 }

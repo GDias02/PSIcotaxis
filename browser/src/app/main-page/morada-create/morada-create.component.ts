@@ -65,4 +65,11 @@ export class MoradaCreateComponent {
       numeroDePorta: this.numero
     };
   }
+
+  setMorada(morada: Morada): void {
+    this.codPostal = morada.codigoPostal;
+    this.localidade = morada.localidade;
+    this.rua = morada.rua;
+    this.numero = morada.numeroDePorta;
+  }
 }
