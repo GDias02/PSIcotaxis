@@ -1,9 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MotoristaCreateComponent } from '../motorista-create/motorista-create.component';
 import { MotoristaService } from '../motorista.service';
 import { Motorista } from '../motorista';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-motorista-update',
@@ -14,6 +16,8 @@ export class MotoristaUpdateComponent {
   motorista!: Motorista;
 
   @ViewChild(MotoristaCreateComponent) motoristaCreateComponent!: MotoristaCreateComponent;
+
+  private _snackBar = inject(MatSnackBar);
 
   constructor(
     private route: ActivatedRoute,
@@ -38,10 +42,12 @@ export class MotoristaUpdateComponent {
     this.motoristaCreateComponent.setMotorista(motorista);
   }
 
-  updateMotorista(): void {
-    this.motoristaService
-      .updateMotorista(
-        this.motoristaCreateComponent.getMotorista());
+  async updateMotorista(): Promise<void> {
+    //Send motorista with the respective id
+    let motorista : Motorista = this.motoristaCreateComponent.getMotorista();
+    motorista._id = this.motorista._id;
+    await firstValueFrom(this.motoristaService.updateMotorista(motorista));
+    this._snackBar.open('Motorista atualizado com sucesso!', 'Okay', {duration: 5000});
     this.goBack();
   }
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Taxi } from '../taxi';
 import { TaxiService } from '../taxi.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
 
 @Component({
@@ -16,6 +16,7 @@ export class TaxiDetailComponent {
     private route: ActivatedRoute,
     private taxiService: TaxiService,
     private location: Location,
+    private router: Router,
     public datePipe: DatePipe
   ) {}
 
@@ -33,7 +34,8 @@ export class TaxiDetailComponent {
     this.location.back();
   }
 
-  save(): void {
-    //TO DO
+  editTaxi():void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.router.navigate([`main-page/taxis/update/${id}`]);
   }
 }

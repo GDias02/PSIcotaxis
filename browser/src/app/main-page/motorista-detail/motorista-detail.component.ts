@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
 
 import { Motorista } from '../motorista';
@@ -17,6 +17,7 @@ export class MotoristaDetailComponent {
     private route: ActivatedRoute,
     private motoristaService: MotoristaService,
     private location: Location,
+    private router: Router,
     public datePipe: DatePipe
   ) {}
 
@@ -38,7 +39,8 @@ export class MotoristaDetailComponent {
     this.location.back();
   }
 
-  save(): void {
-    //TO DO
+  editarMotorista(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.router.navigate([`main-page/motoristas/update/${id}`]);
   }
 }

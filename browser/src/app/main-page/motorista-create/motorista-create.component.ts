@@ -134,7 +134,7 @@ export class MotoristaCreateComponent {
     return {
       nif: this.nif,
       nome: this.nome,
-      genero: this.genero,
+      genero: this.genero?.toLocaleLowerCase(),
       anoDeNascimento: this.dataDeNascimento,
       cartaDeConducao: this.cartaDeConducao,
       morada: {

@@ -24,6 +24,7 @@ import { EstatisticasTotaisComponent } from './estatisticas-totais/estatisticas-
 import { EstatisticasSubtotaisComponent } from './estatisticas-subtotais/estatisticas-subtotais.component';
 import { EstatisticasDetailsComponent } from './estatisticas-details/estatisticas-details.component';
 import { MotoristaUpdateComponent } from './motorista-update/motorista-update.component';
+import { TaxiUpdateComponent } from './taxi-update/taxi-update.component';
 
 const mainroutes: Routes = [
     { path: 'main-page', component: MainPageComponent, resolve: {user: userResolver}, children: [
@@ -35,6 +36,7 @@ const mainroutes: Routes = [
       { path: 'motoristas/:id', component: MotoristaDetailComponent, resolve: {user: userResolver} },
       { path: 'taxis', component: TaxisComponent },
       { path: 'taxis/create', component: TaxiCreateComponent },
+      { path: 'taxis/update/:id', component: TaxiUpdateComponent },
       { path: 'taxis/:id', component: TaxiDetailComponent },
       { path: 'turnos/create', component: TurnoCreateComponent, resolve: {user: userResolver} },
       { path: 'turnos/:id/viagem', component: MotoristaViagemComponent, resolve: {user: userResolver} },

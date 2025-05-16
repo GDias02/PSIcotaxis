@@ -146,14 +146,13 @@ exports.motorista_update = [
       morada: req.body.morada
     });
 
-
     if (!errors.isEmpty()) {
       // 400 - Bad Request
       res.status(400).send({ errors: errors.array() });
       return;
     } else {
       // Check to see if the pedido already exists
-      const motoristaExistente = await Motorista.findOne({ _id: pedido._id }).exec();
+      const motoristaExistente = await Motorista.findOne({ _id: motorista._id }).exec();
       if (motoristaExistente) {
         let updatedMotorista = await Motorista.findByIdAndUpdate(req.params.id, motorista, { new: true }).exec();
         updatedMotorista = await Motorista.findById(req.params.id);

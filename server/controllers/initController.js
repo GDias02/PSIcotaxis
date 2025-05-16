@@ -173,15 +173,15 @@ const CONFIGS = [
 
 const TAXIS = [
   {
-    matricula: '11-AA-11',
-    anoDeCompra: new Date('2001'),
+    matricula: 'AA-11-11',
+    anoDeCompra: new Date('1991'),
     marca: 'Audi',
     modelo: 'A1',
     lugares: 5,
     conforto: 'basico',
   },
   {
-    matricula: '22-BB-22',
+    matricula: '22-22-BB',
     anoDeCompra: new Date('2002'),
     marca: 'Bentley',
     modelo: 'Bentayga',
@@ -190,7 +190,7 @@ const TAXIS = [
   },
   {
     matricula: '33-CC-33',
-    anoDeCompra: new Date('2003'),
+    anoDeCompra: new Date('2013'),
     marca: 'Citroën',
     modelo: 'C3',
     lugares: 7,

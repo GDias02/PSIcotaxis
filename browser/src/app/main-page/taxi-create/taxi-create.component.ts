@@ -179,5 +179,25 @@ export class TaxiCreateComponent {
       console.log("lugares "+this.lugares);
       console.log("conforto"+this.conforto);
   }
+
+  setTaxi(taxi: Taxi): void {
+    this.matricula = taxi.matricula;
+    this.marcaControl.setValue(taxi.marca);
+    this.modelo = taxi.modelo;
+    this.anoDeCompra = taxi.anoDeCompra;
+    this.lugares = taxi.lugares;
+    this.conforto = taxi.conforto;
+  }
+
+  getTaxi() : Taxi{
+    return {
+      matricula: this.matricula,
+      marca: this.marcaControl.value,
+      modelo: this.modelo,
+      anoDeCompra: this.anoDeCompra,
+      lugares: this.lugares,
+      conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
+    } as Taxi;
+  }
 }
 

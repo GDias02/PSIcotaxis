@@ -1,5 +1,5 @@
 <div id="taxi-create-wrapper">
-    <h2 class="header">Registar um taxi </h2>
+    <h2 id="header" class="header">Registar um taxi </h2>
     <form [formGroup]="taxiForm" (ngSubmit)="onSubmit()">
         <mat-grid-list cols="2" rowHeight="1:2">
             <mat-grid-tile>
@@ -72,10 +72,12 @@
                             Voltar
                         </button>
 
-                        <button mat-fab extended type="submit" [disabled]="!taxiForm.valid">
+                        <button id="register-button" mat-fab extended type="submit" [disabled]="!taxiForm.valid">
                             Registar
                             <mat-icon>person_add</mat-icon>
                         </button>
+                        
+                        <ng-content select="[action-button]"></ng-content>
                     </div>
                 </div>
             </mat-grid-tile>
