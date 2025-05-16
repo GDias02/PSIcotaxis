@@ -1,5 +1,6 @@
 #estatisticas-create-wrapper {
     height: 100%;
+    margin: 3%;
 }
 
 .header {
@@ -11,9 +12,8 @@
     width: 100%; /* Ensure the header spans the full width */
 }
 
-mat-grid-list {
+mat-grid-tile {
     width: 100%; /* Ensure the grid list spans the full width of the container */
-    height: 10%;
 }
 
 .form-container {
@@ -38,6 +38,11 @@ mat-grid-list {
     align-items: center; /* Align input and toggle button vertically */
 }
 
+.table-container {
+    width: 85%;
+    display: flex;
+    align-items: center; /* Align input and toggle button vertically */
+}
 /* Optional: Ensure consistent width for all form fields */
 .mat-form-field-appearance-fill {
     width: 85%; /* Make all form fields take up the same width */
