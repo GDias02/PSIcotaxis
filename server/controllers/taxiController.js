@@ -108,14 +108,14 @@ exports.taxi_update = [
       lugares: req.body.lugares,
       conforto: req.body.conforto,
     });
-
+    
     if (!errors.isEmpty()) {
       // 400 - Bad Request
       res.status(400).send({ errors: errors.array() });
       return;
     } else {
       // Check to see if the taxi already exists
-      const taxiExistente = await Pedido.findOne({ _id: taxi._id }).exec();
+      const taxiExistente = await Taxi.findOne({ _id: taxi._id }).exec();
       if (taxiExistente) {
         let updatedTaxi = await Taxi.findByIdAndUpdate(req.params.id, taxi, { new: true }).exec();
         updatedTaxi = await Taxi.findById(req.params.id);

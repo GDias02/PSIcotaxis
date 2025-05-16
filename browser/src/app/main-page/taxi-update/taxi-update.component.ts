@@ -45,7 +45,6 @@ export class TaxiUpdateComponent {
   async updateTaxi() : Promise<void> {
     let taxi : Taxi = this.taxiCreateComponent.getTaxi()
     taxi._id = this.taxi._id;
-    console.log(taxi)
     await firstValueFrom(this.taxiService.updateTaxi(taxi));
     this._snackBar.open('Taxi atualizado com sucesso', 'Okay', {duration: 5000});
     this.goBack();
