@@ -1,4 +1,5 @@
 const Taxi = require("../models/taxi");
+const Viagem = require("../models/viagem");
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
@@ -100,7 +101,7 @@ exports.taxi_update = [
     const errors = validationResult(req);
     const taxi = new Taxi({
       _id: req.params.id,
-      registo: Date.now(),
+      registo: Date.now(), //If there is an update, registo should be updated aswel
       matricula: req.body.matricula,
       marca: req.body.marca,
       modelo: req.body.modelo,
@@ -117,6 +118,13 @@ exports.taxi_update = [
       // Check to see if the taxi already exists
       const taxiExistente = await Taxi.findOne({ _id: taxi._id }).exec();
       if (taxiExistente) {
+
+        let failedBusinessRules = await checkingTaxiBusinessRulesForPut(taxi);
+        
+        if (Object.keys(failedBusinessRules).length > 0){
+          return res.status(409).send(failedBusinessRules);
+        }
+
         let updatedTaxi = await Taxi.findByIdAndUpdate(req.params.id, taxi, { new: true }).exec();
         updatedTaxi = await Taxi.findById(req.params.id);
         // 201 - Created
@@ -197,3 +205,27 @@ exports.taxi_create = [
     }
   }),
 ];
+
+async function checkingTaxiBusinessRulesForPut(taxi) {
+  let failedBusinessRules = {}
+  let i = 0;
+  const t = await Taxi.findById(taxi);
+  
+  //Taxi doesn't exist
+  if (t === null){
+    failedBusinessRules[i] = "Taxi doesn't exist";
+    i++;
+    return failedBusinessRules;
+  }
+
+  //Can't update taxi's conforto if the taxi has already made a viagem
+  if (t.conforto !== taxi.conforto){  
+    const viagem = await Viagem.findOne({taxi : taxi._id}).exec();
+    if (viagem){
+      failedBusinessRules[i] = "Can't update taxi's conforto if the taxi has already made a viagem";
+      i++;
+    }
+  }
+
+  return failedBusinessRules;
+}

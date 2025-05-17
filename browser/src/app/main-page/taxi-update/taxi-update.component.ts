@@ -6,6 +6,7 @@ import { TaxiService } from '../taxi.service';
 import { Location } from '@angular/common';
 import { Taxi } from '../taxi';
 import { firstValueFrom } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-taxi-update',
@@ -45,8 +46,19 @@ export class TaxiUpdateComponent {
   async updateTaxi() : Promise<void> {
     let taxi : Taxi = this.taxiCreateComponent.getTaxi()
     taxi._id = this.taxi._id;
-    await firstValueFrom(this.taxiService.updateTaxi(taxi));
-    this._snackBar.open('Taxi atualizado com sucesso', 'Okay', {duration: 5000});
+    try {
+      await firstValueFrom(this.taxiService.updateTaxi(taxi));
+      this._snackBar.open('Taxi atualizado com sucesso', 'Okay', {duration: 5000});
+    } catch (errors: any) {
+      const messagesObject = errors?.error;
+      let errorMessages = '';
+
+      errorMessages = Object.values(messagesObject).join('; \n');
+      
+      if (!errorMessages) errorMessages = "erro desconhecido";
+
+      this._snackBar.open(`Taxi não pôde ser atualizado:\n${errorMessages}`, 'Okay', { duration: 20000 });
+    }
     this.goBack();
   }
 

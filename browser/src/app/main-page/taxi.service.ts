@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, catchError } from 'rxjs';
+import { Observable, of, catchError, throwError } from 'rxjs';
 import { Taxi } from './taxi';
 import { MessageService } from './message.service';
 
@@ -26,7 +26,7 @@ export class TaxiService {
     return (error: any): Observable<T> => {
       console.error(error);
       this.log(`${operation} falhou: ${error.message}`);
-      return of(result as T)
+      return throwError(() => error);
     }
   }
 
