@@ -1,5 +1,7 @@
 const Motorista = require("../models/motorista");
 const Pessoa = require("../models/pessoa");
+const Turno = require("../models/turno"); 
+
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
@@ -36,17 +38,33 @@ exports.motorista_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.motorista_delete = asyncHandler(async (req, res, next) => {
-    const motorista = await Motorista.findById(req.params.id)
-                                .exec();
-    //TODO - confirmar delete (?)
-    if (motorista === null) {
-        res.status(404).send();
-        return;
+  const motoristaId = req.params.id;
+
+  try {
+    const motorista = await Motorista.findById(motoristaId).exec();
+
+    if (!motorista) {
+      return res.status(404).send(); // motorista não existe
     }
-    await Motorista.findByIdAndDelete(req.params.id)
-                .exec();
-    res.status(204).send();
-});
+
+    // Verifica se o motorista tem turnos associados
+    const temTurnos = await Turno.exists({ motorista: motoristaId });
+
+    if (temTurnos) {
+      return res.status(400).json({
+        erro: "Este motorista está associado a turnos e não pode ser removido."
+      });
+    }
+
+    // Pode remover
+    await Motorista.findByIdAndDelete(motoristaId).exec();
+    return res.status(204).send(); // sucesso
+
+  } catch (error) {
+    return res.status(500).json({ erro: "Erro ao tentar remover o motorista." });
+  }
+})
+
 
 // /motorista - POST
 exports.motorista_create = [

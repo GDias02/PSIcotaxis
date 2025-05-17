@@ -1,5 +1,7 @@
 const Taxi = require("../models/taxi");
 const Viagem = require("../models/viagem");
+const Turno = require("../models/turno");
+
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
@@ -45,17 +47,31 @@ exports.taxi = asyncHandler(async (req, res, next) => {
 
 // /taxi/id - DELETE
 exports.taxi_delete = asyncHandler(async (req, res, next) => {
-    const taxi = await Taxi.findById(req.params.id)
-                                .exec();
-    //TODO - verificar que o taxi pode ser apagado (?)
-    if (taxi === null) {
-        res.status(404).send();
-        return;
+  const taxiId = req.params.id;
+
+  try {
+    const taxi = await Taxi.findById(taxiId).exec();
+
+    if (!taxi) {
+      return res.status(404).send(); // táxi não encontrado
     }
-    await Taxi.findByIdAndDelete(req.params.id)
-                .exec();
-    res.status(204).send();
-});
+
+    // RIA: táxi não pode ser removido se já foi usado em turnos
+    const estaAssociado = await Turno.exists({ taxi: taxiId });
+
+    if (estaAssociado) {
+      return res.status(400).json({
+        erro: "Este táxi já foi requisitado para turnos e não pode ser removido." // mensagem para mostrar no frontend
+      });
+    }
+
+    await Taxi.findByIdAndDelete(taxiId).exec();
+    return res.status(204).send(); // removido com sucesso
+
+  } catch (error) {
+    return res.status(500).json({ erro: "Erro ao tentar remover o táxi." });
+  }
+})
 
 // /taxi/id - PUT
 exports.taxi_update = [
