@@ -66,8 +66,15 @@ export class MotoristasComponent {
       this.motoristas = this.motoristas.filter(m => m !== motorista);
       this.dataSource.data = this.motoristas;
       this._snackBar.open("Motorista apagado", "Okay", {duration:3000});
-    } catch (error) {
-      this._snackBar.open(`Não foi possível apagar o motorista devido aos seguintes erro(s): ${error}`, 'Okay', {duration:15000});
+    } catch (errors : any) {
+      const messagesObject = errors?.error;
+      let errorMessages = '';
+
+      errorMessages = Object.values(messagesObject).join('; \n');
+      
+      if (!errorMessages) errorMessages = "erro desconhecido";
+      
+      this._snackBar.open(`Não foi possível apagar o motorista devido aos seguintes erro(s): ${errorMessages}`, 'Okay', {duration:15000});
     }
   }
 

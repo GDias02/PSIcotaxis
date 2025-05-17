@@ -1,5 +1,6 @@
 const Taxi = require("../models/taxi");
 const Viagem = require("../models/viagem");
+const Turno = require("../models/turno");
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
@@ -45,16 +46,22 @@ exports.taxi = asyncHandler(async (req, res, next) => {
 
 // /taxi/id - DELETE
 exports.taxi_delete = asyncHandler(async (req, res, next) => {
-    const taxi = await Taxi.findById(req.params.id)
-                                .exec();
-    //TODO - verificar que o taxi pode ser apagado (?)
-    if (taxi === null) {
-        res.status(404).send();
-        return;
-    }
-    await Taxi.findByIdAndDelete(req.params.id)
-                .exec();
-    res.status(204).send();
+  const taxi = await Taxi.findById(req.params.id)
+                              .exec();
+  //TODO - verificar que o taxi pode ser apagado (?)
+  if (taxi === null) {
+      res.status(404).send();
+      return;
+  }
+
+  let failedBusinessRules = await checkingTaxiBusinessRulesForDelete(taxi);
+  if (Object.keys(failedBusinessRules).length > 0){
+    return res.status(409).send(failedBusinessRules);
+  }
+
+  await Taxi.findByIdAndDelete(req.params.id)
+              .exec();
+  res.status(204).send();
 });
 
 // /taxi/id - PUT
@@ -225,6 +232,19 @@ async function checkingTaxiBusinessRulesForPut(taxi) {
       failedBusinessRules[i] = "Can't update taxi's conforto if the taxi has already made a viagem";
       i++;
     }
+  }
+
+  return failedBusinessRules;
+}
+
+async function checkingTaxiBusinessRulesForDelete(taxi){
+  let failedBusinessRules = {}
+  let i = 0;
+
+  const turno = await Turno.findOne({taxi: taxi._id}).exec();
+  if (turno) {
+    failedBusinessRules[i] = "Taxi já foi atribuído a um turno";
+    i++;
   }
 
   return failedBusinessRules;

@@ -1,5 +1,6 @@
 const Motorista = require("../models/motorista");
 const Pessoa = require("../models/pessoa");
+const Turno = require("../models/turno");
 
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
@@ -36,16 +37,22 @@ exports.motorista_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.motorista_delete = asyncHandler(async (req, res, next) => {
-    const motorista = await Motorista.findById(req.params.id)
-                                .exec();
-    //TODO - confirmar delete (?)
-    if (motorista === null) {
-        res.status(404).send();
-        return;
-    }
-    await Motorista.findByIdAndDelete(req.params.id)
-                .exec();
-    res.status(204).send();
+  const motorista = await Motorista.findById(req.params.id)
+                              .exec();
+  //TODO - confirmar delete (?)
+  if (motorista === null) {
+    res.status(404).send();
+    return;
+  }
+  
+  const failedBusinessRules =  await checkingMotoristaBusinessRulesForDelete(motorista);
+  if (Object.keys(failedBusinessRules).length > 0){
+    return res.status(409).send(failedBusinessRules);
+  }
+
+  await Motorista.findByIdAndDelete(req.params.id)
+              .exec();
+  res.status(204).send();
 });
 
 // /motorista - POST
@@ -164,3 +171,16 @@ exports.motorista_update = [
     res.status(400).send({ error: "Pedido não existe" });
     })
 ];
+
+async function checkingMotoristaBusinessRulesForDelete(motorista){
+  let failedBusinessRules = {}
+  let i = 0;
+
+  const turno = await Turno.findOne({motorista: motorista._id}).exec();
+  if (turno) {
+    failedBusinessRules[i] = "Motorista já requisitou um taxi para um turno";
+    i++;
+  }
+
+  return failedBusinessRules;
+}

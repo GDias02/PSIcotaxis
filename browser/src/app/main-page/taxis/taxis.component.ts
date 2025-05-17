@@ -65,8 +65,15 @@ export class TaxisComponent {
       this.taxis = this.taxis.filter(m => m !== taxi);
       this.dataSource.data = this.taxis;
       this._snackBar.open("Taxi apagado com sucesso", "Okay", {duration: 3000});
-    } catch (error) {
-      this._snackBar.open(`Não foi possível apagar o taxi devido aos seguintes problemas:${error}`, "Okay", {duration:15000});
+    } catch (errors : any) {
+      const messagesObject = errors?.error;
+      let errorMessages = '';
+
+      errorMessages = Object.values(messagesObject).join('; \n');
+      
+      if (!errorMessages) errorMessages = "erro desconhecido";
+      
+      this._snackBar.open(`Não foi possível apagar o taxi devido aos seguintes problemas:${errorMessages}`, "Okay", {duration:15000});
     }
   }
 
