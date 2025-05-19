@@ -60,6 +60,7 @@ import { EstatisticasSubtotaisComponent } from './estatisticas-subtotais/estatis
 import { EstatisticasDetailsComponent } from './estatisticas-details/estatisticas-details.component';
 import { MotoristaUpdateComponent } from './motorista-update/motorista-update.component';
 import { TaxiUpdateComponent } from './taxi-update/taxi-update.component';
+import { ViagemDetailComponent } from './viagem-detail/viagem-detail.component';
 
 @NgModule({
   imports: [
@@ -128,7 +129,8 @@ import { TaxiUpdateComponent } from './taxi-update/taxi-update.component';
     EstatisticasSubtotaisComponent,
     EstatisticasDetailsComponent,
     MotoristaUpdateComponent,
-    TaxiUpdateComponent
+    TaxiUpdateComponent,
+    ViagemDetailComponent
   ],
 })
 export class MainPageModule {

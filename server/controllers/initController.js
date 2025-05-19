@@ -157,8 +157,10 @@ exports.init = asyncHandler(async (req, res) => {
       viagemCreate(0, VIAGENS[0], 0, 0, 0),
       viagemCreate(1, VIAGENS[1], 1, 1, 0),
       viagemCreate(2, VIAGENS[2], 1, 2, 0),
-      viagemCreate(3, VIAGENS[1], 0, 0, 0),
-      viagemCreate(4, VIAGENS[2], 2, 0, 0)
+      viagemCreate(3, VIAGENS[3], 1, 1, 0),
+      viagemCreate(4, VIAGENS[4], 2, 2, 0),
+      viagemCreate(5, VIAGENS[1], 0, 0, 0),
+      viagemCreate(6, VIAGENS[2], 2, 0, 0)
     ]);
   }
 });
