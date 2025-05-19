@@ -136,7 +136,7 @@ export class TaxiCreateComponent {
       matricula: this.matricula!.toLocaleUpperCase(),
       anoDeCompra: this.anoDeCompra,
       marca: this.marcaControl.value,
-      modelo: this.modelo,
+      modelo: this.modeloControl.value,
       lugares: this.lugares,
       conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
     } as Taxi).subscribe({
@@ -172,7 +172,7 @@ export class TaxiCreateComponent {
 
   dataInRange(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const data = control.value;
+      const data = new Date(control.value);
       if (new Date("1900") < data && data < new Date(Date.now())) return null;
       else return { dataInRange: true }
     }
@@ -181,7 +181,7 @@ export class TaxiCreateComponent {
   allFilled(): boolean {
     return this.matricula !== undefined &&
       this.marcaControl !== undefined &&
-      this.modelo !== undefined &&
+      this.modeloControl !== undefined &&
       this.anoDeCompra !== undefined &&
       this.lugares !== undefined &&
       this.conforto !== undefined;
@@ -209,7 +209,7 @@ export class TaxiCreateComponent {
     return {
       matricula: this.matricula,
       marca: this.marcaControl.value,
-      modelo: this.modelo,
+      modelo: this.modeloControl.value,
       anoDeCompra: this.anoDeCompra,
       lugares: this.lugares,
       conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),

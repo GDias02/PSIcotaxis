@@ -55,9 +55,8 @@
                     <p>
                         <mat-form-field>
                             <mat-label>Data de Compra</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="anoDeCompra" [(ngModel)]="anoDeCompra">
-                            <mat-hint>DD/MM/YYYY</mat-hint>
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <input matInput type="date" formControlName="anoDeCompra" [(ngModel)]="anoDeCompra">
+                            <!--<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error *ngIf="taxiForm.value.anoDeCompra">A data tem de ser depois de 1900 e antes de hoje</mat-error>
                         </mat-form-field>
