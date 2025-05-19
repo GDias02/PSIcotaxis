@@ -8,7 +8,7 @@
                         <mat-form-field class="example-full-width">
                             <mat-label>Marca</mat-label>
                             <input type="text" placeholder="Escolha uma marca" aria-label="Marca" matInput
-                                [formControl]="marcaControl" [matAutocomplete]="auto">
+                                [formControl]="marcaControl" [matAutocomplete]="auto" (blur)="updateModelos()">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let option of (filteredOptionsMarcas | async)" [value]="option">
                                     {{option}}
