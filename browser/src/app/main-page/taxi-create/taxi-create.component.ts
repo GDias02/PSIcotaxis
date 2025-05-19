@@ -39,6 +39,7 @@ export class TaxiCreateComponent {
   filteredOptionsMarcas?: Observable<string[]>;
   optionsModelos: string[] = [];
   filteredOptionsModelos?: Observable<string[]>;
+  marcasEModelos: Map<string, string> = new Map();
 
   constructor(
     private route: ActivatedRoute,
@@ -93,6 +94,7 @@ export class TaxiCreateComponent {
   getMarcas(): void {
     this.taxiService.getMarcasEModelos()
       .subscribe(marcas => {
+        this.marcasEModelos = marcas;
         for (let key of Object.getOwnPropertyNames(marcas)) {
           this.optionsMarcas.push(key);
           for(let model of marcas[key]){
@@ -186,7 +188,7 @@ export class TaxiCreateComponent {
     this.modelo = taxi.modelo;
     this.anoDeCompra = taxi.anoDeCompra;
     this.lugares = taxi.lugares;
-    this.conforto = taxi.conforto;
+    this.conforto = taxi.conforto == 'basico' ? 'básico' : 'luxuoso';
   }
 
   getTaxi() : Taxi{
@@ -198,6 +200,10 @@ export class TaxiCreateComponent {
       lugares: this.lugares,
       conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
     } as Taxi;
+  }
+
+  updateModelos(): void {
+    this.filteredOptionsModelos = 
   }
 }
 
