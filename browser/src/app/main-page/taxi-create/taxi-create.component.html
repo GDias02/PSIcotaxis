@@ -20,10 +20,19 @@
                     <p>
                         <mat-form-field appearance="fill">
                             <mat-label>Modelo</mat-label>
-                            <mat-select [(ngModel)]="modelo" formControlName="modelo" [(ngModel)]="modelo">
+                            <input type="text" placeholder="Escolha um modelo" aria-label="Modelo" matInput
+                                [formControl]="modeloControl" [matAutocomplete]="auto2">
+                            <mat-autocomplete #auto2="matAutocomplete">
+                                <mat-option *ngFor="let option2 of (filteredOptionsModelos | async)" [value]="option2">
+                                    {{option2}}
+                                </mat-option>
+                            </mat-autocomplete>
+
+                            <!--<mat-select [(ngModel)]="modelo" formControlName="modelo" [(ngModel)]="modelo">
                                 <mat-option *ngFor="let option of optionsModelos" [value]="option">{{option}}</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="taxiForm.value.modelo">O modelo tem de ter entre 2 e 64 caracteres</mat-error>
+                            </mat-select>-->
+
+                            <mat-error *ngIf="modeloControl.value">O modelo tem de ter entre 2 e 64 caracteres</mat-error>
                         </mat-form-field>
                     </p>
                     <p>

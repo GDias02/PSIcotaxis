@@ -17,6 +17,7 @@ import { MessageService } from '../message.service';
 
 export class TaxiCreateComponent {
   marcaControl = new FormControl<string>('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]);
+  modeloControl = new FormControl<string>('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]);
   matricula?: string;
   anoDeCompra?: Date;
   marca?: string;
@@ -24,12 +25,11 @@ export class TaxiCreateComponent {
   lugares?: number;
   conforto?: string;
   confortos = ['básico', 'luxuoso'];
-
+  
   duplicateMatricula: boolean = false;
-
+  
   taxiForm = new FormGroup({
-      //marca: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
-      modelo: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
+    //marca: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
       conforto: new FormControl('', [Validators.required, Validators.pattern('^básico|luxuoso$') ]),
       anoDeCompra: new FormControl('', [Validators.required, this.dataInRange()]),
       lugares: new FormControl('', [Validators.required, Validators.min(1)]),
@@ -39,7 +39,7 @@ export class TaxiCreateComponent {
   filteredOptionsMarcas?: Observable<string[]>;
   optionsModelos: string[] = [];
   filteredOptionsModelos?: Observable<string[]>;
-  marcasEModelos: Map<string, string> = new Map();
+  marcasEModelos: Map<string, string[]> = new Map();
 
   constructor(
     private route: ActivatedRoute,
@@ -89,17 +89,26 @@ export class TaxiCreateComponent {
         return name ? this._filter(name as string) : this.optionsMarcas.slice();
       }),
     );
+    this.filteredOptionsModelos = this.modeloControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : '';
+        return name ? this._filterModelo(name as string) : this.optionsModelos.slice();
+      }),
+    );
   }
 
   getMarcas(): void {
     this.taxiService.getMarcasEModelos()
       .subscribe(marcas => {
-        this.marcasEModelos = marcas;
         for (let key of Object.getOwnPropertyNames(marcas)) {
           this.optionsMarcas.push(key);
+          let models = [];
           for(let model of marcas[key]){
             this.optionsModelos.push(model);
+            models.push(model);
           }
+          this.marcasEModelos.set(key, models);
         }
       });
   }
@@ -111,6 +120,11 @@ export class TaxiCreateComponent {
   private _filter(name: string): string[] {
     const filterValue = name.toLowerCase();
     return this.optionsMarcas ? this.optionsMarcas.filter(option => option.toLowerCase().includes(filterValue)) : [];
+  }
+
+  private _filterModelo(name: string): string[] {
+    const filterValue = name.toLowerCase();
+    return this.optionsModelos ? this.optionsModelos.filter(option => option.toLowerCase().includes(filterValue)) : [];
   }
 
   goBack(): void {
@@ -203,7 +217,10 @@ export class TaxiCreateComponent {
   }
 
   updateModelos(): void {
-    this.filteredOptionsModelos = 
+    if(this.marcaControl.value){
+      let res = this.marcasEModelos.get(this.marcaControl.value);
+      this.optionsModelos = res ?? [];
+    }
   }
 }
 
