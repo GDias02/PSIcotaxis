@@ -46,7 +46,6 @@ export class MotoristaUpdateComponent {
   async updateMotorista(): Promise<void> {
     //Send motorista with the respective id
     let motorista : Motorista = this.motoristaCreateComponent.getMotorista();
-    console.log(motorista)
     motorista._id = this.motorista._id;
     await firstValueFrom(this.motoristaService.updateMotorista(motorista));
     this._snackBar.open('Motorista atualizado com sucesso!', 'Okay', {duration: 5000});
