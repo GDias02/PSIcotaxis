@@ -1,5 +1,10 @@
-<app-taxi-create>
-    <button id="update-button" mat-fab extended type="submit" action-button (click)="updateTaxi()">
+<app-taxi-create [enableSubmit]="false">
+    <button id="update-button" 
+            mat-fab extended 
+            type="submit" 
+            action-button 
+            (click)="updateTaxi()"
+            [disabled]="!taxiCreateComponent?.isFormValid()">
         Atualizar
         <mat-icon>save</mat-icon>
     </button> 

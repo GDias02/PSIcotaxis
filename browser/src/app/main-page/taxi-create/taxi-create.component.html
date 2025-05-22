@@ -21,7 +21,7 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Modelo</mat-label>
                             <input type="text" placeholder="Escolha um modelo" aria-label="Modelo" matInput
-                                [formControl]="modeloControl" [matAutocomplete]="auto2">
+                                [formControl]="modeloControl" [(ngModel)]="modelo" [matAutocomplete]="auto2">
                             <mat-autocomplete #auto2="matAutocomplete">
                                 <mat-option *ngFor="let option2 of (filteredOptionsModelos | async)" [value]="option2">
                                     {{option2}}
@@ -80,7 +80,7 @@
                             Voltar
                         </button>
 
-                        <button id="register-button" mat-fab extended type="submit" [disabled]="!taxiForm.valid">
+                        <button id="register-button" mat-fab extended type="submit" (click)="save()"[disabled]="!taxiForm.valid">
                             Registar
                             <mat-icon>person_add</mat-icon>
                         </button>

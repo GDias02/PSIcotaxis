@@ -27,7 +27,8 @@ export class MotoristaUpdateComponent {
 
   ngOnInit(): void {
     this.getMotorista();
-    document.getElementById("register-button")!.style.display = "none";
+    const button = document.getElementById("register-button")!
+    if (button) button.remove();
     document.getElementById("header")!.innerHTML = "Atualizar Motorista";
   }
 

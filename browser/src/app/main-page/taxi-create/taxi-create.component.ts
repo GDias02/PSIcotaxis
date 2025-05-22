@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -40,6 +40,8 @@ export class TaxiCreateComponent {
   optionsModelos: string[] = [];
   filteredOptionsModelos?: Observable<string[]>;
   marcasEModelos: Map<string, string[]> = new Map();
+
+  @Input() enableSubmit = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -142,12 +144,10 @@ export class TaxiCreateComponent {
     } as Taxi).subscribe({
       next: (taxi) => {
         if (taxi.name !== "HttpErrorResponse"){
-          console.log('Created Taxi:', taxi);
           this.goBack();
         } else {
           //There was a specific error
           const error = taxi.error;
-          console.log('Error creating taxi', error);
           if (error.code === 11000) {
             this.showErrors(Object.keys(error.keyPattern));
           }
@@ -166,7 +166,7 @@ export class TaxiCreateComponent {
   }
 
   onSubmit(): void {
-    if (this.taxiForm.invalid) return;
+    if (this.taxiForm.invalid || !this.enableSubmit) return;
     this.save();
   }
 
@@ -200,9 +200,14 @@ export class TaxiCreateComponent {
     this.matricula = taxi.matricula;
     this.marcaControl.setValue(taxi.marca);
     this.modelo = taxi.modelo;
-    this.anoDeCompra = taxi.anoDeCompra;
+    this.anoDeCompra = new Date(taxi.anoDeCompra);
     this.lugares = taxi.lugares;
     this.conforto = taxi.conforto == 'basico' ? 'básico' : 'luxuoso';
+    this.taxiForm.controls["anoDeCompra"].setValue(
+      taxi.anoDeCompra ?
+        new Date(taxi.anoDeCompra).toISOString().slice(0, 10)
+        : null
+    );
   }
 
   getTaxi() : Taxi{
@@ -221,6 +226,10 @@ export class TaxiCreateComponent {
       let res = this.marcasEModelos.get(this.marcaControl.value);
       this.optionsModelos = res ?? [];
     }
+  }
+
+  isFormValid():boolean {
+    return this.taxiForm.valid;
   }
 }
 

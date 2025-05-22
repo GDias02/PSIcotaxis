@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormControl, AbstractControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
@@ -31,6 +31,8 @@ export class MotoristaCreateComponent {
     dataDeNascimento: new FormControl<Date>(new Date(), [Validators.required, this.dataInRange()], ),
     cartaDeConducao: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(32), this.duplicateCartaValidator()])
   })
+
+  @Input() enableSubmit = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,7 +70,7 @@ export class MotoristaCreateComponent {
   }
 
   onSubmit(): void {
-    if (this.motoristaForm.invalid || this.moradaComponent!.moradaForm.invalid) return;
+    if (this.motoristaForm.invalid || this.moradaComponent!.moradaForm.invalid || !this.enableSubmit) return;
     this.save();
   }
 
@@ -97,7 +99,6 @@ export class MotoristaCreateComponent {
         } else {
           //There was a specific error
           const error = motorista.error;
-          console.log('Error creating motorista', error);
           if (error.code === 11000) {
             this.showErrors(Object.keys(error.keyPattern));
           }

@@ -28,7 +28,8 @@ export class TaxiUpdateComponent {
 
   ngOnInit(): void {
     this.getTaxi();
-    document.getElementById("register-button")!.style.display = "none";
+    const button = document.getElementById("register-button")!
+    if (button) button.remove()
     document.getElementById("header")!.innerHTML = "Atualizar Taxi"
   }
 
@@ -50,14 +51,20 @@ export class TaxiUpdateComponent {
       await firstValueFrom(this.taxiService.updateTaxi(taxi));
       this._snackBar.open('Taxi atualizado com sucesso', 'Okay', {duration: 5000});
     } catch (errors: any) {
-      const messagesObject = errors?.error;
       let errorMessages = '';
+      const messagesObject = errors?.error;
 
       errorMessages = Object.values(messagesObject).join('; \n');
-      
       if (!errorMessages) errorMessages = "erro desconhecido";
+      
+      if (errors?.error.errors){ //for other types of errors (from Mongoose)
+        errorMessages = "";
+        for (let err of errors?.error.errors){
+          errorMessages = errorMessages.concat(err.msg);
+        }
+      }
 
-      this._snackBar.open(`Taxi não pôde ser atualizado:\n${errorMessages}`, 'Okay', { duration: 20000 });
+      this._snackBar.open(`Taxi não pôde ser atualizado:\n${errorMessages};`, 'Okay', { duration: 20000 });
     }
     this.goBack();
   }
