@@ -28,7 +28,7 @@ export class MotoristaCreateComponent {
     nome: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64), Validators.pattern('^[^\\d]*$')]),
     nif: new FormControl('', [Validators.required, Validators.min(100000000), Validators.max(999999999), this.duplicateNifValidator()]),
     genero: new FormControl('', [Validators.required, Validators.pattern('^Masculino|Feminino$')]),
-    dataDeNascimento: new FormControl('', [Validators.required, this.dataInRange()], ),
+    dataDeNascimento: new FormControl<Date>(new Date(), [Validators.required, this.dataInRange()], ),
     cartaDeConducao: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(32), this.duplicateCartaValidator()])
   })
 
@@ -125,7 +125,8 @@ export class MotoristaCreateComponent {
     this.motoristaForm.controls["nif"].setValue(String(motorista.nif));
     this.motoristaForm.controls["nome"].setValue(motorista.nome);
     this.motoristaForm.controls["genero"].setValue(motorista.genero == 'feminino' ? 'Feminino' : 'Masculino');
-    this.motoristaForm.controls["dataDeNascimento"].setValue(String(motorista.anoDeNascimento));
+    this.motoristaForm.controls["dataDeNascimento"].setValue(
+      motorista.anoDeNascimento ? new Date(motorista.anoDeNascimento) : new Date());
     this.motoristaForm.controls["cartaDeConducao"].setValue(motorista.cartaDeConducao);
     this.moradaComponent.setMorada(motorista.morada);
   }
@@ -144,5 +145,9 @@ export class MotoristaCreateComponent {
         numeroDePorta: this.moradaComponent?.numero ?? ''
       }
     } as Motorista;
+  }
+
+  formIsValid(): boolean {
+    return this.motoristaForm.valid && this.moradaComponent.formIsValid();
   }
 }

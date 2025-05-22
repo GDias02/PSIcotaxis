@@ -72,4 +72,8 @@ export class MoradaCreateComponent {
     this.rua = morada.rua;
     this.numero = morada.numeroDePorta;
   }
+
+  formIsValid():boolean {
+    return this.moradaForm.valid;
+  }
 }

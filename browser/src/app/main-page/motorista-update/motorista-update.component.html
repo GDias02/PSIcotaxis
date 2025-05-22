@@ -1,5 +1,10 @@
 <app-motorista-create>
-    <button id="update-button" mat-fab extended type="submit" action-button (click)="updateMotorista()">
+    <button id="update-button" 
+            mat-fab extended 
+            type="submit" 
+            action-button 
+            (click)="updateMotorista()"
+            [disabled]="!motoristaCreateComponent?.formIsValid()">
         Atualizar
         <mat-icon>save</mat-icon>
     </button>

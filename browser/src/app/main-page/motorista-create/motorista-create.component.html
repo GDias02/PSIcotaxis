@@ -33,7 +33,7 @@
                         <mat-form-field>
                             <mat-label>Data de Nascimento</mat-label>
                             <input matInput [matDatepicker]="picker" formControlName="dataDeNascimento" [(ngModel)]="dataDeNascimento">
-                            <mat-hint>DD/MM/YYYY</mat-hint>
+                            <mat-hint>MM/DD/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error *ngIf="motoristaForm.value.dataDeNascimento">A idade do motorista deve ser maior que 18</mat-error>
