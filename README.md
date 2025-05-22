@@ -1,25 +1,12 @@
 # psicotaxis
 
-----#----#----#----#----#----#----#----#
-Acede ao servidor por ssh
+## para aceder ao servidor (usar vpn):
+ssh PSI002@appserver.alunos.di.fc.ul.pt
 
-password psiXXXpsiXXXpsiXXX
+## para iniciar o frontend:
+ng serve --port 3002 --host 0.0.0.0 --disableHostCheck true
+### ou
+ng serve --port 3052 --host 0.0.0.0 --disableHostCheck true
 
-(É preciso estar ligado à rede da fcul)
-
-
-----#----#----#----#----#----#----#----#
-
-Base de dados Mongo:
-    username/password: psiXXX
-
-
-Não esquecer de adaptar o link da base de dados
-----#----#----#----#----#----#----#----#
-
-appserver:
-    Node:16
-
-Usar apenas uma versão do nosso projeto
-Se por acaso precisarmos de videos e imagens,
-alojá-los externamente
+### para aceder à consola do mongo no appserver:
+mongosh --username PSI002 --password --authenticationDatabase PSI002 appserver.alunos.di.fc.ul.pt/PSI002
