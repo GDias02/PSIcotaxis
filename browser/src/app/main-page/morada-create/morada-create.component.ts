@@ -21,6 +21,7 @@ export class MoradaCreateComponent {
     codPostal: new FormControl('', [Validators.required, Validators.pattern('^\\d{4}-\\d{3}$')]),
     localidade: new FormControl('', [Validators.required]),
     rua: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    numero: new FormControl('')
   })
   
   constructor(
@@ -62,7 +63,7 @@ export class MoradaCreateComponent {
       codigoPostal: data.codPostal ?? "0000-000",
       localidade: data.localidade ?? "não encontrada",
       rua: data.rua ?? "não encontrada",
-      numeroDePorta: this.numero
+      numeroDePorta: this.numero ?? "00"
     };
   }
 

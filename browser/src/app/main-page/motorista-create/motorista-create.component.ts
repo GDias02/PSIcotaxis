@@ -143,7 +143,7 @@ export class MotoristaCreateComponent {
         rua: this.moradaComponent?.rua,
         codigoPostal: this.moradaComponent?.codPostal,
         localidade: this.moradaComponent?.localidade,
-        numeroDePorta: this.moradaComponent?.numero ?? ''
+        numeroDePorta: this.moradaComponent?.numero
       }
     } as Motorista;
   }
