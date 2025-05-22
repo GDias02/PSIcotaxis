@@ -53,7 +53,7 @@ exports.taxi_delete = asyncHandler(async (req, res, next) => {
     const taxi = await Taxi.findById(taxiId).exec();
 
     if (!taxi) {
-      return res.status(404).send(); // táxi não encontrado
+      return res.status(404).json({ erro : "Táxi não encontrado"});
     }
 
     // RIA: táxi não pode ser removido se já foi usado em turnos
@@ -66,7 +66,7 @@ exports.taxi_delete = asyncHandler(async (req, res, next) => {
     }
 
     await Taxi.findByIdAndDelete(taxiId).exec();
-    return res.status(204).send(); // removido com sucesso
+    return res.status(204).send(); 
 
   } catch (error) {
     return res.status(500).json({ erro: "Erro ao tentar remover o táxi." });

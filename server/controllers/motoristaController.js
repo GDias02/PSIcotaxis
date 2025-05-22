@@ -44,7 +44,7 @@ exports.motorista_delete = asyncHandler(async (req, res, next) => {
     const motorista = await Motorista.findById(motoristaId).exec();
 
     if (!motorista) {
-      return res.status(404).send(); // motorista não existe
+      return res.status(404).json({ erro: "Motorista não encontrado." });
     }
 
     // Verifica se o motorista tem turnos associados
@@ -52,18 +52,18 @@ exports.motorista_delete = asyncHandler(async (req, res, next) => {
 
     if (temTurnos) {
       return res.status(400).json({
-        erro: "Este motorista está associado a turnos e não pode ser removido."
+        erro: "Este motorista não pode ser removido porque já requisitou táxis em turnos."
       });
     }
 
-    // Pode remover
     await Motorista.findByIdAndDelete(motoristaId).exec();
-    return res.status(204).send(); // sucesso
+    return res.status(204).send();
 
-  } catch (error) {
+  } catch (err) {
     return res.status(500).json({ erro: "Erro ao tentar remover o motorista." });
   }
-})
+});
+
 
 
 // /motorista - POST
