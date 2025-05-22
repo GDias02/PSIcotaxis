@@ -119,12 +119,12 @@ export class MotoristaCreateComponent {
   setMotorista(motorista : Motorista) : void {
     this.nif = motorista.nif;
     this.nome = motorista.nome;
-    this.genero = motorista.genero;
+    this.genero = motorista.genero == 'feminino' ? 'Feminino' : 'Masculino';
     this.dataDeNascimento = motorista.anoDeNascimento;
     this.cartaDeConducao = motorista.cartaDeConducao;
     this.motoristaForm.controls["nif"].setValue(String(motorista.nif));
     this.motoristaForm.controls["nome"].setValue(motorista.nome);
-    this.motoristaForm.controls["genero"].setValue(motorista.genero);
+    this.motoristaForm.controls["genero"].setValue(motorista.genero == 'feminino' ? 'Feminino' : 'Masculino');
     this.motoristaForm.controls["dataDeNascimento"].setValue(String(motorista.anoDeNascimento));
     this.motoristaForm.controls["cartaDeConducao"].setValue(motorista.cartaDeConducao);
     this.moradaComponent.setMorada(motorista.morada);

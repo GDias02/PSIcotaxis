@@ -1,0 +1,31 @@
+<mat-card appearance="outlined">
+    <mat-card-content *ngIf="viagem">
+        <h2>{{ viagem._id }}</h2>
+
+        <mat-divider></mat-divider>
+
+        <mat-list role="list">
+            <h3>Dados da Viagem</h3>
+            <mat-list-item role="listitem">Id do motorista : {{ viagem.motorista }}</mat-list-item>
+            <mat-list-item role="listitem">Id do taxi: {{ viagem.taxi }}</mat-list-item>
+            <mat-list-item role="listitem">Id do cliente: {{ viagem.cliente }}</mat-list-item>
+            <mat-list-item role="listitem">Número de passageiros: {{ viagem.numeroDePassageiros }}</mat-list-item>
+            <mat-list-item role="listitem">Início da Viagem: {{ datePipe.transform(viagem.inicio, "dd-MM-yyyy hh:mm") }}</mat-list-item>
+            <mat-list-item role="listitem">Fim da Viagem: {{ datePipe.transform(viagem.fim, "dd-MM-yyyy hh:mm") }}</mat-list-item>
+            <mat-list-item role="listitem">Partida em: {{ viagem.partida.rua }}, {{ viagem.partida.localidade }}</mat-list-item>
+            <mat-list-item role="listitem">Chegada a: {{ viagem.chegada!.rua }}, {{ viagem.chegada!.localidade }}</mat-list-item>
+            <mat-list-item role="listitem">Percorridos: {{ viagem.kilometros }}km </mat-list-item>
+            <mat-list-item role="listitem">Custo total: {{ viagem.custo }}€</mat-list-item>
+        </mat-list>
+
+        <mat-card-actions>
+            <button mat-fab extended (click)="goBack()">
+                <mat-icon fontIcon="&#8617;"></mat-icon>
+                Voltar
+            </button>
+        </mat-card-actions>
+
+        <mat-divider></mat-divider>
+
+    </mat-card-content>
+</mat-card>

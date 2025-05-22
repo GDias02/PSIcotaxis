@@ -1,0 +1,21 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ViagemDetailComponent } from './viagem-detail.component';
+
+describe('ViagemDetailComponent', () => {
+  let component: ViagemDetailComponent;
+  let fixture: ComponentFixture<ViagemDetailComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ViagemDetailComponent]
+    });
+    fixture = TestBed.createComponent(ViagemDetailComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

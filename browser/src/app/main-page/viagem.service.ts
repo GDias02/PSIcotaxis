@@ -66,6 +66,14 @@ export class ViagemService {
       );
   }
 
+  getViagemCompleta(id: string): Observable<Viagem> {
+    const url = `${this.motoristaUrl}/viagens/${id}`;
+    return this.http.get<Viagem>(url)
+      .pipe(
+        catchError(this.handleError<Viagem>(`getViagem id=${id}`))
+      );
+  }
+
   addViagem(viagem: Viagem): Observable<Viagem | any> {
     const url = this.motoristaUrl + "/viagens/create";
     return this.http.post<Viagem>(url, viagem, this.httpOptions).pipe(

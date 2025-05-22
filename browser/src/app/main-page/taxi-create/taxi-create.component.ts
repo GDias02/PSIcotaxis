@@ -17,6 +17,7 @@ import { MessageService } from '../message.service';
 
 export class TaxiCreateComponent {
   marcaControl = new FormControl<string>('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]);
+  modeloControl = new FormControl<string>('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]);
   matricula?: string;
   anoDeCompra?: Date;
   marca?: string;
@@ -24,12 +25,11 @@ export class TaxiCreateComponent {
   lugares?: number;
   conforto?: string;
   confortos = ['básico', 'luxuoso'];
-
+  
   duplicateMatricula: boolean = false;
-
+  
   taxiForm = new FormGroup({
-      //marca: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
-      modelo: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
+    //marca: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(64)]),
       conforto: new FormControl('', [Validators.required, Validators.pattern('^básico|luxuoso$') ]),
       anoDeCompra: new FormControl('', [Validators.required, this.dataInRange()]),
       lugares: new FormControl('', [Validators.required, Validators.min(1)]),
@@ -39,6 +39,7 @@ export class TaxiCreateComponent {
   filteredOptionsMarcas?: Observable<string[]>;
   optionsModelos: string[] = [];
   filteredOptionsModelos?: Observable<string[]>;
+  marcasEModelos: Map<string, string[]> = new Map();
 
   constructor(
     private route: ActivatedRoute,
@@ -88,6 +89,13 @@ export class TaxiCreateComponent {
         return name ? this._filter(name as string) : this.optionsMarcas.slice();
       }),
     );
+    this.filteredOptionsModelos = this.modeloControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : '';
+        return name ? this._filterModelo(name as string) : this.optionsModelos.slice();
+      }),
+    );
   }
 
   getMarcas(): void {
@@ -95,9 +103,12 @@ export class TaxiCreateComponent {
       .subscribe(marcas => {
         for (let key of Object.getOwnPropertyNames(marcas)) {
           this.optionsMarcas.push(key);
+          let models = [];
           for(let model of marcas[key]){
             this.optionsModelos.push(model);
+            models.push(model);
           }
+          this.marcasEModelos.set(key, models);
         }
       });
   }
@@ -111,6 +122,11 @@ export class TaxiCreateComponent {
     return this.optionsMarcas ? this.optionsMarcas.filter(option => option.toLowerCase().includes(filterValue)) : [];
   }
 
+  private _filterModelo(name: string): string[] {
+    const filterValue = name.toLowerCase();
+    return this.optionsModelos ? this.optionsModelos.filter(option => option.toLowerCase().includes(filterValue)) : [];
+  }
+
   goBack(): void {
     this.location.back();
   }
@@ -120,7 +136,7 @@ export class TaxiCreateComponent {
       matricula: this.matricula!.toLocaleUpperCase(),
       anoDeCompra: this.anoDeCompra,
       marca: this.marcaControl.value,
-      modelo: this.modelo,
+      modelo: this.modeloControl.value,
       lugares: this.lugares,
       conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
     } as Taxi).subscribe({
@@ -156,7 +172,7 @@ export class TaxiCreateComponent {
 
   dataInRange(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const data = control.value;
+      const data = new Date(control.value);
       if (new Date("1900") < data && data < new Date(Date.now())) return null;
       else return { dataInRange: true }
     }
@@ -165,7 +181,7 @@ export class TaxiCreateComponent {
   allFilled(): boolean {
     return this.matricula !== undefined &&
       this.marcaControl !== undefined &&
-      this.modelo !== undefined &&
+      this.modeloControl !== undefined &&
       this.anoDeCompra !== undefined &&
       this.lugares !== undefined &&
       this.conforto !== undefined;
@@ -186,18 +202,25 @@ export class TaxiCreateComponent {
     this.modelo = taxi.modelo;
     this.anoDeCompra = taxi.anoDeCompra;
     this.lugares = taxi.lugares;
-    this.conforto = taxi.conforto;
+    this.conforto = taxi.conforto == 'basico' ? 'básico' : 'luxuoso';
   }
 
   getTaxi() : Taxi{
     return {
       matricula: this.matricula,
       marca: this.marcaControl.value,
-      modelo: this.modelo,
+      modelo: this.modeloControl.value,
       anoDeCompra: this.anoDeCompra,
       lugares: this.lugares,
       conforto: this.conforto?.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ''),
     } as Taxi;
+  }
+
+  updateModelos(): void {
+    if(this.marcaControl.value){
+      let res = this.marcasEModelos.get(this.marcaControl.value);
+      this.optionsModelos = res ?? [];
+    }
   }
 }
 

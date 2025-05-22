@@ -78,16 +78,26 @@ export class EstatisticasSubtotaisComponent implements OnInit {
       return acc;
     }, new Map());
 
-    //mesma lógica para táxis
-
     this.fillEstatisticas();
   }
 
   fillEstatisticas(): void {
     switch (this.categoria) {
-      case "Número de Viagens": this.computeViagens(); break;
-      case "Horas de Viagens": this.computeHoras(); break;
-      case "Quilómetros Percorridos": this.computeQuilometros(); break;
+      case "Número de Viagens": 
+        this.computeViagens(); 
+        this.estatisticasMotoristas.sort((stat1, stat2) => stat2.total - stat1.total); 
+        this.estatisticasTaxis.sort((stat1, stat2) => stat2.total - stat1.total); 
+        break;
+      case "Horas de Viagens": 
+        this.computeHoras(); 
+        this.estatisticasMotoristas.sort((stat1, stat2) => stat2.total - stat1.total); 
+        this.estatisticasTaxis.sort((stat1, stat2) => stat2.total - stat1.total); 
+        break;
+      case "Quilómetros Percorridos": 
+      this.computeQuilometros(); 
+      this.estatisticasMotoristas.sort((stat1, stat2) => stat2.total - stat1.total); 
+      this.estatisticasTaxis.sort((stat1, stat2) => stat2.total - stat1.total); 
+      break;
     }
   }
 
@@ -201,9 +211,9 @@ export class EstatisticasSubtotaisComponent implements OnInit {
   }
 
   showDetailsViagensMotorista(row: EstatisticasMotorista): void {
-    this.router.navigate([`main-page/estatisticas/details`], { state: { categoria: this.categoria, viagens: this.motoristaIDs_viagens.get(row._id) } });
+    this.router.navigate([`main-page/estatisticas/details`], { state: { categoria: this.categoria, entidade: row.nome, viagens: this.motoristaIDs_viagens.get(row._id) } });
   }
   showDetailsViagensTaxi(row: EstatisticasTaxi): void {
-    this.router.navigate([`main-page/estatisticas/details`], { state: { categoria: this.categoria, viagens: this.taxiIDs_viagens.get(row._id) } });
+    this.router.navigate([`main-page/estatisticas/details`], { state: { categoria: this.categoria, entidade: row.matricula, viagens: this.taxiIDs_viagens.get(row._id) } });
   }
 }

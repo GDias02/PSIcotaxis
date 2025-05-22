@@ -8,7 +8,7 @@
                         <mat-form-field class="example-full-width">
                             <mat-label>Marca</mat-label>
                             <input type="text" placeholder="Escolha uma marca" aria-label="Marca" matInput
-                                [formControl]="marcaControl" [matAutocomplete]="auto">
+                                [formControl]="marcaControl" [matAutocomplete]="auto" (blur)="updateModelos()">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let option of (filteredOptionsMarcas | async)" [value]="option">
                                     {{option}}
@@ -20,10 +20,19 @@
                     <p>
                         <mat-form-field appearance="fill">
                             <mat-label>Modelo</mat-label>
-                            <mat-select [(ngModel)]="modelo" formControlName="modelo" [(ngModel)]="modelo">
+                            <input type="text" placeholder="Escolha um modelo" aria-label="Modelo" matInput
+                                [formControl]="modeloControl" [matAutocomplete]="auto2">
+                            <mat-autocomplete #auto2="matAutocomplete">
+                                <mat-option *ngFor="let option2 of (filteredOptionsModelos | async)" [value]="option2">
+                                    {{option2}}
+                                </mat-option>
+                            </mat-autocomplete>
+
+                            <!--<mat-select [(ngModel)]="modelo" formControlName="modelo" [(ngModel)]="modelo">
                                 <mat-option *ngFor="let option of optionsModelos" [value]="option">{{option}}</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="taxiForm.value.modelo">O modelo tem de ter entre 2 e 64 caracteres</mat-error>
+                            </mat-select>-->
+
+                            <mat-error *ngIf="modeloControl.value">O modelo tem de ter entre 2 e 64 caracteres</mat-error>
                         </mat-form-field>
                     </p>
                     <p>
@@ -46,9 +55,8 @@
                     <p>
                         <mat-form-field>
                             <mat-label>Data de Compra</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="anoDeCompra" [(ngModel)]="anoDeCompra">
-                            <mat-hint>DD/MM/YYYY</mat-hint>
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <input matInput type="date" formControlName="anoDeCompra" [(ngModel)]="anoDeCompra">
+                            <!--<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error *ngIf="taxiForm.value.anoDeCompra">A data tem de ser depois de 1900 e antes de hoje</mat-error>
                         </mat-form-field>

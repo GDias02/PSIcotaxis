@@ -55,6 +55,8 @@ exports.motorista_delete = asyncHandler(async (req, res, next) => {
   res.status(204).send();
 });
 
+
+
 // /motorista - POST
 exports.motorista_create = [
   // Validate and sanitize fields.
