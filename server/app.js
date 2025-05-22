@@ -17,7 +17,7 @@ const app = express();
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 //const mongoDB = "mongodb+srv://fc57163:12345678B@cluster0.c11fmyj.mongodb.net/psicotaxis?retryWrites=true&w=majority&appName=Cluster0";
-const mongoDB = "mongodb://PSI002:PSI002@localhost:27017/PSI002?retryWrites=true&authSource=PSI002"
+const mongoDB = "mongodb://PSI002:PSI002@localhost:27017/psi002?retryWrites=true&authSource=PSI002"
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
