@@ -165,6 +165,11 @@ exports.init = asyncHandler(async (req, res) => {
   }
 });
 
+exports.miniDebug = asyncHandler(async(req,res)=> {
+  const gestor = new Gestor(GESTORES[0])
+  await gestor.save();
+})
+
 const CONFIGS = [
   {
     ppm_basico: 10,
