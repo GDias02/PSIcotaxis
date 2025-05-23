@@ -14,8 +14,8 @@ import { MessageService } from './message.service';
 })
 export class MotoristaService {
 
-  private motoristaUrl = 'http://localhost:3000/motorista';
-  private gestorUrl = 'http://localhost:3000/gestor';
+  private motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/motorista';
+  private gestorUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/gestor';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -78,7 +78,7 @@ export class MotoristaService {
 
   //TODO - refatorizar para ir para loc.service.ts
   getLocalidadeByCodigoPostal(codPostal: string): Observable<string> {
-    const url = `http://localhost:3000/servicos/localidade/${codPostal}`;
+    const url = `http://appserver.alunos.di.fc.ul.pt:3052/servicos/localidade/${codPostal}`;
      
     return this.http.get(url, {responseType: 'text'})
       .pipe(

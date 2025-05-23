@@ -15,9 +15,9 @@ export class UserService {
   currentUserName: string = "";
   currentUser?: Motorista | Gestor | Cliente;
   
-  private readonly gestorUrl = 'http://appserver.alunos.di.fc.ul.pt:3000/gestor';
-  private readonly clienteUrl = 'http://appserver.alunos.di.fc.ul.pt:3000/cliente';
-  private readonly motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3000/motorista';
+  private readonly gestorUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/gestor';
+  private readonly clienteUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/cliente';
+  private readonly motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/motorista';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

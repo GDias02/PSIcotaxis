@@ -11,8 +11,8 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class PedidoService {
-  private readonly motoristaUrl = 'http://localhost:3000/motorista/pedidos' //pedidos
-  private readonly clienteUrl = 'http://localhost:3000/cliente/pedidos' //pedidos
+  private readonly motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/motorista/pedidos' //pedidos
+  private readonly clienteUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/cliente/pedidos' //pedidos
   
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

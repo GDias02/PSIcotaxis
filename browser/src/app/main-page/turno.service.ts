@@ -10,7 +10,7 @@ import { Turno, TurnoCompleto } from './turno';
 })
 export class TurnoService {
 
-  private turnoUrl = 'http://localhost:3000/motorista/turnos';
+  private turnoUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/motorista/turnos';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

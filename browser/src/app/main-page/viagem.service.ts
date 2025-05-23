@@ -13,10 +13,10 @@ import { ViagemCompleta } from './viagem-completa';
 })
 export class ViagemService {
 
-  private gestorUrl = 'http://localhost:3000/gestor';
-  private motoristaUrl = 'http://localhost:3000/motorista';
-  private clienteUrl = 'http://localhost:3000/cliente';
-  private servicosUrl = 'http://localhost:3000/servicos';
+  private gestorUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/gestor';
+  private motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/motorista';
+  private clienteUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/cliente';
+  private servicosUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/servicos';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

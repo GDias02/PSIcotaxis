@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class ClienteService {
-  private clientesUrl = 'http://localhost:3000/clientes';
+  private clientesUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/clientes';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -12,7 +12,7 @@ import { MessageService } from './message.service';
 })
 export class ConfigService {
 
-  private configsUrl = 'http://localhost:3000/gestor/configs';
+  private configsUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/gestor/configs';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -9,9 +9,9 @@ import { MessageService } from './message.service';
 })
 export class TaxiService {
 
-  private clienteUrl = 'http://localhost:3000/cliente';
-  private motoristaUrl = 'http://localhost:3000/motorista';
-  private gestorUrl = 'http://localhost:3000/gestor';
+  private clienteUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/cliente';
+  private motoristaUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/motorista';
+  private gestorUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/gestor';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
