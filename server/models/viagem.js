@@ -29,7 +29,7 @@ const viagemSchema = new Schema({
     inicio: { type: Date, required: true },
     fim: { type: Date },
     kilometros: { type: Number, min: 0 },
-    custo: { type: Number, min: 0.01}
+    custo: { type: Number, min: 0 }
 });
 
 module.exports = mongoose.model("Viagem", viagemSchema);

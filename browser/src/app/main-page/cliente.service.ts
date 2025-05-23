@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class ClienteService {
-  private clientesUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/clientes';
+  private clientesUrl = 'http://appserver.alunos.di.fc.ul.pt:3052/cliente';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,7 +31,7 @@ export class ClienteService {
   }
 
   getCliente(id: string): Observable<Cliente> {
-    const url = this.clientesUrl + `/cliente/:${id}`;
+    const url = this.clientesUrl + `/id/:${id}`;
     return this.http.get<Cliente>(url)
       .pipe(
         catchError(this.handleError<Cliente>(`getClientes ${id}`))
@@ -39,7 +39,7 @@ export class ClienteService {
   }
 
   getClienteByNif(nif: string): Observable<Cliente> {
-    const url = this.clientesUrl + `/cliente/nif/${nif}`;
+    const url = this.clientesUrl + `/nif/${nif}`;
     return this.http.get<Cliente>(url)
       .pipe(
         catchError(this.handleError<Cliente>(`getClienteByNif ${nif}`))
@@ -47,7 +47,7 @@ export class ClienteService {
   }
 
   postCliente(cliente: Cliente): Observable<Cliente> {
-    const url = this.clientesUrl + "/cliente";
+    const url = this.clientesUrl + "/create";
     return this.http.post<Cliente>(url, cliente, this.httpOptions)
       .pipe(
         catchError(this.handleError<Cliente>('postCliente'))
@@ -55,7 +55,7 @@ export class ClienteService {
   }
 
   updateCliente(cliente: Cliente): Observable<Cliente> {
-    const url = this.clientesUrl + `/cliente/:${cliente._id}`;
+    const url = this.clientesUrl + `/id/:${cliente._id}`;
     return this.http.put<Cliente>(url, cliente, this.httpOptions)
       .pipe(
         catchError(this.handleError<Cliente>('updateCliente'))
@@ -63,7 +63,7 @@ export class ClienteService {
   } 
 
   deleteCliente(cliente: Cliente): Observable<Cliente> {
-    const url = this.clientesUrl + `/cliente/:${cliente._id}`;
+    const url = this.clientesUrl + `/id/:${cliente._id}`;
     return this.http.delete<Cliente>(url, this.httpOptions)
       .pipe(
         catchError(this.handleError<Cliente>('deleteCliente'))
