@@ -12,7 +12,6 @@ const motoristaRouter = require('./routes/motorista')
 const clientesRouter = require('./routes/cliente');
 
 const app = express();
-app.listen(3052);
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
