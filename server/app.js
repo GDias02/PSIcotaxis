@@ -17,6 +17,7 @@ const app = express();
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 const mongoDB = "mongodb+srv://fc57163:12345678B@cluster0.c11fmyj.mongodb.net/psicotaxis?retryWrites=true&w=majority&appName=Cluster0";
+// use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
