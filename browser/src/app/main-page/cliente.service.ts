@@ -39,7 +39,7 @@ export class ClienteService {
   }
 
   getClienteByNif(nif: string): Observable<Cliente> {
-    const url = this.clientesUrl + `/cliente/nif/${nif}`;
+    const url = this.clientesUrl + `/nif/${nif}`;
     return this.http.get<Cliente>(url)
       .pipe(
         catchError(this.handleError<Cliente>(`getClienteByNif ${nif}`))
@@ -47,7 +47,7 @@ export class ClienteService {
   }
 
   postCliente(cliente: Cliente): Observable<Cliente> {
-    const url = this.clientesUrl + "/cliente";
+    const url = this.clientesUrl + "/create";
     return this.http.post<Cliente>(url, cliente, this.httpOptions)
       .pipe(
         catchError(this.handleError<Cliente>('postCliente'))

@@ -8,7 +8,7 @@ const cors = require("cors");
 const indexRouter = require('./routes/index');
 const gestorRouter = require('./routes/gestor');
 const servicosRouter = require('./routes/servicos');
-const motoristaRouter = require('./routes/motorista')
+const motoristaRouter = require('./routes/motorista');
 const clientesRouter = require('./routes/cliente');
 
 const app = express();
@@ -16,8 +16,7 @@ const app = express();
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://fc57163:12345678B@cluster0.c11fmyj.mongodb.net/psicotaxis?retryWrites=true&w=majority&appName=Cluster0";
-// use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+const mongoDB = 'mongodb://user:root@127.0.0.1:27017/psicotaxis?authSource=admin'; // if your database has auth enabled
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
